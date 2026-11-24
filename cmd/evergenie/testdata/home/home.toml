@@ -1,0 +1,17 @@
+[user]
+name = "測試使用者"
+timezone = "Asia/Taipei"
+[slots]
+default = "life"
+[slots.life]
+label = "生活"
+remind = "08:30"
+check = "18:00"
+[accounts]
+default = "main"
+[accounts.main]
+engine = "test-engine"
+[web]
+port = 18850
+[sessions]
+autostart = false

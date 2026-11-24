@@ -1,0 +1,39 @@
+schema = 1
+title = "兌換請求"
+# 也收「現在穿這套」與它的復原（type = wear／unwear）：一樣寫一筆 pending，由衣櫃的程式驗證處理。
+
+[[field]]
+name = "type"
+type = "enum"
+enum = ["unlock", "wear", "unwear"]
+required = true
+description = "請求種類：unlock（用點數兌換一套衣服，只認主人本人）、wear（現在穿這套：只有已經擁有的能穿，穿到當天結束）、unwear（復原：現在指定穿的就是這套才取消，回到輪流穿）"
+
+[[field]]
+name = "persona"
+type = "string"
+required = true
+description = "哪位角色"
+
+[[field]]
+name = "outfit"
+type = "string"
+required = true
+description = "哪套衣服的 id"
+
+[[field]]
+name = "state"
+type = "enum"
+enum = ["pending", "done", "rejected"]
+required = true
+description = "寫入時一律 pending；衣櫃的程式處理後回填 done 或 rejected"
+
+[[field]]
+name = "reason"
+type = "string"
+description = "被拒絕的白話原因（只有程式回填）"
+
+[[field]]
+name = "unlock"
+type = "string"
+description = "成功時的兌換紀錄編號（只有程式回填）"

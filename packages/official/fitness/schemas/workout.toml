@@ -1,0 +1,177 @@
+schema = 1
+title = "訓練"
+date_field = "date"
+
+[[field]]
+name = "type"
+type = "enum"
+enum = ["重訓", "跑步", "划船", "游泳", "騎車"]
+required = true
+description = "種類：重訓，或有氧的一項（清單同 pages/lib/cardio.ts 的 CARDIO 與 habits 的 cardioTypes，三處一起改）（跑步、划船、游泳、騎車）。舊家叫 kind；vault 的標頭已經用 kind 當資料種類，所以這裡改叫 type"
+
+[[field]]
+name = "date"
+type = "date"
+required = true
+description = "開始那天（YYYY-MM-DD）"
+
+[[field]]
+name = "started"
+type = "string"
+description = "開始時間，YYYY-MM-DD HH:MM"
+
+[[field]]
+name = "finished"
+type = "string"
+description = "結束時間，YYYY-MM-DD HH:MM（收操時才有）"
+
+[[field]]
+name = "status"
+type = "enum"
+enum = ["進行中", "完成"]
+required = true
+description = "狀態（同時只會有一筆重訓進行中）"
+
+[[field]]
+name = "feeling"
+type = "enum"
+enum = ["輕鬆", "剛好", "吃力"]
+description = "整體感覺（收操時填）"
+
+[[field]]
+name = "note"
+type = "string"
+description = "一句備註"
+
+[[field]]
+name = "sets"
+type = "list"
+description = "重訓每一組，照做的順序；每項是物件：equipment（器材名稱）、weight（公斤，徒手 0）、reps（次數或秒數）、feel（輕鬆／剛好／吃力）"
+
+[[field]]
+name = "distance_km"
+type = "number"
+description = "有氧的距離（公里；划船、游泳也存公里，頁面用公尺顯示）"
+
+[[field]]
+name = "duration_min"
+type = "number"
+description = "有氧的時間（分鐘）"
+
+[[field]]
+name = "pace"
+type = "string"
+description = "配速 m:ss：跑步每公里、划船每 500 公尺、游泳每 100 公尺；騎車不填（看 avg_speed_kmh）"
+
+[[field]]
+name = "source"
+type = "string"
+description = "資料來源，例如 web、watch"
+
+[[field]]
+name = "review"
+type = "string"
+description = "收操後的檢討"
+
+[[field]]
+name = "review_by"
+type = "string"
+description = "檢討是誰寫的：規則（頁面算的），或秘書的 id"
+
+# ---- 有氧共同的指數（四種都有）----
+[[field]]
+name = "avg_hr"
+type = "number"
+description = "平均心率（bpm）"
+
+[[field]]
+name = "max_hr"
+type = "number"
+description = "最大心率（bpm）"
+
+[[field]]
+name = "calories"
+type = "number"
+description = "消耗熱量（大卡，手錶或機器顯示的）"
+
+# ---- 跑步 ----
+[[field]]
+name = "cadence_spm"
+type = "number"
+description = "跑步步頻（步／分）"
+
+[[field]]
+name = "stride_m"
+type = "number"
+description = "跑步平均步幅（公尺）"
+
+[[field]]
+name = "gct_ms"
+type = "number"
+description = "跑步觸地時間（毫秒）"
+
+[[field]]
+name = "vertical_osc_cm"
+type = "number"
+description = "跑步垂直振幅（公分）"
+
+[[field]]
+name = "training_effect"
+type = "number"
+description = "有氧訓練效果（0–5，手錶算的）"
+
+# ---- 跑步、騎車 ----
+[[field]]
+name = "elevation_m"
+type = "number"
+description = "總爬升（公尺）"
+
+# ---- 划船、騎車 ----
+[[field]]
+name = "avg_power_w"
+type = "number"
+description = "平均功率（瓦）"
+
+# ---- 划船 ----
+[[field]]
+name = "stroke_rate_spm"
+type = "number"
+description = "划船槳頻（下／分）"
+
+# ---- 游泳 ----
+[[field]]
+name = "pool_m"
+type = "number"
+description = "泳池長度（公尺；0＝開放水域）"
+
+[[field]]
+name = "laps"
+type = "number"
+description = "游泳趟數（一趟＝一個池長）"
+
+[[field]]
+name = "stroke_style"
+type = "enum"
+enum = ["自由式", "蛙式", "仰式", "蝶式", "混合"]
+description = "主要泳姿"
+
+[[field]]
+name = "swolf"
+type = "number"
+description = "游泳平均 SWOLF（一趟的秒數＋划手次數，越低越有效率）"
+
+# ---- 騎車 ----
+[[field]]
+name = "avg_speed_kmh"
+type = "number"
+description = "騎車均速（公里／小時）"
+
+[[field]]
+name = "cadence_rpm"
+type = "number"
+description = "騎車踏頻（轉／分）"
+
+[[field]]
+name = "indoor"
+type = "bool"
+description = "室內（飛輪、訓練台、划船機、跑步機）"

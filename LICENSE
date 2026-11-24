@@ -1,0 +1,109 @@
+# EverGenie 授權（EverGenie License）
+
+Copyright (c) 2026 EverGenie contributors。在法律允許的範圍內保留所有權利，只開放下面寫的用途。
+
+這不是開放原始碼（open source）授權：原始碼公開，大家可以看、可以自己用、可以自己改，但不能拿去賣，也不能拿到別的產品裡用。
+
+## 範圍
+
+「EverGenie」指這個 repo 與 EverGenie 發行檔裡的所有內容，包括：
+
+- 程式原始碼、執行檔、腳本、說明文件。
+- 官方角色：`packages/official/personas/` 裡的角色設定卡（個性、說話方式、故事），以及官方角色包裡的頭像、衣服圖片與影片（由 EverGenie 下載到你的電腦，不在這個 repo 裡）。
+
+不包括第三方元件：它們照各自的授權，聲明在 [LICENSES/](LICENSES/)（發行檔裡另外附上編進執行檔的元件的授權）。
+
+角色取材的神話與傳說人物名字（例如輝夜、雅典娜）屬於公共文化，不在保留範圍；保留的是這裡的文字設定與圖像本身。
+
+## 你可以
+
+- 在你擁有或管理的電腦上安裝、使用 EverGenie，個人或工作上都可以；公司或團隊內部給成員用也可以，只要不向使用的人收費。
+- 把 EverGenie **原樣**免費分享給別人，並附上這份文件。
+- 修改 EverGenie（包括角色設定卡）自己用。
+- 把改過的 EverGenie 或改過的角色設定卡**免費**分享給別人，要附上這份文件並說明改過哪裡（例如用 git 紀錄）。改過的版本整體仍照這份文件，不能加上更寬或更嚴的條件。
+- 分享可以用任何管道，包括鏡像網站與在 GitHub 上公開的 fork。
+- 這裡的「免費」是不收費，也不把付費、訂閱當成取得的條件。
+- 官方角色只能跟 EverGenie 一起分享，不能單獨散布。
+
+## 你自己做的東西
+
+- 你自己做的套件、角色、衣服，以及你用 EverGenie 產生的資料與內容，是你的，不受這份文件限制（包括下面「不可以」那一段），你可以照自己的意思分享、授權或販售。
+- 條件是裡面不能夾帶 EverGenie 本身的程式或官方角色（設定卡、圖、影片）。從官方套件或官方角色卡複製來改的，算改過的 EverGenie，照上面「你可以」那一段。
+
+## 沒有書面同意不可以
+
+- 販售、出租、再授權 EverGenie 或其中任何部分（包括改過的版本），或把它們放進收費的產品、服務或內容裡。
+- 用 EverGenie 架設收費的服務給別人用。
+- 把 EverGenie 的程式或官方角色（或改過的版本）用在 EverGenie 以外的產品或服務。
+- 拿掉或改掉這份授權說明與著作權聲明。
+
+## 貢獻
+
+送來的修改（例如 pull request）視為同意以這份授權釋出，並同意 EverGenie 的著作權人日後可以用其他條件釋出。
+
+## 沒有保證
+
+EverGenie 照現狀提供，不附任何明示或默示的保證，包括可售性、適合特定用途與不侵權。不論是契約、侵權或其他原因，作者與著作權人對使用或無法使用 EverGenie 所造成的任何請求、損害或其他責任，一概不負責。
+
+## 其他
+
+- 想做上面不允許的用途，請在這個 repo 開 issue 聯絡。
+- 這份文件有中文與英文兩個版本，意思相同；有出入時以中文為準。
+
+---
+
+## EverGenie License (English)
+
+Copyright (c) 2026 EverGenie contributors. All rights reserved to the extent permitted by law, except as
+permitted below.
+
+This is **not** an open-source license. The source code is public: you may read it, use it and modify it for
+yourself, but you may not sell it or use it in other products.
+
+**Scope.** "EverGenie" means everything in this repository and in the EverGenie release packages: the source
+code, binaries, scripts and documentation, and the official characters (the persona cards under
+`packages/official/personas/` and the avatars, outfit images and videos in the official character packs, which
+EverGenie downloads to your computer). Third-party components are not covered (the release packages also
+include the licenses of components compiled into the binaries); they keep their own licenses,
+listed in [LICENSES/](LICENSES/). Names of mythological or folkloric figures are not claimed; only the written
+character settings and the images themselves are.
+
+**You may:**
+
+- Install and use EverGenie on computers you own or manage, for personal or work use; a company or team may
+  run it for its own members, as long as the people using it are not charged.
+- Redistribute EverGenie **unmodified**, free of charge, provided this file is included.
+- Modify EverGenie (including the persona cards) for your own use.
+- Share modified versions of EverGenie or of the persona cards **free of charge**, provided this file is
+  included and your changes are noted (for example through the git history). A modified version as a whole
+  remains under this license; you may not add broader or narrower terms.
+- Share through any channel, including mirrors and public forks on GitHub.
+- "Free of charge" means no fee, and no payment or subscription required to obtain it.
+- The official characters may only be shared together with EverGenie, not on their own.
+
+**What you make is yours.** Packages, characters and outfits you create yourself, and the data and content you
+produce with EverGenie, are yours and are not restricted by this license (including the restrictions below):
+you may share, license or sell them as you like, provided they do not include EverGenie's own code or official
+characters (persona cards, images, videos). Anything copied from an official package or official persona card
+and then modified is a modified version of EverGenie and falls under "You may" above.
+
+**Without prior written permission you may not:**
+
+- Sell, rent or sublicense EverGenie or any part of it (including modified versions), or include it in a paid
+  product, service or content.
+- Run EverGenie as a paid service for others.
+- Use EverGenie's code or official characters (or modified versions) in any product or service other than
+  EverGenie.
+- Remove or alter this license or the copyright notice.
+
+**Contributions.** By submitting a change (for example a pull request) you agree that it is released under this
+license, and that the EverGenie copyright holders may later release it under other terms.
+
+**No warranty.** EVERGENIE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO
+EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH EVERGENIE OR THE USE OR OTHER
+DEALINGS IN EVERGENIE.
+
+To ask for a use not permitted above, open an issue in this repository. This license exists in Chinese and
+English with the same meaning; if they differ, the Chinese version prevails.

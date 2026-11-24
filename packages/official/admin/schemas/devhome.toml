@@ -1,0 +1,40 @@
+schema = 1
+title = "開發家狀態"
+
+
+[[field]]
+name = "state"
+type = "enum"
+enum = ["unset", "stopped", "running"]
+required = true
+description = "unset＝home.toml 沒寫 [admin] dev_home；stopped＝1 秒內沒回應；running＝開著（只看同一台的開發家）"
+
+[[field]]
+name = "path"
+type = "string"
+description = "[admin] dev_home 的值"
+
+[[field]]
+name = "version"
+type = "string"
+description = "開著而且回報得出版本才有"
+
+[[field]]
+name = "board_port"
+type = "int"
+description = "開發家 home.toml 的 [runtime] board_port（沒寫退回 [web] port）；讀不到是 0"
+
+[[field]]
+name = "detail"
+type = "string"
+description = "給人看的白話一句（沒設定時寫要填哪個欄位）"
+
+[[field]]
+name = "url"
+type = "string"
+description = "開發家 home.toml 的 [runtime] url（只收 http／https）"
+
+[[field]]
+name = "computed_at"
+type = "datetime"
+description = "程式算完的時間（RFC 3339）"

@@ -1,0 +1,116 @@
+# 官方套件：習慣（REQ-124）。附程式的套件（kind = "program"）：背景行程讀 vault、算點數、把結果寫回 vault（status、wallet）、賺到點通知。
+# 仍然不做 RPC（D-28）：秘書用 `evergenie data …`、頁面用 @evergenie/sdk-web 的 api.vault 讀寫同一份資料。
+schema = 1
+id = "habits"
+name = "習慣"
+version = "0.1.0"
+description = "原子習慣：約定、打卡、自動來源、子項目、累計或連續、點數錢包"
+kind = "program"
+api = "evergenie.v1"
+
+[program]
+entry = "cmd/evergenie-habits"
+restart = "always"
+
+[capabilities]
+read = ["vault:pkg/habits", "vault:pkg/fitness", "vault:pkg/body", "vault:pkg/nutrition", "vault:pkg/closet", "vault:reminder"]
+write = ["vault:pkg/habits", "notify"]
+
+[[contributes.data]]
+kind = "habit"
+schema = "schemas/habit.toml"
+ids = "seq"
+prefix = "H-"
+
+[[contributes.data]]
+kind = "checkin"
+schema = "schemas/checkin.toml"
+ids = "seq"
+prefix = "C-"
+
+[[contributes.data]]
+kind = "status"
+schema = "schemas/status.toml"
+ids = "given"
+
+[[contributes.data]]
+kind = "wallet"
+schema = "schemas/wallet.toml"
+ids = "given"
+
+[[contributes.data]]
+kind = "exchange"
+schema = "schemas/exchange.toml"
+ids = "seq"
+prefix = "X-"
+
+# 第一次介紹習慣（HAB-21）：秘書介紹過寫 done；升級前就在用、或已經約了習慣的家，程式寫 skipped。有了這筆，下面的 welcome 那段就不再帶。
+[[contributes.data]]
+kind = "welcome"
+schema = "schemas/welcome.toml"
+ids = "given"
+
+# 給秘書的補充（HAB-11、HAB-21；提不提換衣服照錢包的 outfits_ready，HAB-23）：接在每一位秘書的指令後面；套件停用就不帶。完整用法在這個資料夾的 README.md。
+[[extension]]
+id = "guide"
+kind = "prompt_append"
+description = "習慣怎麼跟主人約、怎麼記、點數怎麼來（每位秘書都帶）"
+default = '''
+主人可以跟你約習慣（照《原子習慣》的精神，但保持簡單）。他想約一個新習慣時（從看板來的會以「我想約一個新習慣：」開頭）：
+- 從很小的開始：先約一個兩分鐘做得完的版本，綁在他每天本來就會做的一件事後面當提示，再用一句話說他想成為什麼樣的人。次數寧可少，他說得出口就好。
+- 聊定了就記一筆：`evergenie data add habits.habit --json '{"name":"睡前讀書","agent":"<你的職位 id>","cadence":"daily","mode":"cumulative","start":"<今天>","status":"active","two_min":"讀一頁","cue":"刷完牙躺上床之後","identity":"有在讀書的人"}'`（每週型改 "cadence":"weekly" 並加 "target":<每週幾次>）。他說做了就幫他打卡：`evergenie data add habits.checkin --json '{"habit":"H-<n>","date":"<那天>","source":"manual","key":"manual:H-<n>:<那天>:"}'`。其他欄位、撤銷、子項目、看進度，讀說明：`evergenie docs` 第一行印的程式資料夾裡的 `packages/official/habits/README.md`。
+- 點數由套件的程式算，不要自己算，也不要寫 habits.status、habits.wallet：家裡第一個習慣約好就送 1 點（每個家只一次），之後累積達標 2 週 +1、再每 4 週 +1，連續達標還有獎勵。點數現在能不能換衣服看 `evergenie data get habits.wallet main` 的 `outfits_ready`：是 true 才說可以到展示間換角色的衣服；不是（衣櫃沒在用、或還沒有要點數的衣服）就只說點數先存著、之後有衣服可以換時用得到，不要帶他去展示間。
+- 不念、不催：他沒做到不提醒、不責備，也不主動問進度；他提起時才聊，先看做到的部分。
+- 戒掉壞習慣、回顧這陣子做得怎樣，沒有專門的頁面：他提起時用聊的陪他想（例如讓壞習慣難一點做、看看哪個提示沒用），要的話改約一個新的小習慣。
+'''
+
+# 新家第一次聊天帶一次（HAB-21）：「第一次介紹習慣」那筆紀錄出現之後就不再帶（until_record，PKG-4）。
+[[extension]]
+id = "welcome"
+kind = "prompt_append"
+description = "新家第一次聊天時介紹一次習慣（介紹過就不再帶）"
+until_record = "welcome/main"
+default = '''
+這個家還沒有人跟主人介紹過習慣。主人本人在聊天裡跟你說話時（排程工作、別的秘書傳來的訊息不算），先照常回他；回完跑一次 `evergenie data add habits.welcome --id main --json '{"status":"done","agent":"<你的職位 id>"}'`：
+- 成功了，才在同一輪用你自己的口吻補一兩句：可以跟你約一個很小的習慣，約好就送 1 點，做到還有點數。先看 `evergenie data get habits.wallet main` 的 `outfits_ready`：是 true 才加一句點數可以到展示間換你的衣服；不是就不提換衣服（還沒有衣服可換）。輕輕帶過，不要推銷。
+- 其他情況（說已經有資料了＝別的秘書講過、或出錯）：什麼都不提。
+只講這一次，他沒接話就不再提。他本來就在聊習慣，就直接照習慣那段約，不用另外介紹（紀錄照寫）。
+'''
+
+[[contributes.page]]
+id = "list"
+title = "習慣"
+route = "/habits"
+component = "pages/list.tsx"
+# 寬螢幕時旁邊放聊天（REQ-235），習慣各自跟不同秘書約，讓主人選。
+chat = true
+
+[[contributes.page]]
+id = "detail"
+title = "習慣詳情"
+route = "/habit"
+component = "pages/detail.tsx"
+
+[[contributes.page]]
+id = "today"
+title = "今天的習慣"
+route = "/habits-today"
+component = "pages/today.tsx"
+slot = "core.overview.cards"
+slot_front = true
+
+[[contributes.page]]
+id = "todo-points"
+title = "做待辦拿點數"
+route = "/habits-todo-points"
+component = "pages/todo-points.tsx"
+slot = "core.reminders.top"
+
+[[contributes.menu]]
+id = "list"
+title = "習慣"
+icon = "calendar-check"
+group_hint = "daily"
+front = true
+order = 5
+page = "list"

@@ -1,0 +1,19 @@
+# 自己的隱藏版判斷的共用案例（personaref.IsAdultPath；衣櫃轉換器 photomigrate.IsAdultDir 照同一份）。
+# 每行：<true|false> <personas/ 底下的相對路徑>
+true mine/adult
+true mine/adult/athena@seaside.png
+true MINE/Adult
+true avatars/level/hidden
+true avatars/level/extra
+true avatars/Level/x.png
+true avatars/nsfw
+true avatars/athena@nsfw.png
+true avatars/R18/a.png
+true avatars/成人/a.png
+true avatars/athena@adult-beach.png
+false avatars
+false avatars/hidden
+false avatars/athena@seaside.png
+false mine/avatars/full/athena.png
+false avatars/levels
+false wardrobe/athena.toml

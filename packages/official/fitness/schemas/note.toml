@@ -1,0 +1,19 @@
+schema = 1
+title = "訓練筆記"
+date_field = "date"
+
+[[field]]
+name = "title"
+type = "string"
+required = true
+description = "標題"
+
+[[field]]
+name = "date"
+type = "date"
+description = "日期（YYYY-MM-DD）"
+
+[[field]]
+name = "pinned"
+type = "bool"
+description = "釘選：訓練計畫就是被釘選的那一篇"

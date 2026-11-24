@@ -1,0 +1,31 @@
+{
+ "session_id": "8f32a0bd-9a95-4fd7-a837-06093037e21b",
+ "transcript_path": "/Users/someone/.claude-acme/projects/-tmp-hg-spike-run-m2/8f32a0bd-9a95-4fd7-a837-06093037e21b.jsonl",
+ "cwd": "/tmp/hg-spike/run/m2",
+ "scratchpad_dir": "/private/tmp/claude-501/-tmp-hg-spike-run-m2/8f32a0bd-9a95-4fd7-a837-06093037e21b/scratchpad",
+ "prompt_id": "f1ff060f-cd6e-4a3a-b7ce-7a46f8107939",
+ "permission_mode": "default",
+ "effort": {
+  "level": "medium"
+ },
+ "hook_event_name": "PreToolUse",
+ "tool_name": "SendMessage",
+ "tool_input": {
+  "to": "m1-e1 [069cbd]",
+  "summary": "Ping m1 session with PING-CROSS from m2",
+  "message": "PING-CROSS from m2",
+  "type": "message",
+  "recipient": "m1-e1 [069cbd]",
+  "recipient_kind": "name",
+  "content": "PING-CROSS from m2"
+ },
+ "tool_use_id": "toolu_013z4SbDjzHHq8gyT2hkT8De",
+ "_recorded": {
+  "recorded": "2026-10-23",
+  "claude_code": "2.1.309",
+  "model": "haiku",
+  "account": "claude-acme",
+  "by": "P3-S0",
+  "flags": "--setting-sources project --settings <gen> --mcp-config <gen> --strict-mcp-config --session-id <uuid>"
+ }
+}

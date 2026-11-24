@@ -1,0 +1,21 @@
+schema = 1
+title = "這個家支援什麼"
+
+# 只有衣櫃的程式寫，只用 main 這一筆（CLO-32）：頁面與核心都不判斷「我在哪種家」，只看這一筆。
+# 核心的 show_when = "cap:closet.<能力>" 讀 supports（MNU-11）；「修改」這類頁面照 actions 畫別的套件登記的鈕與篩選（CLO-33）。
+
+[[field]]
+name = "supports"
+type = "list"
+required = true
+description = "這個家支援的能力（字串清單）：mine＝每個家都有（自己的衣服：新增／刪一套、上傳／刪單張、要不要用點數換）；edit＝只有開發家（整套與單張的狀態、評論、篩選）；edit-tab＝有 edit 而且開關 closet.edit-tab 沒關（角色頁掛「修改」分頁）"
+
+[[field]]
+name = "actions"
+type = "list"
+description = "別的套件登記、衣櫃驗過、這個家的能力撐得起的動作（list of map，照 scope、order、id 排）：欄位跟 closet.action 同名，多 id；request_kind、status_kind 是完整名稱；filter_label 有寫時 filter_values 一定有（沒寫的話＝status_labels 的全部值）"
+
+[[field]]
+name = "computed_at"
+type = "string"
+description = "程式算完的時間（RFC 3339）"

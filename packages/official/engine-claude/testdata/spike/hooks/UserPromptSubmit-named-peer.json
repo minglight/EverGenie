@@ -1,0 +1,20 @@
+{
+ "session_id": "f69d2677-8efa-4fc3-8bec-10a371109f74",
+ "transcript_path": "/Users/someone/.claude-acme/projects/-private-tmp-hg-s0c-repo/f69d2677-8efa-4fc3-8bec-10a371109f74.jsonl",
+ "cwd": "/private/tmp/hg-s0c/repo",
+ "scratchpad_dir": "/private/tmp/claude-501/-private-tmp-hg-s0c-repo/f69d2677-8efa-4fc3-8bec-10a371109f74/scratchpad",
+ "prompt_id": "2e37b299-cf36-4f13-8400-f6dbd601eb98",
+ "permission_mode": "auto",
+ "hook_event_name": "UserPromptSubmit",
+ "prompt": "<cross-session-message from=\"uds:/tmp/cc-socks/00000.sock\" from-name=\"s0c-q\" from-mode=\"prompting\">\n主人的 Goal GOAL-1，這一棒交給你：請照 Goal 原文做，做完用 SendMessage 回報給 s0c-q。\n</cross-session-message>",
+ "session_title": "s0c-r",
+ "_recorded": {
+  "recorded": "2026-10-24",
+  "claude_code": "2.1.309",
+  "model": "haiku",
+  "account": "claude-acme",
+  "by": "P3-S0c",
+  "flags": "--name <n> --settings <gen> --permission-mode auto --session-id <uuid>（原生：帳號全部設定）",
+  "note": "--name s0c-q 的寄件人 → from-name 原樣；context hook 對這則印出 Goal 附註，收件方照原文做"
+ }
+}

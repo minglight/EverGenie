@@ -1,0 +1,12 @@
+schema = 1
+title = "待辦累積換點數"
+
+[[field]]
+name = "points"
+type = "int"
+description = "用掉多少待辦累積（只是記錄；程式照筆數算：改價前的筆數 20、之後 30），不夠的那次不換"
+
+[[field]]
+name = "note"
+type = "string"
+description = "備註"

@@ -1,0 +1,27 @@
+⏺ 我之前把清單上的「已整理」誤當成你已確認，其實你對三份週報和一張年度總覽圖表只留了意見│     共用清單"
+  ，還沒有確認。我先問你要不要照意見重做，之後再更正記錄。 · summary                    │ 10  kind = "data"
+────────────────────────────────────────────────────────────────────────────────────────│ 11  api = "evergenie.v1"
+ ☐ 重做                                                                                 │ 12
+                                                                                        │
+│ 我剛才說「W-41～W-47 你都確認了」是講錯的。實際上你確認了第一季的總覽圖表（W-43）和四 │──────────────────────────────────────────────────────────────────────
+│ 份月報，另外三份週報你留了意見沒確認：一月第二週（W-41：標題要短一點、重點放最前面、可│packages/mine/reading-list/tools/reading_list.py               [ ask ]
+│ 以加小結）、二月第一週（W-42：表格太長、數字難讀）、三月第三週（W-44：折線圖很清楚，要│──────────────────────────────────────────────────────────────────────
+│ 多用這種圖）；還有年度總覽圖表（W-36：「顏色太淡」）。要照你的意見重做嗎？週報每份大約│ 13  from __future__ import annotations
+│ 要 9 分鐘，三份共 27 分鐘；年度總覽圖表是把配色調深一點再重畫一次，不用重新整理資料， │ 14
+│ 也不會動到已經確認的那幾份。                                                          │ 15  import argparse
+                                                                                        │ 16 +import fcntl
+❯ 1. 全部重做（Recommended）                                                            │ 17  import json
+     三份週報照你的意見各重寫一份（共 27 分鐘），年度總覽圖表也把配色調深               │ 18  import os
+     重畫一張；做完一樣放進清單等你看                                                   │ 19  import re
+  2. 只重做三份週報                                                                     │ 20  import subprocess
+     年度總覽圖表（W-36）先不動，只花 27 分鐘重寫週報                                   │ 21  import sys
+  3. 只重做年度總覽圖表                                                                 │ 22 +import time
+     不用重寫，三份週報先維持現狀                                                       │ 23  from pathlib import Path
+  4. 都先不要                                                                           │ 24  from typing import Any, Dict, List, Optional
+     維持現狀，之後你再說                                                               │ 25
+  5. Type something.                                                                    │ 344  def build_parser() -> argparse.ArgumentParser:
+────────────────────────────────────────────────────────────────────────────────────────│ 345      p = argparse.ArgumentParser(prog="reading-list", description=
+  6. Chat about this                                                                    │      "閱讀清單（資料在 EverGenie 的 vault/pkg/reading-list）。書、作者
+                                                                                        │      、標籤可以用編號或名字。")
+Enter to select · ↑/↓ to navigate · Esc to cancel                                       │ 346      sub = p.add_subparsers(dest="cmd", required=True)
+────────────────────────────────────────────────────────────────────────── demo-sec-12 ─│ 347 +    s = sub.add_parser("changelog", help="異動紀錄（誰、何時、改

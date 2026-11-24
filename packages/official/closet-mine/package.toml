@@ -1,0 +1,56 @@
+# 官方套件：「上傳衣服與角色」（REQ-126、DEV-112）。附程式的套件（kind = "program"）：背景行程處理 closet-mine.request，
+# 把使用者在看板上傳（或聊天附件）放進家的附件資料夾（第 1 版 runtime/share/，第 2 版 media/share/）的圖驗證後複製進 personas/mine/（D-30），並登記到衣櫃的目錄（closet.outfit）。
+# 預設啟用（作者 2026-11-03：上傳是展示間的基本用途，取代 2026-10-25「做成進階套件」）；獨立成一個套件是為了讓
+# 「能寫 personas/mine/」只屬於這一個行程（D-30），不併進 closet。自己不在選單上（DEV-143）：衣服的上傳掛在核心角色頁的
+# 「衣服」分頁（slot core.persona.tab），新增角色掛在角色清單的「新增角色」（slot core.personas.new）。
+# 仍然不做 RPC（D-28）：頁面與秘書寫 closet-mine.request，程式只回填 state、reason、result。
+schema = 1
+id = "closet-mine"
+name = "上傳衣服與角色"
+version = "0.1.0"
+description = "替自己的角色與官方角色加衣服：上傳半身、全身、輪播照片與動畫"
+kind = "program"
+api = "evergenie.v1"
+
+[[requires]]
+id = "closet"
+version = ""
+
+[program]
+entry = "cmd/evergenie-closet-mine"
+restart = "always"
+
+# files: 後面是邏輯位置，核心不解讀、不檢查（宣告用，D-19），程式照家的佈局（DEV-145）用 sdk 的函式找實際位置：
+# share＝附件資料夾（sdk.SharesDir：第 1 版 <家>/runtime/share/，第 2 版 <家>/media/share/；舊寫法 files:runtime/share 同義）、
+# personas/mine＝主人的角色（永遠在家裡）、personas/avatars＝官方圖（sdk.OfficialPersonasDir：第 1 版在家裡，第 2 版在狀態資料夾）。
+# files:personas/avatars 只給「升成官方」（closet-mine.request type = promote，只在開發家、只認主人本人送的，DEV-141）
+# 與開發家換官方的照片（photo_id 指著官方的照片，只在官方角色放在家裡時，CMI-25）。
+[capabilities]
+read = ["vault:pkg/closet", "vault:pkg/closet-mine", "files:share"]
+write = ["vault:pkg/closet", "vault:pkg/closet-mine", "files:personas/mine", "files:personas/avatars"]
+
+[[contributes.data]]
+kind = "request"
+schema = "schemas/request.toml"
+ids = "seq"
+prefix = "U-"
+# 角色改代號時（PKG-64）：persona 是角色代號，result 是影響的衣服編號 <角色>-<衣服>，photo_id 是照片紀錄的編號 <角色>-<衣服>--u<n>。
+# outfit 只有升成官方的請求才是編號、其他是衣服 id，不宣告（核心分不出來），改代號時只列出來；photos（remove_outfit 回填的照片編號清單）
+# 是 list、核心不改。改代號只改還在的紀錄（封存的衣服與照片留在舊編號），所以刪掉的衣服與照片在改代號後用請求拿不回來。
+persona_field = "persona"
+persona_prefixed = ["result", "photo_id"]
+
+# 一位角色一頁的「衣服」分頁（DEV-143）：核心給 persona（角色代號）；slot_front 讓它排在別的套件分頁前面。
+[[contributes.page]]
+id = "outfits"
+title = "衣服"
+component = "pages/outfits.tsx"
+slot = "core.persona.tab"
+slot_front = true
+
+# 角色清單「新增角色」裡的一種新增方式：上傳一張半身照建我的角色（核心給 onDone(代號)、onCancel）。
+[[contributes.page]]
+id = "new-character"
+title = "上傳半身照"
+component = "pages/new-character.tsx"
+slot = "core.personas.new"

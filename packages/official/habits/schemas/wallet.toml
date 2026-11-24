@@ -1,0 +1,63 @@
+schema = 1
+title = "點數錢包"
+
+[[field]]
+name = "earned"
+type = "int"
+description = "賺到過的點數合計：全部習慣（含已刪的）的點數帳＋待辦累積換到的（task_wallet）＋起手禮（starter = given 時 1 點）；只增不減"
+
+[[field]]
+name = "spent"
+type = "int"
+description = "衣櫃花掉的點數（closet.unlock 每筆花 cost，沒寫就是 1）；沒有 closet 套件就是 0"
+
+[[field]]
+name = "points"
+type = "int"
+description = "現在可以花的點數：max(earned − spent, 0)"
+
+[[field]]
+name = "ledger"
+type = "list"
+description = "點數帳（list of map）：habit（H-<n>）、points（這個習慣賺到過的最高點數）；習慣被刪或封存後這一列仍保留"
+
+[[field]]
+name = "task_points"
+type = "int"
+description = "待辦的累積（只增不減，完成待辦就往上加）"
+
+[[field]]
+name = "task_exchanged"
+type = "int"
+description = "已經換成點數的待辦累積（只增不減；改價前每份 20、之後每份 30）。還沒換的＝task_points − task_exchanged"
+
+[[field]]
+name = "task_legacy"
+type = "int"
+description = "舊版（每滿 20 自動換）換掉的待辦累積，升級時算一次，之後照抄"
+
+[[field]]
+name = "task_wallet"
+type = "int"
+description = "待辦累積換到的點數（只增不減，算進 earned）；改價前的錢包第一次從 task_exchanged ÷ 20 算"
+
+[[field]]
+name = "task_old_requests"
+type = "int"
+description = "照舊價 20 點算的兌換筆數（2026-11-12 改成 30 點後第一次重算時記下，之後照抄）"
+
+[[field]]
+name = "starter"
+type = "enum"
+enum = ["waiting", "given", "none"]
+description = "起手禮：waiting＝還沒約過習慣，第一個習慣約好送 1 點；given＝送過了（算進 earned，之後不再送）；none＝起手禮上線前就有過習慣的家，不補送"
+
+[[field]]
+name = "starter_habit"
+type = "string"
+description = "起手禮是約好哪個習慣時送的（H-<n>）；starter = given 才有"
+
+[[field]]
+name = "outfits_ready"
+type = "bool"
+description = "點數現在換不換得到衣服（HAB-23）：衣櫃套件在用、而且有上架要點數的衣服（closet.outfit 沒封存、state = active、cost > 0）才是 true；通知、習慣頁、給秘書的補充照它決定要不要提換衣服。舊紀錄沒有＝還沒算過，當 false"

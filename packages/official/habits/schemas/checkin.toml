@@ -1,0 +1,35 @@
+schema = 1
+title = "打卡"
+date_field = "date"
+
+[[field]]
+name = "habit"
+type = "string"
+required = true
+description = "哪個習慣（H-<n>）"
+
+[[field]]
+name = "date"
+type = "date"
+required = true
+description = "打卡的那天（YYYY-MM-DD）"
+
+[[field]]
+name = "sub"
+type = "string"
+description = "子項目名稱；空＝整個習慣"
+
+[[field]]
+name = "source"
+type = "string"
+description = "來源，沒寫＝manual"
+
+[[field]]
+name = "key"
+type = "string"
+description = "去重鍵：同一個習慣、同一個 key 在有效期間只算一次。頁面用 manual:<習慣>:<日期>:<子項目>"
+
+[[field]]
+name = "undo"
+type = "bool"
+description = "true＝撤銷：取消同一習慣、同一天、同一子項目最後一筆還有效的打卡（只新增一筆，不改舊資料）"

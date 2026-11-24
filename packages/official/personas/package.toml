@@ -1,0 +1,13 @@
+# 官方套件：角色包的指標與公開角色的卡（REQ-283、REQ-131、PRS-25）。純資料，沒有秘書、頁面或資料種類：
+# pack.toml——這一版核心用哪份角色包（版號、manifest 網址、manifest 的 sha256）；
+# 升級後 `evergenie personas pack sync` 照它下載同版號的包（頭像、衣服圖）；url 空＝這一版沒有角色包。
+# cards/<代號>.md——公開角色的卡片文字，跟著程式發行；正本在來源家，用 `evergenie personas pack cards --repo <repo>` 產生（PRS-26），不要手改。
+# 發行者用 `evergenie personas pack build --set-pointer <repo> --url-base <網址>` 寫 pack.toml（公開卡一起寫）。
+# 角色卡、圖與影片的授權見 LICENSE（repo 與發行檔的最上層，涵蓋程式與官方角色）。
+schema = 1
+id = "personas"
+name = "角色包"
+version = "0.1.0"
+description = "官方公開角色的卡、頭像與公開版衣櫃，升級後自動下載同版號的包"
+kind = "data"
+api = "evergenie.v1"

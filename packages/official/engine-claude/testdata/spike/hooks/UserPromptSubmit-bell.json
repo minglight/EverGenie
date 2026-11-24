@@ -1,0 +1,18 @@
+{
+ "session_id": "963e0859-449c-41ca-811d-705a27890cea",
+ "transcript_path": "/Users/someone/.claude-acme/projects/-tmp-hg-spike-bell-m1/963e0859-449c-41ca-811d-705a27890cea.jsonl",
+ "cwd": "/tmp/hg-spike/bell/m1",
+ "scratchpad_dir": "/private/tmp/claude-501/-tmp-hg-spike-bell-m1/963e0859-449c-41ca-811d-705a27890cea/scratchpad",
+ "prompt_id": "107aee46-f214-449d-96e8-aa93adce3ce4",
+ "permission_mode": "default",
+ "hook_event_name": "UserPromptSubmit",
+ "prompt": "[hg-bell]",
+ "_recorded": {
+  "recorded": "2026-10-23",
+  "claude_code": "2.1.309",
+  "model": "haiku",
+  "account": "claude-acme",
+  "by": "P3-S0",
+  "flags": "--setting-sources project --settings <gen> --mcp-config <gen> --strict-mcp-config --session-id <uuid>"
+ }
+}

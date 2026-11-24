@@ -1,0 +1,13 @@
+# 公開前的檢查放過的命中（scripts/public-check.sh 讀）。格式與規則只寫在 ai_docs/runbooks/public-release.md。
+# 一行「<路徑樣式>  <規則名或 *>  # 原因」，原因必填。能改成示範寫法的就改，不要放進來；這份會跟著公開，不要寫出私人的名字。
+
+LICENSES/  email  # 第三方授權文字裡原作者的聯絡信箱，照原文保留
+internal/base/app/board/cors.go  private-ip  # Tailscale 的位址範圍本身（認得 tailnet 來源要用）
+internal/base/app/board/cors_test.go  private-ip  # 測認得 tailnet、內網、docker 位址的假資料
+internal/base/app/board/cors_test.go  email  # 測 Origin 帶帳密（user@host）要擋
+internal/base/app/board/host_test.go  ts-net  # 測別的 tailnet、格式不對的 *.ts.net 要擋
+internal/base/app/board/host_test.go  private-ip  # 測 Host 寫 tailnet 位址要擋
+internal/base/app/board/thismac_test.go  private-ip  # 測經 Tailscale 與內網來的請求
+internal/feature/packages/pkg/export_test.go  *  # 測匯出前的隱私掃描認得金鑰、信箱、家目錄的假資料
+internal/feature/system/report/build_test.go  users-path  # 測問題回報遮掉家目錄的假路徑
+LICENSES/web-third-party.txt  私人角色  # 第三方授權原文裡著作權人的名字含私人清單的字

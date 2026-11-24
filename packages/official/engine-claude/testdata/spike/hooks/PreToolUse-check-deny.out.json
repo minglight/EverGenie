@@ -1,0 +1,7 @@
+{
+ "hookSpecificOutput": {
+  "hookEventName": "PreToolUse",
+  "permissionDecision": "deny",
+  "permissionDecisionReason": "S0C-DENY：這是 work 傳來的委派，沒有主人的 Goal，只能查和回答。請把要做的事回給 work。"
+ }
+}

@@ -1,0 +1,4 @@
+{
+  "name": "evergenie",
+  "description": "EverGenie 秘書專用的官方技能（create-feature、request-permission）。只由 engine-claude 在開秘書 session 時用 --plugin-dir 載入，不裝進帳號的 skills/（DEV-42）。"
+}

@@ -1,0 +1,17 @@
+/bin/
+# scripts/deploy.sh 的退路與壞掉的那份（部署 checkout 與工坊跑的主資料夾都會有）
+/bin.prev/
+/bin.failed/
+/runtime/
+# 發版產物：scripts/dist.sh（make dist）的發行檔與版本清單、scripts/build-tmux.sh 的 dist/tmux/，不進 git
+/dist/
+# 這份程式屬於哪個家（指標檔，每個 checkout 自己的；見 ai_docs/schemas/home.md）
+/evergenie.local.toml
+# 在根目錄 go build ./cmd/evergenie 產生的執行檔
+/evergenie
+*.test
+node_modules/
+.DS_Store
+
+# Python 執行時產生的快取
+__pycache__/

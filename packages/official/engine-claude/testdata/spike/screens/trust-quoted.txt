@@ -1,0 +1,13 @@
+# recorded 2026-11-17 Claude Code 2.1.326（秘書在回覆裡引用了信任框的字，不是真的對話框；節錄）
+
+  - packages/official/engine-claude/internal/claude/screens.go 的 isTrustScreen 只認「trust this folder」加「No, exit」，所以認不出這個新框。
+  - 選項是「No, exit」和「Yes, add it」。
+  另外我把這件事記進日誌了，之後再遇到同樣卡住的新對話，我會先去看 tmux 畫面。
+
+✻ Sautéed for 6s · done 5:14 PM
+
+                                                                               new task? /clear to save 117.1k tokens · ✔ Update installed · Restart to update
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── system ─
+❯
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← 1 agent

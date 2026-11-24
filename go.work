@@ -1,0 +1,11 @@
+go 1.24.0
+
+use (
+	.
+	./sdk
+	./packages/official/engine-claude
+	./packages/official/habits
+	./packages/official/closet
+	./packages/official/closet-mine
+	./packages/official/admin
+)

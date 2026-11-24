@@ -1,0 +1,2710 @@
+Account struct
+Account.ConfigDir string config_dir,omitempty
+Account.Default bool default
+Account.Engine string engine,omitempty
+Account.EnvFile string env_file,omitempty
+Account.Name string name,omitempty
+Account.RemoteAccess bool remote_access
+Account.UsageWarmup bool usage_warmup
+AccountUsage struct
+AccountUsage.Account string account,omitempty
+AccountUsage.MeasuredAt time.Time measured_at,omitempty
+AccountUsage.Note string note,omitempty
+AccountUsage.ResetsAt time.Time resets_at,omitempty
+AccountUsage.UsedRatio float64 used_ratio
+AccountUsage.Windows []sdk.UsageWindow windows,omitempty
+ActionClass string
+ActionVerdict string
+Actor struct
+Actor.Name string name,omitempty
+AgentCard struct
+AgentCard.Aliases []string aliases,omitempty
+AgentCard.Body string body,omitempty
+AgentCard.Duty string duty,omitempty
+AgentCard.ID string id,omitempty
+AgentCard.Name string name,omitempty
+AgentCardFile struct
+AgentCardFile.Action string action,omitempty
+AgentCardFile.Agent string agent,omitempty
+AgentCardFile.Path string path,omitempty
+AgentCardFile.Summary string summary,omitempty
+AgentDecl struct
+AgentDecl.Color string color,omitempty
+AgentDecl.ColorDark string color_dark,omitempty
+AgentDecl.Duty string duty,omitempty
+AgentDecl.ID string id,omitempty
+AgentDecl.Optional bool optional,omitempty
+AgentKnowledgeBlock struct
+AgentKnowledgeBlock.Default bool default
+AgentKnowledgeBlock.Enabled bool enabled
+AgentKnowledgeBlock.ID string id,omitempty
+AgentKnowledgeBlock.Summary string summary,omitempty
+AgentKnowledgeBlock.Title string title,omitempty
+AgentLinkAccount struct
+AgentLinkAccount.Account string account,omitempty
+AgentLinkAccount.Files []sdk.AgentCardFile files,omitempty
+AgentLinkAccount.Note string note,omitempty
+AgentPermission struct
+AgentPermission.Agent string agent,omitempty
+AgentPermission.Level sdk.PermissionLevel level,omitempty
+AgentPermission.Source string source,omitempty
+AgentPref struct
+AgentPref.Agent string agent,omitempty
+AgentPref.Categories map[string]*sdk.CategoryPref categories,omitempty
+AgentSetting struct
+AgentSetting.Account string account,omitempty
+AgentSetting.Duty string duty,omitempty
+AgentSetting.Effort string effort,omitempty
+AgentSetting.Enabled bool enabled
+AgentSetting.ID string id,omitempty
+AgentSetting.Model string model,omitempty
+AgentSetting.Name string name,omitempty
+AgentSetting.Persona string persona,omitempty
+AgentsAddRuleRequest struct
+AgentsAddRuleRequest.By *sdk.Actor by,omitempty
+AgentsAddRuleRequest.ID string id,omitempty
+AgentsAddRuleRequest.Rule string rule,omitempty
+AgentsAddRuleRequest.Section string section,omitempty
+AgentsAddRuleResponse struct
+AgentsAddRuleResponse.Addendum string addendum,omitempty
+AgentsAppendJournalRequest struct
+AgentsAppendJournalRequest.By *sdk.Actor by,omitempty
+AgentsAppendJournalRequest.ID string id,omitempty
+AgentsAppendJournalRequest.Line string line,omitempty
+AgentsAppendJournalResponse struct
+AgentsArchiveRequest struct
+AgentsArchiveRequest.By *sdk.Actor by,omitempty
+AgentsArchiveRequest.ID string id,omitempty
+AgentsArchiveResponse struct
+AgentsArchiveResponse.Archived []string archived,omitempty
+AgentsArchiveResponse.Restore string restore,omitempty
+AgentsAssignRequest struct
+AgentsAssignRequest.By *sdk.Actor by,omitempty
+AgentsAssignRequest.ID string id,omitempty
+AgentsAssignRequest.Persona string persona,omitempty
+AgentsAssignResponse struct
+AgentsAssignResponse.Agent *sdk.Record agent,omitempty
+AgentsCreateRequest struct
+AgentsCreateRequest.By *sdk.Actor by,omitempty
+AgentsCreateRequest.DisplayName string display_name,omitempty
+AgentsCreateRequest.Duty string duty,omitempty
+AgentsCreateRequest.ID string id,omitempty
+AgentsCreateRequest.Knowledge []string knowledge,omitempty
+AgentsCreateRequest.Persona string persona,omitempty
+AgentsCreateResponse struct
+AgentsCreateResponse.Agent *sdk.Record agent,omitempty
+AgentsCustomizationsRequest struct
+AgentsCustomizationsRequest.ID string id,omitempty
+AgentsCustomizationsResponse struct
+AgentsCustomizationsResponse.Addendum string addendum,omitempty
+AgentsCustomizationsResponse.Duties string duties,omitempty
+AgentsKnowledgeRequest struct
+AgentsKnowledgeRequest.Agent string agent,omitempty
+AgentsKnowledgeResponse struct
+AgentsKnowledgeResponse.Agent string agent,omitempty
+AgentsKnowledgeResponse.Blocks []sdk.AgentKnowledgeBlock blocks
+AgentsLinkRequest struct
+AgentsLinkRequest.Apply bool apply,omitempty
+AgentsLinkRequest.By *sdk.Actor by,omitempty
+AgentsLinkResponse struct
+AgentsLinkResponse.Accounts []sdk.AgentLinkAccount accounts,omitempty
+AgentsLinkResponse.Applied bool applied
+AgentsRenameRequest struct
+AgentsRenameRequest.By *sdk.Actor by,omitempty
+AgentsRenameRequest.DisplayName string display_name,omitempty
+AgentsRenameRequest.ID string id,omitempty
+AgentsRenameRequest.NewID string new_id,omitempty
+AgentsRenameResponse struct
+AgentsRenameResponse.Agent *sdk.Record agent,omitempty
+AgentsRenameResponse.Mentions []string mentions,omitempty
+AgentsRenameResponse.Moved []string moved,omitempty
+AgentsSetAccountRequest struct
+AgentsSetAccountRequest.Account string account,omitempty
+AgentsSetAccountRequest.By *sdk.Actor by,omitempty
+AgentsSetAccountRequest.Effort string effort,omitempty
+AgentsSetAccountRequest.ID string id,omitempty
+AgentsSetAccountRequest.Model string model,omitempty
+AgentsSetAccountResponse struct
+AgentsSetAccountResponse.Agent *sdk.Record agent,omitempty
+AgentsSetFieldRequest struct
+AgentsSetFieldRequest.By *sdk.Actor by,omitempty
+AgentsSetFieldRequest.Field string field,omitempty
+AgentsSetFieldRequest.ID string id,omitempty
+AgentsSetFieldRequest.Value string value,omitempty
+AgentsSetFieldResponse struct
+AgentsSetFieldResponse.Agent *sdk.Record agent,omitempty
+AgentsSetKnowledgeRequest struct
+AgentsSetKnowledgeRequest.Agent string agent,omitempty
+AgentsSetKnowledgeRequest.By *sdk.Actor by,omitempty
+AgentsSetKnowledgeRequest.Enabled []string enabled
+AgentsSwapRequest struct
+AgentsSwapRequest.A string a,omitempty
+AgentsSwapRequest.B string b,omitempty
+AgentsSwapRequest.By *sdk.Actor by,omitempty
+AgentsSwapResponse struct
+AgentsSwapResponse.Agents []sdk.Record agents,omitempty
+AgentsWriteMemoryRequest struct
+AgentsWriteMemoryRequest.Body string body,omitempty
+AgentsWriteMemoryRequest.By *sdk.Actor by,omitempty
+AgentsWriteMemoryRequest.ID string id,omitempty
+AgentsWriteMemoryResponse struct
+AgentsWriteNoteRequest struct
+AgentsWriteNoteRequest.Body string body,omitempty
+AgentsWriteNoteRequest.By *sdk.Actor by,omitempty
+AgentsWriteNoteRequest.ID string id,omitempty
+AgentsWriteNoteRequest.Name string name,omitempty
+AgentsWriteNoteRequest.Revision string revision,omitempty
+AgentsWriteNoteResponse struct
+AgentsWriteNoteResponse.Created bool created
+AgentsWriteNoteResponse.Name string name,omitempty
+AgentsWriteNoteResponse.Revision string revision,omitempty
+Answer struct
+Answer.At time.Time at,omitempty
+Answer.DeliveredAt time.Time delivered_at,omitempty
+Answer.Text string text,omitempty
+Answer.Via sdk.AnswerVia via,omitempty
+AnswerVia string
+ApprovalKind string
+BackupCreateRequest struct
+BackupCreateRequest.By *sdk.Actor by,omitempty
+BackupCreateResponse struct
+BackupCreateResponse.File sdk.HomeBackupFile file
+BackupCreateResponse.Sections []sdk.HomeBackupSection sections,omitempty
+BackupCreateResponse.Skipped []string skipped,omitempty
+BackupFile struct
+BackupFile.Group string group,omitempty
+BackupFile.ModTime time.Time mod_time,omitempty
+BackupFile.Path string path,omitempty
+BackupFile.Prune bool prune,omitempty
+BackupFile.Size int64 size
+BackupGetStatusRequest struct
+BackupGetStatusRequest.Local bool local,omitempty
+BackupGetStatusResponse struct
+BackupGetStatusResponse.AutoError string auto_error,omitempty
+BackupGetStatusResponse.AutoErrorAt time.Time auto_error_at
+BackupGetStatusResponse.DailyKeep int32 daily_keep
+BackupGetStatusResponse.Files []sdk.HomeBackupFile files,omitempty
+BackupGetStatusResponse.FreeBytes int64 free_bytes
+BackupGetStatusResponse.KeepCount int32 keep_count
+BackupGetStatusResponse.KeepDays int32 keep_days
+BackupGetStatusResponse.LastAt time.Time last_at
+BackupGetStatusResponse.LastKind string last_kind,omitempty
+BackupGetStatusResponse.LastRestore *sdk.HomeRestoreResult last_restore,omitempty
+BackupGetStatusResponse.Local bool local
+BackupGetStatusResponse.Restoring bool restoring
+BackupPreviewRequest struct
+BackupPreviewRequest.Kind string kind,omitempty
+BackupPreviewRequest.Name string name,omitempty
+BackupPreviewRequest.Path string path,omitempty
+BackupPreviewRequest.Upload string upload,omitempty
+BackupPreviewResponse struct
+BackupPreviewResponse.AppVersion string app_version,omitempty
+BackupPreviewResponse.Bytes int64 bytes
+BackupPreviewResponse.CreatedAt time.Time created_at
+BackupPreviewResponse.Files int32 files
+BackupPreviewResponse.HomeName string home_name,omitempty
+BackupPreviewResponse.Installed []string installed,omitempty
+BackupPreviewResponse.Kind string kind,omitempty
+BackupPreviewResponse.LostLinks []string lost_links,omitempty
+BackupPreviewResponse.Machine string machine,omitempty
+BackupPreviewResponse.OtherMachine bool other_machine
+BackupPreviewResponse.Owner string owner,omitempty
+BackupPreviewResponse.Problem string problem,omitempty
+BackupPreviewResponse.Sections []sdk.HomeBackupSection sections,omitempty
+BackupPreviewResponse.Size int64 size
+BackupPreviewResponse.Skipped []string skipped,omitempty
+BackupRestoreRequest struct
+BackupRestoreRequest.By *sdk.Actor by,omitempty
+BackupRestoreRequest.Kind string kind,omitempty
+BackupRestoreRequest.Name string name,omitempty
+BackupRestoreRequest.Path string path,omitempty
+BackupRestoreRequest.Upload string upload,omitempty
+BackupRestoreResponse struct
+BackupRestoreResponse.Restarting bool restarting
+BackupRestoreResponse.Safety string safety,omitempty
+BackupSweepItem struct
+BackupSweepItem.Checked string checked,omitempty
+BackupSweepItem.Date string date,omitempty
+BackupSweepItem.Dir bool dir,omitempty
+BackupSweepItem.Expires string expires,omitempty
+BackupSweepItem.ModTime time.Time mod_time
+BackupSweepItem.Path string path,omitempty
+BackupSweepItem.Problem string problem,omitempty
+BackupSweepItem.Reason string reason,omitempty
+BackupSweepItem.Size int64 size
+BackupSweepItem.State string state,omitempty
+BackupSweepItem.Suggest string suggest,omitempty
+BackupSweepItem.UsedBy string used_by,omitempty
+BackupSweepReport struct
+BackupSweepReport.At time.Time at
+BackupSweepReport.By string by,omitempty
+BackupSweepReport.Checks []string checks,omitempty
+BackupSweepReport.Current int32 current
+BackupSweepReport.CurrentBytes int64 current_bytes
+BackupSweepReport.Errors []string errors,omitempty
+BackupSweepReport.Expired []sdk.BackupSweepItem expired,omitempty
+BackupSweepReport.File string file,omitempty
+BackupSweepReport.Misnamed []sdk.BackupSweepItem misnamed,omitempty
+BackupSweepReport.Notes []string notes,omitempty
+BackupSweepReport.Pruned int32 pruned
+BackupSweepReport.PrunedBytes int64 pruned_bytes
+BackupSweepReport.Roots []string roots,omitempty
+BackupSweepReport.Skipped []sdk.BackupSweepItem skipped,omitempty
+BackupSweepReport.TookMs int64 took_ms
+BootPrompt struct
+BootPrompt.Choices []string choices,omitempty
+BootPrompt.ID string id,omitempty
+BootPrompt.Session string session,omitempty
+BootPrompt.Title string title,omitempty
+BusGetRequest struct
+BusGetRequest.ID string id,omitempty
+BusGetResponse struct
+BusGetResponse.Envelope *sdk.Envelope envelope,omitempty
+BusListRequest struct
+BusListRequest.Page *sdk.PageRequest page,omitempty
+BusListRequest.States []sdk.Lifecycle states,omitempty
+BusListRequest.To string to,omitempty
+BusListResponse struct
+BusListResponse.Envelopes []sdk.Envelope envelopes,omitempty
+BusListResponse.Page *sdk.PageResponse page,omitempty
+BusPublishRequest struct
+BusPublishRequest.By *sdk.Actor by,omitempty
+BusPublishRequest.Payload map[string]interface {} payload,omitempty
+BusPublishRequest.Topic string topic,omitempty
+BusPublishResponse struct
+BusSendRequest struct
+BusSendRequest.Body string body,omitempty
+BusSendRequest.From string from,omitempty
+BusSendRequest.IdempotencyKey string idempotency_key,omitempty
+BusSendRequest.Kind sdk.EnvelopeKind kind,omitempty
+BusSendRequest.Notice string notice,omitempty
+BusSendRequest.ReplyTo string reply_to,omitempty
+BusSendRequest.To string to,omitempty
+BusSendResponse struct
+BusSendResponse.Envelope *sdk.Envelope envelope,omitempty
+BusSubscribeRequest struct
+BusSubscribeRequest.Topics []string topics,omitempty
+BusSubscribeResponse struct
+BusSubscribeResponse.At time.Time at,omitempty
+BusSubscribeResponse.Payload map[string]interface {} payload,omitempty
+BusSubscribeResponse.Topic string topic,omitempty
+BusWatchRequest struct
+BusWatchRequest.ID string id,omitempty
+BusWatchRequest.To string to,omitempty
+BusWatchResponse struct
+BusWatchResponse.Envelope *sdk.Envelope envelope,omitempty
+BusWatchResponse.Step *sdk.LifecycleStep step,omitempty
+Capabilities struct
+Capabilities.Events []string events,omitempty
+Capabilities.Read []string read,omitempty
+Capabilities.Write []string write,omitempty
+Category string
+CategoryPref struct
+CategoryPref.DigestHours int32 digest_hours
+CategoryPref.Mode sdk.DeliveryMode mode,omitempty
+ChangeEntry struct
+ChangeEntry.At time.Time at,omitempty
+ChangeEntry.By string by,omitempty
+ChangeEntry.ID string id,omitempty
+ChangeEntry.Kind string kind,omitempty
+ChangeEntry.Op string op,omitempty
+ChangeType string
+Channel string
+ChatDisplay string
+ChatKind string
+ChatMessage struct
+ChatMessage.CallID string call_id,omitempty
+ChatMessage.Draft bool draft,omitempty
+ChatMessage.FromSession string from_session,omitempty
+ChatMessage.IsError bool is_error
+ChatMessage.Kind sdk.ChatKind kind,omitempty
+ChatMessage.Text string text,omitempty
+ChatMessage.Tool string tool,omitempty
+ChatMessage.ToolLabel string tool_label,omitempty
+ChatMessage.Ts time.Time ts,omitempty
+ChatMessage.Uuid string uuid,omitempty
+ClaimState string
+Client struct
+Cycle string
+DataFieldDecl struct
+DataFieldDecl.Description string description,omitempty
+DataFieldDecl.Enum []string enum,omitempty
+DataFieldDecl.Name string name,omitempty
+DataFieldDecl.Required bool required
+DataFieldDecl.Type string type,omitempty
+DataKindDecl struct
+DataKindDecl.DateField string date_field,omitempty
+DataKindDecl.Export string export,omitempty
+DataKindDecl.ExportOmit []string export_omit,omitempty
+DataKindDecl.ExportOnly map[string][]string export_only,omitempty
+DataKindDecl.Fields []sdk.DataFieldDecl fields,omitempty
+DataKindDecl.FileField string file_field,omitempty
+DataKindDecl.FolderField string folder_field,omitempty
+DataKindDecl.IDs string ids,omitempty
+DataKindDecl.Kind string kind,omitempty
+DataKindDecl.PackOnly map[string][]string pack_only,omitempty
+DataKindDecl.PackOnlyNote string pack_only_note,omitempty
+DataKindDecl.PackParent *sdk.DataParentDecl pack_parent,omitempty
+DataKindDecl.PersonaField string persona_field,omitempty
+DataKindDecl.PersonaID string persona_id,omitempty
+DataKindDecl.PersonaPrefixed []string persona_prefixed,omitempty
+DataKindDecl.PersonaSource string persona_source,omitempty
+DataKindDecl.Prefix string prefix,omitempty
+DataKindDecl.Title string title,omitempty
+DataParentDecl struct
+DataParentDecl.Field string field
+DataParentDecl.Kind string kind
+Decision struct
+Decision.Allow bool allow
+Decision.Answers map[string]string answers,omitempty
+Decision.Message string message,omitempty
+Delivery struct
+Delivery.At time.Time at,omitempty
+Delivery.Channel sdk.Channel channel,omitempty
+Delivery.Result string result,omitempty
+DeliveryMode string
+DeniedAction struct
+DeniedAction.Agent string agent,omitempty
+DeniedAction.At time.Time at,omitempty
+DeniedAction.Class sdk.ActionClass class,omitempty
+DeniedAction.From string from,omitempty
+DeniedAction.Origin string origin,omitempty
+DeniedAction.Reason string reason,omitempty
+DeniedAction.Session string session,omitempty
+DeniedAction.Tool string tool,omitempty
+DeniedAction.Verdict sdk.ActionVerdict verdict,omitempty
+Difficulty string
+DirectMessage struct
+DirectMessage.OK bool ok,omitempty
+DirectMessage.Text string text,omitempty
+DirectMessage.To string to,omitempty
+DoctorCheck struct
+DoctorCheck.Detail string detail,omitempty
+DoctorCheck.Fix string fix,omitempty
+DoctorCheck.Group sdk.DoctorGroup group,omitempty
+DoctorCheck.ID string id,omitempty
+DoctorCheck.Ok bool ok
+DoctorCheck.Severity sdk.DoctorSeverity severity,omitempty
+DoctorGroup string
+DoctorSeverity string
+EngineAnswerApprovalRequest struct
+EngineAnswerApprovalRequest.By *sdk.Actor by,omitempty
+EngineAnswerApprovalRequest.Decision *sdk.Decision decision,omitempty
+EngineAnswerApprovalRequest.Pending *sdk.Pending pending,omitempty
+EngineAnswerApprovalRequest.Session string session,omitempty
+EngineAnswerApprovalResponse struct
+EngineAnswerApprovalResponse.Answered bool answered
+EngineAnswerApprovalResponse.Reason string reason,omitempty
+EngineAnswerBootPromptRequest struct
+EngineAnswerBootPromptRequest.By *sdk.Actor by,omitempty
+EngineAnswerBootPromptRequest.Choice string choice,omitempty
+EngineAnswerBootPromptRequest.ID string id,omitempty
+EngineAnswerBootPromptResponse struct
+EngineAskRequest struct
+EngineAskRequest.Account string account,omitempty
+EngineAskRequest.Agent string agent,omitempty
+EngineAskRequest.Cwd string cwd,omitempty
+EngineAskRequest.Effort string effort,omitempty
+EngineAskRequest.EngineConfig map[string]interface {} engine_config,omitempty
+EngineAskRequest.Instructions string instructions,omitempty
+EngineAskRequest.Message string message,omitempty
+EngineAskRequest.Model string model,omitempty
+EngineAskRequest.TimeoutSeconds int32 timeout_seconds
+EngineAskResponse struct
+EngineAskResponse.Model string model,omitempty
+EngineAskResponse.Reply string reply,omitempty
+EngineCapabilitiesRequest struct
+EngineCapabilitiesResponse struct
+EngineCapabilitiesResponse.Engine string engine,omitempty
+EngineCapabilitiesResponse.Features map[string]bool features,omitempty
+EngineCapabilitiesResponse.Version string version,omitempty
+EngineCommandRequest struct
+EngineCommandRequest.Arg string arg,omitempty
+EngineCommandRequest.By *sdk.Actor by,omitempty
+EngineCommandRequest.Command sdk.SessionCommand command,omitempty
+EngineCommandRequest.Session string session,omitempty
+EngineCommandResponse struct
+EngineCommandResponse.Done bool done
+EngineCommandResponse.Effort string effort,omitempty
+EngineCommandResponse.EngineSessionID string engine_session_id,omitempty
+EngineCommandResponse.Model string model,omitempty
+EngineCommandResponse.ModelLabel string model_label,omitempty
+EngineCommandResponse.Reason string reason,omitempty
+EngineDeliverRequest struct
+EngineDeliverRequest.EnvelopeID string envelope_id,omitempty
+EngineDeliverRequest.Force bool force,omitempty
+EngineDeliverRequest.Resend bool resend,omitempty
+EngineDeliverRequest.Session string session,omitempty
+EngineDeliverRequest.Text string text,omitempty
+EngineDeliverResponse struct
+EngineDeliverResponse.Delivered bool delivered
+EngineDeliverResponse.Reason string reason,omitempty
+EngineErrorKind string
+EngineEvent struct
+EngineEvent.Activity string activity,omitempty
+EngineEvent.At time.Time at,omitempty
+EngineEvent.BackgroundTasks int32 background_tasks
+EngineEvent.DirectMessage *sdk.DirectMessage direct_message,omitempty
+EngineEvent.Effort string effort,omitempty
+EngineEvent.EngineSessionID string engine_session_id,omitempty
+EngineEvent.Error sdk.EngineErrorKind error,omitempty
+EngineEvent.From string from,omitempty
+EngineEvent.Input string input,omitempty
+EngineEvent.Interrupted bool interrupted,omitempty
+EngineEvent.LastMessage string last_message,omitempty
+EngineEvent.Model string model,omitempty
+EngineEvent.ModelLabel string model_label,omitempty
+EngineEvent.Reason string reason,omitempty
+EngineEvent.Session string session,omitempty
+EngineEvent.Source sdk.InputSource source,omitempty
+EngineEvent.Type sdk.EngineEventType type,omitempty
+EngineEvent.Until time.Time until,omitempty
+EngineEventType string
+EngineHostCheckActionRequest struct
+EngineHostCheckActionRequest.Class sdk.ActionClass class,omitempty
+EngineHostCheckActionRequest.Session string session,omitempty
+EngineHostCheckActionRequest.Summary string summary,omitempty
+EngineHostCheckActionRequest.Tool string tool,omitempty
+EngineHostCheckActionResponse struct
+EngineHostCheckActionResponse.Reason string reason,omitempty
+EngineHostCheckActionResponse.Verdict sdk.ActionVerdict verdict,omitempty
+EngineHostGetContextRequest struct
+EngineHostGetContextRequest.Input string input,omitempty
+EngineHostGetContextRequest.Session string session,omitempty
+EngineHostGetContextResponse struct
+EngineHostGetContextResponse.Text string text,omitempty
+EngineHostReportEventRequest struct
+EngineHostReportEventRequest.Event *sdk.EngineEvent event,omitempty
+EngineHostReportEventResponse struct
+EngineHostRequestApprovalRequest struct
+EngineHostRequestApprovalRequest.Kind sdk.ApprovalKind kind,omitempty
+EngineHostRequestApprovalRequest.MaxWaitSeconds int32 max_wait_seconds
+EngineHostRequestApprovalRequest.Questions []sdk.Question questions,omitempty
+EngineHostRequestApprovalRequest.Session string session,omitempty
+EngineHostRequestApprovalRequest.Summary string summary,omitempty
+EngineHostRequestApprovalRequest.Tool string tool,omitempty
+EngineHostRequestApprovalResponse struct
+EngineHostRequestApprovalResponse.Decided bool decided
+EngineHostRequestApprovalResponse.Decision *sdk.Decision decision,omitempty
+EngineListBootPromptsRequest struct
+EngineListBootPromptsRequest.Session string session,omitempty
+EngineListBootPromptsResponse struct
+EngineListBootPromptsResponse.Prompts []sdk.BootPrompt prompts,omitempty
+EnginePreflightRequest struct
+EnginePreflightRequest.Account string account,omitempty
+EnginePreflightRequest.EngineConfig map[string]interface {} engine_config,omitempty
+EnginePreflightResponse struct
+EnginePreflightResponse.Checks []sdk.PreflightCheck checks,omitempty
+EngineSetPermissionRequest struct
+EngineSetPermissionRequest.Account string account,omitempty
+EngineSetPermissionRequest.DryRun bool dry_run,omitempty
+EngineSetPermissionRequest.Policy *sdk.PermissionPolicy policy,omitempty
+EngineSetPermissionResponse struct
+EngineSetPermissionResponse.Artifacts []string artifacts,omitempty
+EngineSetPermissionResponse.Drift []string drift,omitempty
+EngineSetPermissionResponse.GeneratedAt time.Time generated_at,omitempty
+EngineStartRequest struct
+EngineStartRequest.Account string account,omitempty
+EngineStartRequest.Agent string agent,omitempty
+EngineStartRequest.Cwd string cwd,omitempty
+EngineStartRequest.Effort string effort,omitempty
+EngineStartRequest.EngineConfig map[string]interface {} engine_config,omitempty
+EngineStartRequest.FirstMessage string first_message,omitempty
+EngineStartRequest.HostEndpoint string host_endpoint,omitempty
+EngineStartRequest.Instructions string instructions,omitempty
+EngineStartRequest.Model string model,omitempty
+EngineStartRequest.Name string name,omitempty
+EngineStartRequest.PermissionLevel sdk.PermissionLevel permission_level,omitempty
+EngineStartRequest.RemoteAccess bool remote_access
+EngineStartRequest.RemoteAccessName string remote_access_name,omitempty
+EngineStartRequest.ResumeSessionID string resume_session_id,omitempty
+EngineStartRequest.Rules []sdk.PolicyRule rules,omitempty
+EngineStartResponse struct
+EngineStartResponse.Attach string attach,omitempty
+EngineStartResponse.Effort string effort,omitempty
+EngineStartResponse.EngineSessionID string engine_session_id,omitempty
+EngineStartResponse.Model string model,omitempty
+EngineStartResponse.ModelLabel string model_label,omitempty
+EngineStartResponse.RemoteAccessURL string remote_access_url,omitempty
+EngineStopRequest struct
+EngineStopRequest.Name string name,omitempty
+EngineStopResponse struct
+EngineTranscriptRequest struct
+EngineTranscriptRequest.Follow bool follow
+EngineTranscriptRequest.Session string session,omitempty
+EngineTranscriptRequest.SinceUuid string since_uuid,omitempty
+EngineTranscriptResponse struct
+EngineTranscriptResponse.Message *sdk.ChatMessage message,omitempty
+EngineUsageRequest struct
+EngineUsageRequest.Account string account,omitempty
+EngineUsageRequest.EngineConfig map[string]interface {} engine_config,omitempty
+EngineUsageRequest.Warmup bool warmup,omitempty
+EngineUsageResponse struct
+EngineUsageResponse.Account string account,omitempty
+EngineUsageResponse.MeasuredAt time.Time measured_at,omitempty
+EngineUsageResponse.ResetsAt time.Time resets_at,omitempty
+EngineUsageResponse.UsedRatio float64 used_ratio
+EngineUsageResponse.Warmed bool warmed,omitempty
+EngineUsageResponse.Windows []sdk.UsageWindow windows,omitempty
+EngineWriteAgentCardsRequest struct
+EngineWriteAgentCardsRequest.Account string account,omitempty
+EngineWriteAgentCardsRequest.Cards []sdk.AgentCard cards,omitempty
+EngineWriteAgentCardsRequest.DryRun bool dry_run,omitempty
+EngineWriteAgentCardsRequest.EngineConfig map[string]interface {} engine_config,omitempty
+EngineWriteAgentCardsRequest.UserName string user_name,omitempty
+EngineWriteAgentCardsResponse struct
+EngineWriteAgentCardsResponse.Files []sdk.AgentCardFile files,omitempty
+EngineWriteAgentCardsResponse.Note string note,omitempty
+Envelope struct
+Envelope.Attempts int32 attempts
+Envelope.Body string body,omitempty
+Envelope.CreatedAt time.Time created_at,omitempty
+Envelope.From string from,omitempty
+Envelope.History []sdk.LifecycleStep history,omitempty
+Envelope.ID string id,omitempty
+Envelope.IdempotencyKey string idempotency_key,omitempty
+Envelope.Kind sdk.EnvelopeKind kind,omitempty
+Envelope.LastMessage string last_message,omitempty
+Envelope.Lifecycle sdk.Lifecycle lifecycle,omitempty
+Envelope.Notice string notice,omitempty
+Envelope.Reason string reason,omitempty
+Envelope.ReplyTo string reply_to,omitempty
+Envelope.Route sdk.EnvelopeRoute route,omitempty
+Envelope.To string to,omitempty
+EnvelopeKind string
+EnvelopeRoute string
+Error struct
+Error.Code sdk.ErrorCode code
+Error.Details map[string]string details,omitempty
+Error.Field string field,omitempty
+Error.Message string message
+ErrorCode string
+ExtensionKind string
+ExtensionPoint struct
+ExtensionPoint.Agent string agent,omitempty
+ExtensionPoint.DefaultValue string default_value,omitempty
+ExtensionPoint.Description string description,omitempty
+ExtensionPoint.ID string id,omitempty
+ExtensionPoint.Kind sdk.ExtensionKind kind,omitempty
+ExtensionPoint.OwnerOnly bool owner_only,omitempty
+ExtensionPoint.Package string package,omitempty
+Follow string
+ForkInfo struct
+ForkInfo.BaseVersion string base_version,omitempty
+ForkInfo.ForkedAt time.Time forked_at,omitempty
+ForkInfo.Of string of,omitempty
+Goal struct
+Goal.Agent string agent,omitempty
+Goal.By string by,omitempty
+Goal.ConfirmedAt time.Time confirmed_at,omitempty
+Goal.ConfirmedBy string confirmed_by,omitempty
+Goal.CreatedAt time.Time created_at,omitempty
+Goal.Criteria string criteria,omitempty
+Goal.EndedAt time.Time ended_at,omitempty
+Goal.EndedBy string ended_by,omitempty
+Goal.ID string id,omitempty
+Goal.Notice string notice,omitempty
+Goal.Planbook string planbook,omitempty
+Goal.PlanbookLog []sdk.PlanbookEntry planbook_log,omitempty
+Goal.State sdk.GoalState state,omitempty
+Goal.Summary string summary,omitempty
+Goal.Text string text,omitempty
+Goal.Title string title,omitempty
+Goal.UpdatedAt time.Time updated_at,omitempty
+GoalState string
+GoalsCreateRequest struct
+GoalsCreateRequest.Agent string agent,omitempty
+GoalsCreateRequest.By *sdk.Actor by,omitempty
+GoalsCreateRequest.Criteria string criteria,omitempty
+GoalsCreateRequest.Text string text,omitempty
+GoalsCreateRequest.Title string title,omitempty
+GoalsCreateResponse struct
+GoalsCreateResponse.Goal *sdk.Goal goal,omitempty
+GoalsDoneRequest struct
+GoalsDoneRequest.By *sdk.Actor by,omitempty
+GoalsDoneRequest.ID string id,omitempty
+GoalsDoneRequest.Summary string summary,omitempty
+GoalsDoneResponse struct
+GoalsDoneResponse.Goal *sdk.Goal goal,omitempty
+GoalsGetRequest struct
+GoalsGetRequest.ID string id,omitempty
+GoalsGetResponse struct
+GoalsGetResponse.Goal *sdk.Goal goal,omitempty
+GoalsListRequest struct
+GoalsListRequest.States []sdk.GoalState states,omitempty
+GoalsListResponse struct
+GoalsListResponse.Goals []sdk.Goal goals,omitempty
+GoalsProposeRequest struct
+GoalsProposeRequest.Agent string agent,omitempty
+GoalsProposeRequest.By *sdk.Actor by,omitempty
+GoalsProposeRequest.Criteria string criteria,omitempty
+GoalsProposeRequest.Text string text,omitempty
+GoalsProposeRequest.Title string title,omitempty
+GoalsProposeResponse struct
+GoalsProposeResponse.Goal *sdk.Goal goal,omitempty
+GoalsUpdatePlanbookRequest struct
+GoalsUpdatePlanbookRequest.Body string body,omitempty
+GoalsUpdatePlanbookRequest.By *sdk.Actor by,omitempty
+GoalsUpdatePlanbookRequest.ID string id,omitempty
+GoalsUpdatePlanbookRequest.Note string note,omitempty
+GoalsUpdatePlanbookResponse struct
+GoalsUpdatePlanbookResponse.Goal *sdk.Goal goal,omitempty
+GoalsWithdrawRequest struct
+GoalsWithdrawRequest.By *sdk.Actor by,omitempty
+GoalsWithdrawRequest.ID string id,omitempty
+GoalsWithdrawResponse struct
+GoalsWithdrawResponse.Goal *sdk.Goal goal,omitempty
+HealthItem struct
+HealthItem.Detail string detail,omitempty
+HealthItem.Name string name,omitempty
+HealthItem.Ok bool ok
+HomeBackupFile struct
+HomeBackupFile.CreatedAt time.Time created_at
+HomeBackupFile.Download string download,omitempty
+HomeBackupFile.Kind string kind,omitempty
+HomeBackupFile.Name string name,omitempty
+HomeBackupFile.Size int64 size
+HomeBackupSection struct
+HomeBackupSection.Bytes int64 bytes
+HomeBackupSection.Files int32 files
+HomeBackupSection.ID string id,omitempty
+HomeBackupSection.Label string label,omitempty
+HomeEnv string
+HomeMode string
+HomeRestoreResult struct
+HomeRestoreResult.At time.Time at
+HomeRestoreResult.BackupCreatedAt time.Time backup_created_at
+HomeRestoreResult.BackupHome string backup_home,omitempty
+HomeRestoreResult.FromOtherMachine bool from_other_machine,omitempty
+HomeRestoreResult.Message string message,omitempty
+HomeRestoreResult.OK bool ok
+HomeRestoreResult.Safety string safety,omitempty
+HomeRestoreResult.Todo []string todo,omitempty
+InputSource string
+Job struct
+Job.Action string action,omitempty
+Job.Agent string agent,omitempty
+Job.Archived bool archived
+Job.Body string body,omitempty
+Job.By string by,omitempty
+Job.Catchup string catchup,omitempty
+Job.CreatedAt time.Time created_at,omitempty
+Job.Cron []string cron,omitempty
+Job.Enabled bool enabled
+Job.ID string id,omitempty
+Job.IdleMin int idle_min,omitempty
+Job.LastReason string last_reason,omitempty
+Job.LastResult sdk.JobResult last_result,omitempty
+Job.LastRun *time.Time last_run,omitempty
+Job.Name string name,omitempty
+Job.NextRun *time.Time next_run,omitempty
+Job.PerDay int per_day,omitempty
+Job.RunsToday int runs_today,omitempty
+Job.Silent bool silent,omitempty
+Job.Source string source,omitempty
+Job.UpdatedAt time.Time updated_at,omitempty
+Job.WeekendWindows []string weekend_windows,omitempty
+Job.Windows []string windows,omitempty
+JobResult string
+Lifecycle string
+LifecycleStep struct
+LifecycleStep.At time.Time at,omitempty
+LifecycleStep.Detail string detail,omitempty
+LifecycleStep.State sdk.Lifecycle state,omitempty
+Menu struct
+Menu.Pool []sdk.MenuItem pool,omitempty
+Menu.Renderer string renderer,omitempty
+Menu.RendererBundleURL string renderer_bundle_url,omitempty
+Menu.RendererError string renderer_error,omitempty
+Menu.Tree []sdk.MenuEntry tree,omitempty
+Menu.Tucked []sdk.MenuItem tucked,omitempty
+MenuEntry struct
+MenuEntry.Badge int32 badge
+MenuEntry.Children []sdk.MenuEntry children,omitempty
+MenuEntry.ID string id,omitempty
+MenuEntry.Icon string icon,omitempty
+MenuEntry.Route string route,omitempty
+MenuEntry.Section string section,omitempty
+MenuEntry.SectionTitle string section_title,omitempty
+MenuEntry.Tier sdk.Tier tier,omitempty
+MenuEntry.Title string title,omitempty
+MenuItem struct
+MenuItem.Badge int32 badge
+MenuItem.ID string id,omitempty
+MenuItem.Icon string icon,omitempty
+MenuItem.Route string route,omitempty
+MenuItem.Section string section,omitempty
+MenuItem.SectionTitle string section_title,omitempty
+MenuItem.Tier sdk.Tier tier,omitempty
+MenuItem.Title string title,omitempty
+MenuItemDecl struct
+MenuItemDecl.Front bool front,omitempty
+MenuItemDecl.GroupHint string group_hint,omitempty
+MenuItemDecl.ID string id,omitempty
+MenuItemDecl.Icon string icon,omitempty
+MenuItemDecl.Order int32 order
+MenuItemDecl.Page string page,omitempty
+MenuItemDecl.Section string section,omitempty
+MenuItemDecl.SectionTitle string section_title,omitempty
+MenuItemDecl.ShowWhen string show_when,omitempty
+MenuItemDecl.Title string title,omitempty
+MenuPrefEntry struct
+MenuPrefEntry.Children []string children,omitempty
+MenuPrefEntry.Group string group,omitempty
+MenuPrefEntry.Icon string icon,omitempty
+MenuPrefEntry.Item string item,omitempty
+MenuPrefEntry.Title string title,omitempty
+MenuPrefs struct
+MenuPrefs.Hidden []string hidden,omitempty
+MenuPrefs.Renderer string renderer,omitempty
+MenuPrefs.Tree []sdk.MenuPrefEntry tree,omitempty
+MessageWait string
+NotesAddCategoryRequest struct
+NotesAddCategoryRequest.Body string body,omitempty
+NotesAddCategoryRequest.By *sdk.Actor by,omitempty
+NotesAddCategoryRequest.Name string name,omitempty
+NotesAddCategoryRequest.Summary string summary,omitempty
+NotesAddCategoryResponse struct
+NotesAddCategoryResponse.Category *sdk.Record category,omitempty
+NotesAddRequest struct
+NotesAddRequest.Aliases []string aliases,omitempty
+NotesAddRequest.By *sdk.Actor by,omitempty
+NotesAddRequest.Category string category,omitempty
+NotesAddRequest.Follow []string follow,omitempty
+NotesAddRequest.Line string line,omitempty
+NotesAddRequest.Links []string links,omitempty
+NotesAddRequest.Name string name,omitempty
+NotesAddRequest.Summary string summary,omitempty
+NotesAddResponse struct
+NotesAddResponse.Created bool created
+NotesAddResponse.Line string line,omitempty
+NotesAddResponse.Topic *sdk.Record topic,omitempty
+NotesArchiveRequest struct
+NotesArchiveRequest.By *sdk.Actor by,omitempty
+NotesArchiveRequest.Into string into,omitempty
+NotesArchiveRequest.Name string name,omitempty
+NotesArchiveResponse struct
+NotesArchiveResponse.Into string into,omitempty
+NotesArchiveResponse.Message string message,omitempty
+NotesArchiveResponse.Name string name,omitempty
+NotesArchiveResponse.Path string path,omitempty
+NotesQuipUsedRequest struct
+NotesQuipUsedRequest.By *sdk.Actor by,omitempty
+NotesQuipUsedRequest.Text string text,omitempty
+NotesQuipUsedResponse struct
+NotesQuipUsedResponse.Message string message,omitempty
+NotesQuipUsedResponse.Quip string quip,omitempty
+NotesQuipUsedResponse.Until time.Time until
+NotesQuipsRequest struct
+NotesQuipsRequest.By *sdk.Actor by,omitempty
+NotesQuipsResponse struct
+NotesQuipsResponse.Resting []string resting,omitempty
+NotesQuipsResponse.Shown int32 shown
+NotesQuipsResponse.Text string text,omitempty
+NotesQuipsResponse.Total int32 total
+NotesSetRequest struct
+NotesSetRequest.Aliases []string aliases,omitempty
+NotesSetRequest.Body string body,omitempty
+NotesSetRequest.By *sdk.Actor by,omitempty
+NotesSetRequest.Clear []string clear,omitempty
+NotesSetRequest.Follow []string follow,omitempty
+NotesSetRequest.KeepBody bool keep_body,omitempty
+NotesSetRequest.Links []string links,omitempty
+NotesSetRequest.Name string name,omitempty
+NotesSetRequest.Revision string revision,omitempty
+NotesSetRequest.Summary string summary,omitempty
+NotesSetResponse struct
+NotesSetResponse.Topic *sdk.Record topic,omitempty
+Notification struct
+Notification.Account string account,omitempty
+Notification.Agent string agent,omitempty
+Notification.Answer *sdk.Answer answer,omitempty
+Notification.Badge bool badge
+Notification.Body string body,omitempty
+Notification.By string by,omitempty
+Notification.Category sdk.Category category,omitempty
+Notification.Claim string claim,omitempty
+Notification.Context string context,omitempty
+Notification.CreatedAt time.Time created_at,omitempty
+Notification.DeliversAnswer bool delivers_answer
+Notification.Delivery []sdk.Delivery delivery,omitempty
+Notification.Home string home,omitempty
+Notification.ID string id,omitempty
+Notification.Image string image,omitempty
+Notification.Inline bool inline,omitempty
+Notification.Lane string lane,omitempty
+Notification.Link *sdk.NotificationLink link,omitempty
+Notification.Options []string options,omitempty
+Notification.Reminder string reminder,omitempty
+Notification.Room string room,omitempty
+Notification.Source string source,omitempty
+Notification.Speaker string speaker,omitempty
+Notification.State sdk.NotificationState state,omitempty
+Notification.Task string task,omitempty
+Notification.Title string title,omitempty
+Notification.Todo string todo,omitempty
+Notification.Typed bool typed,omitempty
+Notification.URL string url,omitempty
+Notification.Urgent bool urgent
+NotificationLink struct
+NotificationLink.Label string label,omitempty
+NotificationLink.URL string url,omitempty
+NotificationState string
+NotifyAnswerRequest struct
+NotifyAnswerRequest.By *sdk.Actor by,omitempty
+NotifyAnswerRequest.ID string id,omitempty
+NotifyAnswerRequest.Text string text,omitempty
+NotifyAnswerRequest.Via sdk.AnswerVia via,omitempty
+NotifyAnswerResponse struct
+NotifyAnswerResponse.Delivered bool delivered
+NotifyAnswerResponse.Notification *sdk.Notification notification,omitempty
+NotifyArchiveRequest struct
+NotifyArchiveRequest.By *sdk.Actor by,omitempty
+NotifyArchiveRequest.IDS []string ids,omitempty
+NotifyArchiveResponse struct
+NotifyArchiveResponse.Archived []string archived,omitempty
+NotifyArchiveResponse.Skipped []string skipped,omitempty
+NotifyGetPrefsRequest struct
+NotifyGetPrefsResponse struct
+NotifyGetPrefsResponse.Prefs *sdk.NotifyPrefs prefs,omitempty
+NotifyGetRequest struct
+NotifyGetRequest.ID string id,omitempty
+NotifyGetResponse struct
+NotifyGetResponse.Notification *sdk.Notification notification,omitempty
+NotifyListRequest struct
+NotifyListRequest.Agent string agent,omitempty
+NotifyListRequest.IncludeArchived bool include_archived
+NotifyListRequest.Page *sdk.PageRequest page,omitempty
+NotifyListRequest.States []sdk.NotificationState states,omitempty
+NotifyListResponse struct
+NotifyListResponse.Notifications []sdk.Notification notifications,omitempty
+NotifyListResponse.Page *sdk.PageResponse page,omitempty
+NotifyListResponse.Unread int32 unread
+NotifyMarkReadRequest struct
+NotifyMarkReadRequest.IDS []string ids,omitempty
+NotifyMarkReadResponse struct
+NotifyNudgeRequest struct
+NotifyNudgeRequest.Agent string agent,omitempty
+NotifyNudgeRequest.By *sdk.Actor by,omitempty
+NotifyNudgeRequest.Context string context,omitempty
+NotifyNudgeRequest.Key string key,omitempty
+NotifyNudgeRequest.Resolve bool resolve,omitempty
+NotifyNudgeRequest.Session string session,omitempty
+NotifyNudgeRequest.Task string task,omitempty
+NotifyNudgeRequest.Title string title,omitempty
+NotifyNudgeRequest.Todo string todo,omitempty
+NotifyNudgeRequest.URL string url,omitempty
+NotifyNudgeResponse struct
+NotifyNudgeResponse.Nudge *sdk.Nudge nudge,omitempty
+NotifyPrefs struct
+NotifyPrefs.Agents []sdk.AgentPref agents,omitempty
+NotifyPrefs.Categories map[string]*sdk.CategoryPref categories,omitempty
+NotifyPrefs.ChannelApp bool channel_app
+NotifyPrefs.ChannelLine bool channel_line
+NotifyPrefs.Preset string preset,omitempty
+NotifyPrefs.Presets map[string]map[string]*sdk.CategoryPref presets,omitempty
+NotifyPrefs.QuietHours string quiet_hours,omitempty
+NotifyPrefs.ReaskAfterMinutes int32 reask_after_minutes
+NotifyPrefs.ReaskMaxAsks int32 reask_max_asks
+NotifyPrefs.Tasks *sdk.TaskFollowPrefs tasks,omitempty
+NotifyPresenceRequest struct
+NotifyPresenceRequest.Away bool away
+NotifyPresenceRequest.By *sdk.Actor by,omitempty
+NotifyPresenceRequest.Client string client,omitempty
+NotifyPresenceRequest.Path string path,omitempty
+NotifyPresenceRequest.Thread string thread,omitempty
+NotifyPresenceResponse struct
+NotifyPresenceResponse.Nudges []sdk.Nudge nudges,omitempty
+NotifyPushKeyRequest struct
+NotifyPushKeyResponse struct
+NotifyPushKeyResponse.PublicKey string public_key,omitempty
+NotifyPushKeyResponse.Subscriptions int subscriptions
+NotifyPushTestRequest struct
+NotifyPushTestRequest.By *sdk.Actor by,omitempty
+NotifyPushTestRequest.Endpoint string endpoint,omitempty
+NotifyPushTestResponse struct
+NotifyResolveNudgeRequest struct
+NotifyResolveNudgeRequest.By *sdk.Actor by,omitempty
+NotifyResolveNudgeRequest.ID string id,omitempty
+NotifyResolveNudgeResponse struct
+NotifySendRequest struct
+NotifySendRequest.Agent string agent,omitempty
+NotifySendRequest.By *sdk.Actor by,omitempty
+NotifySendRequest.Category sdk.Category category,omitempty
+NotifySendRequest.Context string context,omitempty
+NotifySendRequest.Image string image,omitempty
+NotifySendRequest.Inline bool inline,omitempty
+NotifySendRequest.Lane string lane,omitempty
+NotifySendRequest.Link *sdk.NotificationLink link,omitempty
+NotifySendRequest.Options []string options,omitempty
+NotifySendRequest.Reminder string reminder,omitempty
+NotifySendRequest.Room string room,omitempty
+NotifySendRequest.Task string task,omitempty
+NotifySendRequest.Title string title,omitempty
+NotifySendRequest.Todo string todo,omitempty
+NotifySendRequest.URL string url,omitempty
+NotifySendRequest.Urgent bool urgent
+NotifySendResponse struct
+NotifySendResponse.Notification *sdk.Notification notification,omitempty
+NotifySetPrefsRequest struct
+NotifySetPrefsRequest.By *sdk.Actor by,omitempty
+NotifySetPrefsRequest.Expand bool expand,omitempty
+NotifySetPrefsRequest.Prefs *sdk.NotifyPrefs prefs,omitempty
+NotifySetPrefsResponse struct
+NotifySetPrefsResponse.Prefs *sdk.NotifyPrefs prefs,omitempty
+NotifySubscribePushRequest struct
+NotifySubscribePushRequest.Auth string auth,omitempty
+NotifySubscribePushRequest.By *sdk.Actor by,omitempty
+NotifySubscribePushRequest.Endpoint string endpoint,omitempty
+NotifySubscribePushRequest.P256dh string p256dh,omitempty
+NotifySubscribePushResponse struct
+NotifySubscribePushResponse.Subscriptions int subscriptions
+NotifyUnsubscribePushRequest struct
+NotifyUnsubscribePushRequest.By *sdk.Actor by,omitempty
+NotifyUnsubscribePushRequest.Endpoint string endpoint,omitempty
+NotifyUnsubscribePushResponse struct
+NotifyUnsubscribePushResponse.Subscriptions int subscriptions
+NotifyWatchRequest struct
+NotifyWatchResponse struct
+NotifyWatchResponse.Notification *sdk.Notification notification,omitempty
+NotifyWatchResponse.Nudge *sdk.Nudge nudge,omitempty
+NotifyWatchResponse.Unread int32 unread
+Nudge struct
+Nudge.Agent string agent,omitempty
+Nudge.Context string context,omitempty
+Nudge.CreatedAt time.Time created_at,omitempty
+Nudge.ID string id,omitempty
+Nudge.Key string key,omitempty
+Nudge.Resolved bool resolved
+Nudge.Session string session,omitempty
+Nudge.Surface sdk.NudgeSurface surface,omitempty
+Nudge.Task string task,omitempty
+Nudge.Title string title,omitempty
+Nudge.Todo string todo,omitempty
+Nudge.URL string url,omitempty
+NudgeSurface string
+Package struct
+Package.API string api,omitempty
+Package.Agents []sdk.AgentDecl agents,omitempty
+Package.Avatars string avatars,omitempty
+Package.Capabilities *sdk.Capabilities capabilities,omitempty
+Package.Data []sdk.DataKindDecl data,omitempty
+Package.Description string description,omitempty
+Package.DevOnly bool dev_only,omitempty
+Package.Enabled bool enabled
+Package.Error string error,omitempty
+Package.Extensions []sdk.ExtensionPoint extensions,omitempty
+Package.Fork *sdk.ForkInfo fork,omitempty
+Package.ID string id,omitempty
+Package.Kind sdk.PackageKind kind,omitempty
+Package.Menu []sdk.MenuItemDecl menu,omitempty
+Package.Name string name,omitempty
+Package.Optional bool optional,omitempty
+Package.Pages []sdk.PageDecl pages,omitempty
+Package.Remedy sdk.PackageRemedy remedy,omitempty
+Package.Requires []sdk.Requirement requires,omitempty
+Package.Source *sdk.PackageSource source,omitempty
+Package.State sdk.PackageState state,omitempty
+Package.Tier sdk.Tier tier,omitempty
+Package.Version string version,omitempty
+PackageClaimNotifyRequest struct
+PackageClaimNotifyRequest.Agent string agent,omitempty
+PackageClaimNotifyRequest.By *sdk.Actor by,omitempty
+PackageClaimNotifyRequest.ID string id,omitempty
+PackageClaimNotifyRequest.Persona string persona,omitempty
+PackageClaimNotifyResponse struct
+PackageClaimNotifyResponse.Agent string agent,omitempty
+PackageClaimNotifyResponse.Detail string detail,omitempty
+PackageClaimNotifyResponse.Notice string notice,omitempty
+PackageClaimNotifyResponse.Package string package,omitempty
+PackageClaimNotifyResponse.Persona string persona,omitempty
+PackageClaimNotifyResponse.PersonaName string persona_name,omitempty
+PackageClaimNotifyResponse.Reason string reason,omitempty
+PackageClaimNotifyResponse.Sent bool sent
+PackageClaimNotifyResponse.State sdk.ClaimState state,omitempty
+PackageExportFinding struct
+PackageExportFinding.Kind string kind,omitempty
+PackageExportFinding.Line int32 line
+PackageExportFinding.Path string path,omitempty
+PackageExportFinding.What string what,omitempty
+PackageExportRequest struct
+PackageExportRequest.AllowFindings bool allow_findings
+PackageExportRequest.By *sdk.Actor by,omitempty
+PackageExportRequest.Git bool git
+PackageExportRequest.ID string id,omitempty
+PackageExportRequest.Out string out,omitempty
+PackageExportResponse struct
+PackageExportResponse.Blocked bool blocked
+PackageExportResponse.Files []string files,omitempty
+PackageExportResponse.Findings []sdk.PackageExportFinding findings,omitempty
+PackageExportResponse.Format string format,omitempty
+PackageExportResponse.Path string path,omitempty
+PackageExportResponse.Skipped []string skipped,omitempty
+PackageForkRequest struct
+PackageForkRequest.By *sdk.Actor by,omitempty
+PackageForkRequest.ID string id,omitempty
+PackageForkResponse struct
+PackageForkResponse.Package *sdk.Package package,omitempty
+PackageGetRequest struct
+PackageGetRequest.ID string id,omitempty
+PackageGetResponse struct
+PackageGetResponse.Package *sdk.Package package,omitempty
+PackageGoStatusRequest struct
+PackageGoStatusResponse struct
+PackageGoStatusResponse.Ask string ask,omitempty
+PackageGoStatusResponse.Detail string detail,omitempty
+PackageGoStatusResponse.Installable bool installable
+PackageGoStatusResponse.Need string need,omitempty
+PackageGoStatusResponse.Offer string offer,omitempty
+PackageGoStatusResponse.Path string path,omitempty
+PackageGoStatusResponse.SizeMB int size_mb,omitempty
+PackageGoStatusResponse.Source string source,omitempty
+PackageGoStatusResponse.Usable bool usable
+PackageGoStatusResponse.Version string version,omitempty
+PackageHelloRequest struct
+PackageHelloRequest.API string api,omitempty
+PackageHelloRequest.ID string id,omitempty
+PackageHelloRequest.Version string version,omitempty
+PackageHelloResponse struct
+PackageHelloResponse.DataDir string data_dir,omitempty
+PackageHelloResponse.Granted []string granted,omitempty
+PackageHelloResponse.Token string token,omitempty
+PackageHost struct
+PackageHost.Client *sdk.Client -
+PackageHost.DataDir string data_dir,omitempty
+PackageHost.Dir string dir,omitempty
+PackageHost.Granted []string granted,omitempty
+PackageHost.ID string id,omitempty
+PackageHost.Token string token,omitempty
+PackageHost.Version string version,omitempty
+PackageInstallGoRequest struct
+PackageInstallGoRequest.By *sdk.Actor by,omitempty
+PackageInstallGoRequest.Confirmed bool confirmed
+PackageInstallGoResponse struct
+PackageInstallGoResponse.Command string command,omitempty
+PackageInstallGoResponse.Packages []sdk.Package packages,omitempty
+PackageInstallGoResponse.Version string version,omitempty
+PackageInstallRequest struct
+PackageInstallRequest.By *sdk.Actor by,omitempty
+PackageInstallRequest.Confirmed bool confirmed,omitempty
+PackageInstallRequest.Ref string ref,omitempty
+PackageInstallRequest.Source string source,omitempty
+PackageInstallRequest.Tier sdk.Tier tier,omitempty
+PackageInstallResponse struct
+PackageInstallResponse.Package *sdk.Package package,omitempty
+PackageKind string
+PackageListExtensionsRequest struct
+PackageListExtensionsRequest.Package string package,omitempty
+PackageListExtensionsResponse struct
+PackageListExtensionsResponse.Extensions []sdk.ExtensionPoint extensions,omitempty
+PackageListExtensionsResponse.Values map[string]string values,omitempty
+PackageListExtensionsResponse.Warnings []string warnings,omitempty
+PackageListRequest struct
+PackageListRequest.Tier sdk.Tier tier,omitempty
+PackageListResponse struct
+PackageListResponse.Packages []sdk.Package packages,omitempty
+PackageListResponse.Warnings []string warnings,omitempty
+PackageListUpdatesRequest struct
+PackageListUpdatesRequest.ID string id,omitempty
+PackageListUpdatesResponse struct
+PackageListUpdatesResponse.BaseVersion string base_version,omitempty
+PackageListUpdatesResponse.Items []sdk.UpdateItem items,omitempty
+PackageListUpdatesResponse.LatestVersion string latest_version,omitempty
+PackageListUpdatesResponse.ReportPath string report_path,omitempty
+PackageNewRequest struct
+PackageNewRequest.By *sdk.Actor by,omitempty
+PackageNewRequest.ID string id,omitempty
+PackageNewRequest.Name string name,omitempty
+PackageNewResponse struct
+PackageNewResponse.Dir string dir,omitempty
+PackageNewResponse.Files []string files,omitempty
+PackageNewResponse.Package *sdk.Package package,omitempty
+PackageOutdated struct
+PackageOutdated.Current string current,omitempty
+PackageOutdated.ID string id,omitempty
+PackageOutdated.Latest string latest,omitempty
+PackageOutdated.Name string name,omitempty
+PackageOutdated.URL string url,omitempty
+PackageOutdatedRequest struct
+PackageOutdatedResponse struct
+PackageOutdatedResponse.Failed []string failed,omitempty
+PackageOutdatedResponse.Packages []sdk.PackageOutdated packages,omitempty
+PackagePreviewPersona struct
+PackagePreviewPersona.Avatar bool avatar
+PackagePreviewPersona.ID string id,omitempty
+PackagePreviewPersona.Name string name,omitempty
+PackagePreviewPersona.Slug string slug,omitempty
+PackagePreviewRequest struct
+PackagePreviewRequest.Ref string ref,omitempty
+PackagePreviewRequest.Source string source,omitempty
+PackagePreviewResponse struct
+PackagePreviewResponse.Agents []string agents,omitempty
+PackagePreviewResponse.Commit string commit,omitempty
+PackagePreviewResponse.Core string core,omitempty
+PackagePreviewResponse.DataKinds []string data_kinds,omitempty
+PackagePreviewResponse.Description string description,omitempty
+PackagePreviewResponse.Exists bool exists
+PackagePreviewResponse.ID string id,omitempty
+PackagePreviewResponse.Jobs []string jobs,omitempty
+PackagePreviewResponse.Kind string kind,omitempty
+PackagePreviewResponse.Name string name,omitempty
+PackagePreviewResponse.Pages []string pages,omitempty
+PackagePreviewResponse.Personas []sdk.PackagePreviewPersona personas,omitempty
+PackagePreviewResponse.Problems []string problems,omitempty
+PackagePreviewResponse.Reads []string reads,omitempty
+PackagePreviewResponse.Ref string ref,omitempty
+PackagePreviewResponse.RunsProgram bool runs_program
+PackagePreviewResponse.Version string version,omitempty
+PackagePreviewResponse.Warnings []string warnings,omitempty
+PackagePreviewResponse.Writes []string writes,omitempty
+PackageReloadRequest struct
+PackageReloadRequest.ID string id,omitempty
+PackageReloadResponse struct
+PackageReloadResponse.Packages []sdk.Package packages,omitempty
+PackageRemedy string
+PackageSetEnabledRequest struct
+PackageSetEnabledRequest.By *sdk.Actor by,omitempty
+PackageSetEnabledRequest.Enabled bool enabled
+PackageSetEnabledRequest.ID string id,omitempty
+PackageSetEnabledResponse struct
+PackageSetEnabledResponse.Package *sdk.Package package,omitempty
+PackageSetExtensionRequest struct
+PackageSetExtensionRequest.By *sdk.Actor by,omitempty
+PackageSetExtensionRequest.Extension string extension,omitempty
+PackageSetExtensionRequest.Package string package,omitempty
+PackageSetExtensionRequest.Value map[string]interface {} value,omitempty
+PackageSetExtensionResponse struct
+PackageSource struct
+PackageSource.Commit string commit,omitempty
+PackageSource.InstalledAt time.Time installed_at
+PackageSource.Ref string ref,omitempty
+PackageSource.URL string url,omitempty
+PackageState string
+PackageSyncRequest struct
+PackageSyncRequest.Agent string agent,omitempty
+PackageSyncRequest.Apply bool apply
+PackageSyncRequest.By *sdk.Actor by,omitempty
+PackageSyncRequest.ID string id,omitempty
+PackageSyncRequest.Knowledge []string knowledge,omitempty
+PackageSyncRequest.Persona string persona,omitempty
+PackageSyncResponse struct
+PackageSyncResponse.Agents []sdk.SyncAgent agents,omitempty
+PackageSyncResponse.Applied bool applied
+PackageSyncResponse.Jobs []sdk.SyncJob jobs,omitempty
+PackageSyncResponse.Optional []string optional,omitempty
+PackageUninstallRequest struct
+PackageUninstallRequest.By *sdk.Actor by,omitempty
+PackageUninstallRequest.ID string id,omitempty
+PackageUninstallResponse struct
+PackageUpgradeRequest struct
+PackageUpgradeRequest.By *sdk.Actor by,omitempty
+PackageUpgradeRequest.ID string id,omitempty
+PackageUpgradeRequest.Ref string ref,omitempty
+PackageUpgradeResponse struct
+PackageUpgradeResponse.From string from,omitempty
+PackageUpgradeResponse.Package *sdk.Package package,omitempty
+PackageUpgradeResponse.To string to,omitempty
+PageDecl struct
+PageDecl.Chat bool chat
+PageDecl.ChatAgent string chat_agent,omitempty
+PageDecl.Component string component,omitempty
+PageDecl.ID string id,omitempty
+PageDecl.Merge bool merge,omitempty
+PageDecl.Route string route,omitempty
+PageDecl.ShowWhen string show_when,omitempty
+PageDecl.Slot string slot,omitempty
+PageDecl.SlotFront bool slot_front,omitempty
+PageDecl.Title string title,omitempty
+PageInfo struct
+PageInfo.Alias string alias,omitempty
+PageInfo.BundleURL string bundle_url,omitempty
+PageInfo.Chat bool chat
+PageInfo.ChatAgent string chat_agent,omitempty
+PageInfo.Error string error,omitempty
+PageInfo.ID string id,omitempty
+PageInfo.Package string package,omitempty
+PageInfo.Route string route,omitempty
+PageInfo.Slot string slot,omitempty
+PageInfo.SlotFront bool slot_front,omitempty
+PageInfo.Slots []sdk.PageSlot slots,omitempty
+PageInfo.Source string source,omitempty
+PageInfo.Tier sdk.Tier tier,omitempty
+PageInfo.Title string title,omitempty
+PageRequest struct
+PageRequest.Cursor string cursor,omitempty
+PageRequest.Limit int32 limit
+PageResponse struct
+PageResponse.NextCursor string next_cursor,omitempty
+PageSlot struct
+PageSlot.ID string id,omitempty
+PageSlot.Page string page,omitempty
+Pending struct
+Pending.ID string id,omitempty
+Pending.Kind sdk.PendingKind kind,omitempty
+Pending.Native bool native,omitempty
+Pending.Questions []sdk.Question questions,omitempty
+Pending.Since time.Time since,omitempty
+Pending.Summary string summary,omitempty
+Pending.Tool string tool,omitempty
+PendingKind string
+PermissionLevel string
+PermissionMode string
+PermissionPolicy struct
+PermissionPolicy.Allow []string allow,omitempty
+PermissionPolicy.Deny []string deny,omitempty
+PermissionPolicy.Guidance []string guidance,omitempty
+PermissionPolicy.Mode sdk.PermissionMode mode,omitempty
+PermissionPolicy.Repos []sdk.RepoPolicy repos,omitempty
+PermissionSource struct
+PermissionSource.Kind string kind,omitempty
+PermissionSource.Scope string scope,omitempty
+PermissionSource.Source string source,omitempty
+PermissionSource.Value string value,omitempty
+PersonaCard struct
+PersonaCard.Aka []string aka,omitempty
+PersonaCard.AvatarURL string avatar_url,omitempty
+PersonaCard.Name string name,omitempty
+PersonaCard.Package string package,omitempty
+PersonaCard.Seats []string seats,omitempty
+PersonaCard.Shadowed bool shadowed
+PersonaCard.Slug string slug,omitempty
+PersonaCard.Source string source,omitempty
+PersonaCard.Status string status,omitempty
+PersonaCard.Tagline string tagline,omitempty
+PersonaCard.Unassignable string unassignable,omitempty
+PersonaCard.UpdatedAt time.Time updated_at
+PersonaPackLast struct
+PersonaPackLast.At string at,omitempty
+PersonaPackLast.Installed int32 installed
+PersonaPackLast.Message string message,omitempty
+PersonaPackLast.Reason string reason,omitempty
+PersonaPackLast.RecordsLater bool records_later,omitempty
+PersonaPackLast.Status string status,omitempty
+PersonaPackLast.Unchanged int32 unchanged
+PersonaPackLast.UserEdited []string user_edited,omitempty
+PersonaPackLast.Version string version,omitempty
+PersonaPackPending struct
+PersonaPackPending.At string at,omitempty
+PersonaPackPending.Reason string reason,omitempty
+PersonaPackPending.Version string version,omitempty
+PersonaStyleLevel struct
+PersonaStyleLevel.Exists bool exists
+PersonaStyleLevel.Level string level,omitempty
+PersonaStyleLevel.Text string text,omitempty
+PersonaTestRun struct
+PersonaTestRun.At time.Time at
+PersonaTestRun.Checks string checks,omitempty
+PersonaTestRun.Markdown string markdown,omitempty
+PersonaTestRun.Model string model,omitempty
+PersonaTestRun.Reason string reason,omitempty
+PersonaTestRun.Run string run,omitempty
+PersonaTestRun.Seat string seat,omitempty
+PersonaTestRun.Status string status,omitempty
+PersonaTestRun.Style string style,omitempty
+PersonasCheckRequest struct
+PersonasCheckRequest.Slug string slug,omitempty
+PersonasCheckResponse struct
+PersonasCheckResponse.Problems []string problems,omitempty
+PersonasCopyRequest struct
+PersonasCopyRequest.Aka []string aka,omitempty
+PersonasCopyRequest.By *sdk.Actor by,omitempty
+PersonasCopyRequest.From string from,omitempty
+PersonasCopyRequest.Name string name,omitempty
+PersonasCopyRequest.Package string package,omitempty
+PersonasCopyRequest.Slug string slug,omitempty
+PersonasCopyResponse struct
+PersonasCopyResponse.Persona *sdk.PersonaCard persona,omitempty
+PersonasCreateRequest struct
+PersonasCreateRequest.Aka []string aka,omitempty
+PersonasCreateRequest.By *sdk.Actor by,omitempty
+PersonasCreateRequest.Name string name,omitempty
+PersonasCreateRequest.Package string package,omitempty
+PersonasCreateRequest.Slug string slug,omitempty
+PersonasCreateResponse struct
+PersonasCreateResponse.Persona *sdk.PersonaCard persona,omitempty
+PersonasExportRequest struct
+PersonasExportRequest.By *sdk.Actor by,omitempty
+PersonasExportRequest.Personas []string personas,omitempty
+PersonasExportResponse struct
+PersonasExportResponse.Bytes int64 bytes
+PersonasExportResponse.Download string download,omitempty
+PersonasExportResponse.Filename string filename,omitempty
+PersonasExportResponse.Files int32 files
+PersonasExportResponse.Kinds []string kinds,omitempty
+PersonasExportResponse.Personas []string personas,omitempty
+PersonasExportResponse.Records int32 records
+PersonasExportResponse.Skipped []string skipped,omitempty
+PersonasGetRequest struct
+PersonasGetRequest.Slug string slug,omitempty
+PersonasGetResponse struct
+PersonasGetResponse.Body string body,omitempty
+PersonasGetResponse.Persona *sdk.PersonaCard persona,omitempty
+PersonasGetResponse.Raw string raw,omitempty
+PersonasGetStyleRequest struct
+PersonasGetStyleResponse struct
+PersonasGetStyleResponse.CustomExists bool custom_exists
+PersonasGetStyleResponse.Level string level,omitempty
+PersonasGetStyleResponse.Levels []sdk.PersonaStyleLevel levels,omitempty
+PersonasGetStyleResponse.Text string text,omitempty
+PersonasImportRequest struct
+PersonasImportRequest.By *sdk.Actor by,omitempty
+PersonasImportRequest.DryRun bool dry_run,omitempty
+PersonasImportRequest.Force bool force,omitempty
+PersonasImportRequest.Upload string upload,omitempty
+PersonasImportResponse struct
+PersonasImportResponse.Added []string added,omitempty
+PersonasImportResponse.Backup string backup,omitempty
+PersonasImportResponse.DryRun bool dry_run
+PersonasImportResponse.ExportedAt string exported_at,omitempty
+PersonasImportResponse.Kept []string kept,omitempty
+PersonasImportResponse.Personas []string personas
+PersonasImportResponse.RecordsAdded []string records_added,omitempty
+PersonasImportResponse.RecordsKept []string records_kept,omitempty
+PersonasImportResponse.RecordsReplaced []string records_replaced,omitempty
+PersonasImportResponse.RecordsSkipped []string records_skipped,omitempty
+PersonasImportResponse.RecordsUnchanged int32 records_unchanged
+PersonasImportResponse.Replaced []string replaced,omitempty
+PersonasImportResponse.Unchanged int32 unchanged
+PersonasListRequest struct
+PersonasListResponse struct
+PersonasListResponse.Personas []sdk.PersonaCard personas,omitempty
+PersonasPackStatusRequest struct
+PersonasPackStatusResponse struct
+PersonasPackStatusResponse.Last *sdk.PersonaPackLast last,omitempty
+PersonasPackStatusResponse.Latest string latest,omitempty
+PersonasPackStatusResponse.Pending *sdk.PersonaPackPending pending,omitempty
+PersonasPackStatusResponse.Registered string registered,omitempty
+PersonasPackStatusResponse.Source bool source
+PersonasPackSyncRequest struct
+PersonasPackSyncRequest.By *sdk.Actor by,omitempty
+PersonasPackSyncRequest.Force bool force,omitempty
+PersonasPackSyncRequest.Pointer string pointer,omitempty
+PersonasPackSyncResponse struct
+PersonasPackSyncResponse.Backup string backup,omitempty
+PersonasPackSyncResponse.Installed []string installed,omitempty
+PersonasPackSyncResponse.Message string message
+PersonasPackSyncResponse.NewCards []string new_cards,omitempty
+PersonasPackSyncResponse.Reason string reason,omitempty
+PersonasPackSyncResponse.RecordsAdded []string records_added,omitempty
+PersonasPackSyncResponse.RecordsKept []string records_kept,omitempty
+PersonasPackSyncResponse.RecordsLater bool records_later,omitempty
+PersonasPackSyncResponse.RecordsReplaced []string records_replaced,omitempty
+PersonasPackSyncResponse.RecordsSkipped []string records_skipped,omitempty
+PersonasPackSyncResponse.RecordsUnchanged int32 records_unchanged,omitempty
+PersonasPackSyncResponse.Registered string registered,omitempty
+PersonasPackSyncResponse.Status string status
+PersonasPackSyncResponse.Unchanged int32 unchanged
+PersonasPackSyncResponse.UserEdited []string user_edited,omitempty
+PersonasPackSyncResponse.Version string version,omitempty
+PersonasSetStatusRequest struct
+PersonasSetStatusRequest.By *sdk.Actor by,omitempty
+PersonasSetStatusRequest.Slug string slug,omitempty
+PersonasSetStatusRequest.Status string status,omitempty
+PersonasSetStatusResponse struct
+PersonasSetStatusResponse.Persona *sdk.PersonaCard persona,omitempty
+PersonasSetStyleRequest struct
+PersonasSetStyleRequest.By *sdk.Actor by,omitempty
+PersonasSetStyleRequest.Level string level,omitempty
+PersonasSetStyleResponse struct
+PersonasSetStyleResponse.Backup string backup,omitempty
+PersonasSetStyleResponse.CustomExists bool custom_exists
+PersonasSetStyleResponse.Level string level,omitempty
+PersonasSetStyleResponse.Text string text,omitempty
+PersonasTestRequest struct
+PersonasTestRequest.Card string card,omitempty
+PersonasTestRequest.Model string model,omitempty
+PersonasTestRequest.Only []string only,omitempty
+PersonasTestRequest.Seat string seat,omitempty
+PersonasTestRequest.Slug string slug,omitempty
+PersonasTestRequest.Style string style,omitempty
+PersonasTestResponse struct
+PersonasTestResponse.Run string run,omitempty
+PersonasTestResponse.Scenarios int32 scenarios
+PersonasTestResultsRequest struct
+PersonasTestResultsRequest.Limit int32 limit
+PersonasTestResultsRequest.Slug string slug,omitempty
+PersonasTestResultsResponse struct
+PersonasTestResultsResponse.Runs []sdk.PersonaTestRun runs,omitempty
+PersonasUpdateRequest struct
+PersonasUpdateRequest.Aka *[]string aka,omitempty
+PersonasUpdateRequest.BaseUpdatedAt time.Time base_updated_at
+PersonasUpdateRequest.Body *string body,omitempty
+PersonasUpdateRequest.By *sdk.Actor by,omitempty
+PersonasUpdateRequest.Name *string name,omitempty
+PersonasUpdateRequest.Slug string slug,omitempty
+PersonasUpdateResponse struct
+PersonasUpdateResponse.Backup string backup,omitempty
+PersonasUpdateResponse.Persona *sdk.PersonaCard persona,omitempty
+PlanbookEntry struct
+PlanbookEntry.At time.Time at,omitempty
+PlanbookEntry.By string by,omitempty
+PlanbookEntry.Note string note,omitempty
+PolicyDecideRequest struct
+PolicyDecideRequest.Approve bool approve
+PolicyDecideRequest.By *sdk.Actor by,omitempty
+PolicyDecideRequest.Fingerprint string fingerprint,omitempty
+PolicyDecideRequest.ID string id,omitempty
+PolicyDecideRequest.Note string note,omitempty
+PolicyDecideRequest.Permanent bool permanent
+PolicyDecideRequest.Scope string scope,omitempty
+PolicyDecideRequest.Text string text,omitempty
+PolicyDecideResponse struct
+PolicyDecideResponse.Request *sdk.PolicyRequest request,omitempty
+PolicyGetRequest struct
+PolicyGetRequest.ID string id,omitempty
+PolicyGetResponse struct
+PolicyGetResponse.Request *sdk.PolicyRequest request,omitempty
+PolicyKind string
+PolicyListRequest struct
+PolicyListRequest.Agent string agent,omitempty
+PolicyListRequest.Statuses []sdk.PolicyStatus statuses,omitempty
+PolicyListResponse struct
+PolicyListResponse.Requests []sdk.PolicyRequest requests,omitempty
+PolicyRequest struct
+PolicyRequest.Action sdk.ActionClass action,omitempty
+PolicyRequest.Agent string agent,omitempty
+PolicyRequest.Broad bool broad
+PolicyRequest.CreatedAt time.Time created_at,omitempty
+PolicyRequest.DecidedAt time.Time decided_at,omitempty
+PolicyRequest.DecidedBy string decided_by,omitempty
+PolicyRequest.ExpiresAt time.Time expires_at,omitempty
+PolicyRequest.Fingerprint string fingerprint,omitempty
+PolicyRequest.From string from,omitempty
+PolicyRequest.ID string id,omitempty
+PolicyRequest.Impact string impact,omitempty
+PolicyRequest.Kind sdk.PolicyKind kind,omitempty
+PolicyRequest.Note string note,omitempty
+PolicyRequest.Notice string notice,omitempty
+PolicyRequest.Permanent bool permanent
+PolicyRequest.Risk string risk,omitempty
+PolicyRequest.Scope string scope,omitempty
+PolicyRequest.Status sdk.PolicyStatus status,omitempty
+PolicyRequest.Text string text,omitempty
+PolicyRequest.Why string why,omitempty
+PolicyRequestRequest struct
+PolicyRequestRequest.Action sdk.ActionClass action,omitempty
+PolicyRequestRequest.Agent string agent,omitempty
+PolicyRequestRequest.By *sdk.Actor by,omitempty
+PolicyRequestRequest.Kind sdk.PolicyKind kind,omitempty
+PolicyRequestRequest.Risk string risk,omitempty
+PolicyRequestRequest.Scope string scope,omitempty
+PolicyRequestRequest.Text string text,omitempty
+PolicyRequestRequest.Why string why,omitempty
+PolicyRequestResponse struct
+PolicyRequestResponse.Request *sdk.PolicyRequest request,omitempty
+PolicyRevokeRequest struct
+PolicyRevokeRequest.By *sdk.Actor by,omitempty
+PolicyRevokeRequest.ID string id,omitempty
+PolicyRevokeRequest.Note string note,omitempty
+PolicyRevokeResponse struct
+PolicyRevokeResponse.Request *sdk.PolicyRequest request,omitempty
+PolicyRule struct
+PolicyRule.Action sdk.ActionClass action,omitempty
+PolicyRule.Agent string agent,omitempty
+PolicyRule.Scope string scope,omitempty
+PolicyStatus string
+PreflightCheck struct
+PreflightCheck.Detail string detail,omitempty
+PreflightCheck.Fix string fix,omitempty
+PreflightCheck.ID string id,omitempty
+PreflightCheck.Install []string install,omitempty
+PreflightCheck.Login []string login,omitempty
+PreflightCheck.LoginHint []string login_hint,omitempty
+PreflightCheck.Name string name,omitempty
+PreflightCheck.Ok bool ok
+Proposed string
+Question struct
+Question.AllowFreeText bool allow_free_text
+Question.Header string header,omitempty
+Question.MultiSelect bool multi_select
+Question.Options []sdk.QuestionOption options,omitempty
+Question.Text string text,omitempty
+QuestionOption struct
+QuestionOption.Description string description,omitempty
+QuestionOption.Label string label,omitempty
+Record struct
+Record.Archived bool archived
+Record.Body string body,omitempty
+Record.Fields map[string]interface {} fields,omitempty
+Record.ID string id,omitempty
+Record.Kind string kind,omitempty
+Record.Revision string revision,omitempty
+Record.UpdatedAt time.Time updated_at,omitempty
+Reminder struct
+Reminder.Archived bool archived
+Reminder.Asks int32 asks
+Reminder.At time.Time at,omitempty
+Reminder.Attachments []string attachments,omitempty
+Reminder.Body string body,omitempty
+Reminder.By string by,omitempty
+Reminder.Check string check,omitempty
+Reminder.ClosedAt time.Time closed_at,omitempty
+Reminder.Content string content,omitempty
+Reminder.CreatedAt time.Time created_at,omitempty
+Reminder.Cycle sdk.Cycle cycle,omitempty
+Reminder.Difficulty sdk.Difficulty difficulty,omitempty
+Reminder.DoneAt time.Time done_at,omitempty
+Reminder.DonePoints int32 done_points
+Reminder.DueAt time.Time due_at,omitempty
+Reminder.Follow sdk.Follow follow,omitempty
+Reminder.Goal string goal,omitempty
+Reminder.ID string id,omitempty
+Reminder.Owner string owner,omitempty
+Reminder.Points int32 points
+Reminder.Room string room,omitempty
+Reminder.SentAt time.Time sent_at,omitempty
+Reminder.Source string source,omitempty
+Reminder.Status sdk.ReminderStatus status,omitempty
+Reminder.UpdatedAt time.Time updated_at,omitempty
+ReminderQuery string
+ReminderStatus string
+RemindersCancelRequest struct
+RemindersCancelRequest.By *sdk.Actor by,omitempty
+RemindersCancelRequest.ID string id,omitempty
+RemindersCancelResponse struct
+RemindersCancelResponse.Reminder *sdk.Reminder reminder,omitempty
+RemindersCreateRequest struct
+RemindersCreateRequest.At time.Time at,omitempty
+RemindersCreateRequest.Attachments []string attachments,omitempty
+RemindersCreateRequest.Body string body,omitempty
+RemindersCreateRequest.By *sdk.Actor by,omitempty
+RemindersCreateRequest.Check string check,omitempty
+RemindersCreateRequest.Content string content,omitempty
+RemindersCreateRequest.Cycle sdk.Cycle cycle,omitempty
+RemindersCreateRequest.Difficulty sdk.Difficulty difficulty,omitempty
+RemindersCreateRequest.Follow sdk.Follow follow,omitempty
+RemindersCreateRequest.Owner string owner,omitempty
+RemindersCreateRequest.Room string room,omitempty
+RemindersCreateRequest.Source string source,omitempty
+RemindersCreateResponse struct
+RemindersCreateResponse.Reminder *sdk.Reminder reminder,omitempty
+RemindersDoingRequest struct
+RemindersDoingRequest.By *sdk.Actor by,omitempty
+RemindersDoingRequest.ID string id,omitempty
+RemindersDoingResponse struct
+RemindersDoingResponse.Reminder *sdk.Reminder reminder,omitempty
+RemindersDoneRequest struct
+RemindersDoneRequest.By *sdk.Actor by,omitempty
+RemindersDoneRequest.ID string id,omitempty
+RemindersDoneResponse struct
+RemindersDoneResponse.Reminder *sdk.Reminder reminder,omitempty
+RemindersGetRequest struct
+RemindersGetRequest.ID string id,omitempty
+RemindersGetResponse struct
+RemindersGetResponse.Reminder *sdk.Reminder reminder,omitempty
+RemindersListRequest struct
+RemindersListRequest.IncludeArchived bool include_archived
+RemindersListRequest.Owner string owner,omitempty
+RemindersListRequest.Page *sdk.PageRequest page,omitempty
+RemindersListRequest.Query sdk.ReminderQuery query,omitempty
+RemindersListRequest.Statuses []sdk.ReminderStatus statuses,omitempty
+RemindersListResponse struct
+RemindersListResponse.Page *sdk.PageResponse page,omitempty
+RemindersListResponse.Reminders []sdk.Reminder reminders,omitempty
+RemindersSnoozeRequest struct
+RemindersSnoozeRequest.By *sdk.Actor by,omitempty
+RemindersSnoozeRequest.ID string id,omitempty
+RemindersSnoozeRequest.Until string until,omitempty
+RemindersSnoozeResponse struct
+RemindersSnoozeResponse.Reminder *sdk.Reminder reminder,omitempty
+RemindersUpdateRequest struct
+RemindersUpdateRequest.AddAttachments []string add_attachments,omitempty
+RemindersUpdateRequest.At *time.Time at,omitempty
+RemindersUpdateRequest.Body *string body,omitempty
+RemindersUpdateRequest.By *sdk.Actor by,omitempty
+RemindersUpdateRequest.Check *string check,omitempty
+RemindersUpdateRequest.Content *string content,omitempty
+RemindersUpdateRequest.Cycle *sdk.Cycle cycle,omitempty
+RemindersUpdateRequest.Difficulty *sdk.Difficulty difficulty,omitempty
+RemindersUpdateRequest.Follow *sdk.Follow follow,omitempty
+RemindersUpdateRequest.Goal *string goal,omitempty
+RemindersUpdateRequest.ID string id,omitempty
+RemindersUpdateRequest.Owner *string owner,omitempty
+RemindersUpdateRequest.RemoveAttachments []string remove_attachments,omitempty
+RemindersUpdateRequest.Room *string room,omitempty
+RemindersUpdateResponse struct
+RemindersUpdateResponse.Reminder *sdk.Reminder reminder,omitempty
+RemoteAccess struct
+RemoteAccess.Enabled bool enabled
+RemoteAccess.Name string name,omitempty
+RemoteAccess.URL string url,omitempty
+RepoPolicy struct
+RepoPolicy.Path string path,omitempty
+RepoPolicy.Push bool push
+RepoPolicy.Remote string remote,omitempty
+RepoPolicy.Writers []string writers,omitempty
+Requirement struct
+Requirement.ID string id,omitempty
+Requirement.Version string version,omitempty
+RosterAgent struct
+RosterAgent.AvatarURL string avatar_url,omitempty
+RosterAgent.Color string color,omitempty
+RosterAgent.ColorDark string color_dark,omitempty
+RosterAgent.Duty string duty,omitempty
+RosterAgent.Enabled bool enabled
+RosterAgent.ID string id,omitempty
+RosterAgent.Name string name,omitempty
+RosterAgent.Persona string persona,omitempty
+RosterAgent.VideoURL string video_url,omitempty
+RosterAgent.VideoURLs []string video_urls,omitempty
+Route struct
+Route.Method string method,omitempty
+Route.Path string path,omitempty
+Route.Request string request,omitempty
+Route.Response string response,omitempty
+Route.Service string service,omitempty
+Route.Stream bool stream
+RulesDecideRequest struct
+RulesDecideRequest.Accept bool accept
+RulesDecideRequest.By *sdk.Actor by,omitempty
+RulesDecideRequest.ID string id,omitempty
+RulesDecideRequest.Note string note,omitempty
+RulesDecideResponse struct
+RulesDecideResponse.Proposal *sdk.RulesProposal proposal,omitempty
+RulesDecideResponse.Version *sdk.RulesVersion version,omitempty
+RulesDiffLine struct
+RulesDiffLine.Op sdk.RulesDiffOp op,omitempty
+RulesDiffLine.Text string text
+RulesDiffOp string
+RulesDoc struct
+RulesDoc.Exists bool exists
+RulesDoc.ID string id,omitempty
+RulesDoc.Path string path,omitempty
+RulesDoc.Pending int pending,omitempty
+RulesDoc.Problem string problem,omitempty
+RulesDoc.Rank int rank,omitempty
+RulesDoc.Revision string revision,omitempty
+RulesDoc.Section string section,omitempty
+RulesDoc.Title string title,omitempty
+RulesGetRequest struct
+RulesGetRequest.Doc string doc,omitempty
+RulesGetResponse struct
+RulesGetResponse.Doc *sdk.RulesDoc doc,omitempty
+RulesGetResponse.Text string text,omitempty
+RulesHistoryRequest struct
+RulesHistoryRequest.Doc string doc,omitempty
+RulesHistoryResponse struct
+RulesHistoryResponse.Versions []sdk.RulesVersion versions,omitempty
+RulesListRequest struct
+RulesListResponse struct
+RulesListResponse.Docs []sdk.RulesDoc docs,omitempty
+RulesListResponse.Problem string problem,omitempty
+RulesProposal struct
+RulesProposal.Base string base,omitempty
+RulesProposal.CreatedAt time.Time created_at,omitempty
+RulesProposal.DecidedAt time.Time decided_at,omitempty
+RulesProposal.DecidedBy string decided_by,omitempty
+RulesProposal.Diff []sdk.RulesDiffLine diff,omitempty
+RulesProposal.Doc string doc,omitempty
+RulesProposal.From string from,omitempty
+RulesProposal.ID string id,omitempty
+RulesProposal.Note string note,omitempty
+RulesProposal.Notice string notice,omitempty
+RulesProposal.Section string section,omitempty
+RulesProposal.Stale bool stale,omitempty
+RulesProposal.Status sdk.RulesProposalStatus status,omitempty
+RulesProposal.Text string text,omitempty
+RulesProposal.Version string version,omitempty
+RulesProposal.Why string why,omitempty
+RulesProposalStatus string
+RulesProposalsRequest struct
+RulesProposalsRequest.Doc string doc,omitempty
+RulesProposalsRequest.Statuses []sdk.RulesProposalStatus statuses,omitempty
+RulesProposalsResponse struct
+RulesProposalsResponse.Proposals []sdk.RulesProposal proposals,omitempty
+RulesProposeRequest struct
+RulesProposeRequest.By *sdk.Actor by,omitempty
+RulesProposeRequest.Doc string doc,omitempty
+RulesProposeRequest.Section string section,omitempty
+RulesProposeRequest.Text string text,omitempty
+RulesProposeRequest.Why string why,omitempty
+RulesProposeResponse struct
+RulesProposeResponse.Proposal *sdk.RulesProposal proposal,omitempty
+RulesRestoreRequest struct
+RulesRestoreRequest.By *sdk.Actor by,omitempty
+RulesRestoreRequest.ID string id,omitempty
+RulesRestoreRequest.Note string note,omitempty
+RulesRestoreRequest.Revision string revision,omitempty
+RulesRestoreResponse struct
+RulesRestoreResponse.Doc *sdk.RulesDoc doc,omitempty
+RulesRestoreResponse.Version *sdk.RulesVersion version,omitempty
+RulesSaveRequest struct
+RulesSaveRequest.By *sdk.Actor by,omitempty
+RulesSaveRequest.Doc string doc,omitempty
+RulesSaveRequest.Note string note,omitempty
+RulesSaveRequest.Revision string revision,omitempty
+RulesSaveRequest.Text string text,omitempty
+RulesSaveResponse struct
+RulesSaveResponse.Doc *sdk.RulesDoc doc,omitempty
+RulesSaveResponse.Version *sdk.RulesVersion version,omitempty
+RulesVersion struct
+RulesVersion.By string by,omitempty
+RulesVersion.CreatedAt time.Time created_at,omitempty
+RulesVersion.Doc string doc,omitempty
+RulesVersion.ID string id,omitempty
+RulesVersion.Note string note,omitempty
+RulesVersion.Proposal string proposal,omitempty
+RulesVersion.RestoredFrom string restored_from,omitempty
+RulesVersion.Source sdk.RulesVersionSource source,omitempty
+RulesVersion.Text string text,omitempty
+RulesVersion.Title string title,omitempty
+RulesVersionRequest struct
+RulesVersionRequest.Against string against,omitempty
+RulesVersionRequest.ID string id,omitempty
+RulesVersionResponse struct
+RulesVersionResponse.Against string against,omitempty
+RulesVersionResponse.Diff []sdk.RulesDiffLine diff,omitempty
+RulesVersionResponse.Version *sdk.RulesVersion version,omitempty
+RulesVersionSource string
+SchedulerListJobsRequest struct
+SchedulerListJobsRequest.Agent string agent,omitempty
+SchedulerListJobsRequest.IncludeArchived bool include_archived,omitempty
+SchedulerListJobsResponse struct
+SchedulerListJobsResponse.Jobs []sdk.Job jobs,omitempty
+SchedulerRemoveJobRequest struct
+SchedulerRemoveJobRequest.By *sdk.Actor by,omitempty
+SchedulerRemoveJobRequest.ID string id,omitempty
+SchedulerRemoveJobResponse struct
+SchedulerRemoveJobResponse.Archived bool archived
+SchedulerRemoveJobResponse.Job *sdk.Job job,omitempty
+SchedulerRunJobRequest struct
+SchedulerRunJobRequest.By *sdk.Actor by,omitempty
+SchedulerRunJobRequest.ID string id,omitempty
+SchedulerRunJobResponse struct
+SchedulerRunJobResponse.At time.Time at,omitempty
+SchedulerRunJobResponse.Job *sdk.Job job,omitempty
+SchedulerSaveJobRequest struct
+SchedulerSaveJobRequest.By *sdk.Actor by,omitempty
+SchedulerSaveJobRequest.Job *sdk.Job job,omitempty
+SchedulerSaveJobResponse struct
+SchedulerSaveJobResponse.Job *sdk.Job job,omitempty
+SchedulerSetJobRequest struct
+SchedulerSetJobRequest.Body *string body,omitempty
+SchedulerSetJobRequest.By *sdk.Actor by,omitempty
+SchedulerSetJobRequest.Cron []string cron,omitempty
+SchedulerSetJobRequest.Enabled *bool enabled,omitempty
+SchedulerSetJobRequest.ID string id,omitempty
+SchedulerSetJobRequest.Name *string name,omitempty
+SchedulerSetJobResponse struct
+SchedulerSetJobResponse.Job *sdk.Job job,omitempty
+Session struct
+Session.Account string account,omitempty
+Session.Agent string agent,omitempty
+Session.Attach string attach,omitempty
+Session.Cwd string cwd,omitempty
+Session.Effort string effort,omitempty
+Session.Engine string engine,omitempty
+Session.EngineSessionID string engine_session_id,omitempty
+Session.Kind sdk.SessionKind kind,omitempty
+Session.LastCommand *sdk.SessionCommandNote last_command,omitempty
+Session.LastEvent string last_event,omitempty
+Session.LastEventAt time.Time last_event_at,omitempty
+Session.LastTurnEndAt time.Time last_turn_end_at,omitempty
+Session.LastUserAt time.Time last_user_at,omitempty
+Session.LimitedUntil time.Time limited_until,omitempty
+Session.Messages []sdk.SessionMessage messages,omitempty
+Session.Model string model,omitempty
+Session.ModelLabel string model_label,omitempty
+Session.Name string name,omitempty
+Session.Pending *sdk.Pending pending,omitempty
+Session.QueuedAt time.Time queued_at,omitempty
+Session.RemoteAccess *sdk.RemoteAccess remote_access,omitempty
+Session.State sdk.SessionState state,omitempty
+Session.StateSince time.Time state_since,omitempty
+Session.Task string task,omitempty
+SessionChatRequest struct
+SessionChatRequest.Follow bool follow
+SessionChatRequest.Session string session,omitempty
+SessionChatRequest.SinceUuid string since_uuid,omitempty
+SessionChatResponse struct
+SessionChatResponse.Message *sdk.ChatMessage message,omitempty
+SessionCloseRequest struct
+SessionCloseRequest.Name string name,omitempty
+SessionCloseResponse struct
+SessionCommand string
+SessionCommandNote struct
+SessionCommandNote.Arg string arg,omitempty
+SessionCommandNote.At time.Time at,omitempty
+SessionCommandNote.By string by,omitempty
+SessionCommandNote.Command sdk.SessionCommand command,omitempty
+SessionCommandRequest struct
+SessionCommandRequest.Arg string arg,omitempty
+SessionCommandRequest.By *sdk.Actor by,omitempty
+SessionCommandRequest.Command sdk.SessionCommand command,omitempty
+SessionCommandRequest.Session string session,omitempty
+SessionCommandResponse struct
+SessionCommandResponse.Note *sdk.SessionCommandNote note,omitempty
+SessionGetRequest struct
+SessionGetRequest.Name string name,omitempty
+SessionGetResponse struct
+SessionGetResponse.Session *sdk.Session session,omitempty
+SessionKind string
+SessionListRequest struct
+SessionListRequest.Agent string agent,omitempty
+SessionListRequest.States []sdk.SessionState states,omitempty
+SessionListResponse struct
+SessionListResponse.Sessions []sdk.Session sessions,omitempty
+SessionListThreadsRequest struct
+SessionListThreadsRequest.Agent string agent,omitempty
+SessionListThreadsRequest.IncludeStopped bool include_stopped
+SessionListThreadsResponse struct
+SessionListThreadsResponse.Threads []sdk.ThreadSummary threads,omitempty
+SessionListThreadsResponse.WaitingUser int32 waiting_user
+SessionMarkSeenRequest struct
+SessionMarkSeenRequest.By *sdk.Actor by,omitempty
+SessionMarkSeenRequest.Session string session,omitempty
+SessionMarkSeenRequest.Uuid string uuid,omitempty
+SessionMarkSeenResponse struct
+SessionMarkSeenResponse.Thread *sdk.ThreadSummary thread,omitempty
+SessionMessage struct
+SessionMessage.Body string body,omitempty
+SessionMessage.CreatedAt time.Time created_at,omitempty
+SessionMessage.From string from,omitempty
+SessionMessage.ID string id,omitempty
+SessionMessage.Interject bool interject,omitempty
+SessionMessage.Lifecycle sdk.Lifecycle lifecycle,omitempty
+SessionMessage.Reason string reason,omitempty
+SessionMessage.ReasonDetail string reason_detail,omitempty
+SessionMessage.ReasonKind sdk.EngineErrorKind reason_kind,omitempty
+SessionMessage.Wait sdk.MessageWait wait,omitempty
+SessionMessage.WaitUntil time.Time wait_until,omitempty
+SessionOpenRequest struct
+SessionOpenRequest.Agent string agent,omitempty
+SessionOpenRequest.By *sdk.Actor by,omitempty
+SessionOpenRequest.Cwd string cwd,omitempty
+SessionOpenRequest.FirstMessage string first_message,omitempty
+SessionOpenRequest.Kind sdk.SessionKind kind,omitempty
+SessionOpenRequest.Name string name,omitempty
+SessionOpenRequest.Topic string topic,omitempty
+SessionOpenRequest.Wake bool wake,omitempty
+SessionOpenResponse struct
+SessionOpenResponse.Session *sdk.Session session,omitempty
+SessionResolveRequest struct
+SessionResolveRequest.By *sdk.Actor by,omitempty
+SessionResolveRequest.Decision *sdk.Decision decision,omitempty
+SessionResolveRequest.PendingID string pending_id,omitempty
+SessionResolveRequest.Session string session,omitempty
+SessionResolveResponse struct
+SessionResolveResponse.Applied bool applied
+SessionRotateRequest struct
+SessionRotateRequest.Name string name,omitempty
+SessionRotateResponse struct
+SessionRotateResponse.Session *sdk.Session session,omitempty
+SessionState string
+SessionWatchRequest struct
+SessionWatchRequest.Agent string agent,omitempty
+SessionWatchResponse struct
+SessionWatchResponse.Session *sdk.Session session,omitempty
+SessionWatchThreadsRequest struct
+SessionWatchThreadsRequest.Agent string agent,omitempty
+SessionWatchThreadsResponse struct
+SessionWatchThreadsResponse.Thread *sdk.ThreadSummary thread,omitempty
+SessionWatchThreadsResponse.WaitingUser int32 waiting_user
+ShareRequest struct
+ShareRequest.Agent string agent,omitempty
+ShareRequest.Path string path,omitempty
+ShareResponse struct
+ShareResponse.Mime string mime,omitempty
+ShareResponse.PublicBase string public_base,omitempty
+ShareResponse.URL string url,omitempty
+SyncAgent struct
+SyncAgent.Action string action,omitempty
+SyncAgent.Added int32 added
+SyncAgent.ID string id,omitempty
+SyncAgent.Persona string persona,omitempty
+SyncAgent.PersonaFrom string persona_from,omitempty
+SyncAgent.Removed int32 removed
+SyncJob struct
+SyncJob.Action string action,omitempty
+SyncJob.Agent string agent,omitempty
+SyncJob.ID string id,omitempty
+SystemAccountsRequest struct
+SystemAccountsResponse struct
+SystemAccountsResponse.Accounts []sdk.Account accounts,omitempty
+SystemAccountsResponse.Engines []string engines,omitempty
+SystemBackupSweepRequest struct
+SystemBackupSweepRequest.By *sdk.Actor by,omitempty
+SystemBackupSweepRequest.Run bool run,omitempty
+SystemBackupSweepResponse struct
+SystemBackupSweepResponse.Report *sdk.BackupSweepReport report,omitempty
+SystemBackupSweepResponse.Running bool running
+SystemBackupsRequest struct
+SystemBackupsRequest.Apply bool apply,omitempty
+SystemBackupsRequest.By *sdk.Actor by,omitempty
+SystemBackupsRequest.Days int32 days,omitempty
+SystemBackupsRequest.Keep int32 keep,omitempty
+SystemBackupsRequest.Prune bool prune,omitempty
+SystemBackupsResponse struct
+SystemBackupsResponse.Applied bool applied
+SystemBackupsResponse.Files []sdk.BackupFile files,omitempty
+SystemBackupsResponse.Freed int64 freed
+SystemBackupsResponse.Pruned int32 pruned
+SystemBackupsResponse.Total int64 total
+SystemDoctorRequest struct
+SystemDoctorRequest.Groups []sdk.DoctorGroup groups,omitempty
+SystemDoctorResponse struct
+SystemDoctorResponse.Checks []sdk.DoctorCheck checks,omitempty
+SystemGetConfigRequest struct
+SystemGetConfigRequest.Key string key,omitempty
+SystemGetConfigResponse struct
+SystemGetConfigResponse.Key string key,omitempty
+SystemGetConfigResponse.Text string text,omitempty
+SystemGetConfigResponse.Value string value,omitempty
+SystemGetModeRequest struct
+SystemGetModeResponse struct
+SystemGetModeResponse.BoardAPI int board_api,omitempty
+SystemGetModeResponse.ChatDisplay sdk.ChatDisplay chat_display,omitempty
+SystemGetModeResponse.Env sdk.HomeEnv env,omitempty
+SystemGetModeResponse.Label string label,omitempty
+SystemGetModeResponse.Machine string machine,omitempty
+SystemGetModeResponse.Mode sdk.HomeMode mode,omitempty
+SystemGetModeResponse.PublicURL string public_url,omitempty
+SystemGetModeResponse.UserName string user_name,omitempty
+SystemGetModeResponse.Version string version,omitempty
+SystemGetWorkMaxRequest struct
+SystemGetWorkMaxResponse struct
+SystemGetWorkMaxResponse.Default int default,omitempty
+SystemGetWorkMaxResponse.Max int max,omitempty
+SystemGetWorkMaxResponse.Min int min,omitempty
+SystemGetWorkMaxResponse.Set bool set,omitempty
+SystemGetWorkMaxResponse.WorkMax int work_max,omitempty
+SystemPreflightRequest struct
+SystemPreflightResponse struct
+SystemPreflightResponse.Checks []sdk.PreflightCheck checks,omitempty
+SystemReportRequest struct
+SystemReportRequest.Detail bool detail,omitempty
+SystemReportResponse struct
+SystemReportResponse.Body string body,omitempty
+SystemReportResponse.IssueLink string issue_link,omitempty
+SystemReportResponse.Title string title,omitempty
+SystemSaveAccountRequest struct
+SystemSaveAccountRequest.Account sdk.Account account
+SystemSaveAccountRequest.By *sdk.Actor by,omitempty
+SystemSaveAccountRequest.MakeDefault bool make_default
+SystemSaveAccountResponse struct
+SystemSaveAccountResponse.Backup string backup,omitempty
+SystemSetChatDisplayRequest struct
+SystemSetChatDisplayRequest.By *sdk.Actor by,omitempty
+SystemSetChatDisplayRequest.ChatDisplay sdk.ChatDisplay chat_display,omitempty
+SystemSetChatDisplayResponse struct
+SystemSetChatDisplayResponse.Backup string backup,omitempty
+SystemSetChatDisplayResponse.ChatDisplay sdk.ChatDisplay chat_display,omitempty
+SystemSetConfigRequest struct
+SystemSetConfigRequest.By *sdk.Actor by,omitempty
+SystemSetConfigRequest.Key string key,omitempty
+SystemSetConfigRequest.Value string value,omitempty
+SystemSetConfigResponse struct
+SystemSetConfigResponse.Backup string backup,omitempty
+SystemSetConfigResponse.Key string key,omitempty
+SystemSetConfigResponse.Value string value,omitempty
+SystemSetModeRequest struct
+SystemSetModeRequest.By *sdk.Actor by,omitempty
+SystemSetModeRequest.Mode sdk.HomeMode mode,omitempty
+SystemSetModeResponse struct
+SystemSetModeResponse.Backup string backup,omitempty
+SystemSetModeResponse.Mode sdk.HomeMode mode,omitempty
+SystemSetPermissionLevelsRequest struct
+SystemSetPermissionLevelsRequest.By *sdk.Actor by,omitempty
+SystemSetPermissionLevelsRequest.DefaultLevel sdk.PermissionLevel default_level,omitempty
+SystemSetPermissionLevelsRequest.Levels []sdk.AgentPermission levels,omitempty
+SystemSetPermissionLevelsResponse struct
+SystemSetPermissionLevelsResponse.Agents []sdk.AgentPermission agents,omitempty
+SystemSetPermissionLevelsResponse.Backup string backup,omitempty
+SystemSetWorkMaxRequest struct
+SystemSetWorkMaxRequest.By *sdk.Actor by,omitempty
+SystemSetWorkMaxRequest.WorkMax int work_max,omitempty
+SystemSetWorkMaxResponse struct
+SystemSetWorkMaxResponse.Backup string backup,omitempty
+SystemSetWorkMaxResponse.WorkMax int work_max,omitempty
+SystemTrustRequest struct
+SystemTrustRequest.DeniedDays int32 denied_days,omitempty
+SystemTrustRequest.Snapshot bool snapshot,omitempty
+SystemTrustResponse struct
+SystemTrustResponse.Agents []sdk.AgentPermission agents,omitempty
+SystemTrustResponse.Changes []string changes,omitempty
+SystemTrustResponse.DefaultLevel sdk.PermissionLevel default_level,omitempty
+SystemTrustResponse.Denied []sdk.DeniedAction denied,omitempty
+SystemTrustResponse.Policy *sdk.PermissionPolicy policy,omitempty
+SystemTrustResponse.SnapshotPath string snapshot_path,omitempty
+SystemTrustResponse.Sources []sdk.PermissionSource sources,omitempty
+SystemUsageRequest struct
+SystemUsageRequest.Account string account,omitempty
+SystemUsageResponse struct
+SystemUsageResponse.Accounts []sdk.AccountUsage accounts,omitempty
+Task struct
+Task.AcceptedAt time.Time accepted_at,omitempty
+Task.AcceptedBy string accepted_by,omitempty
+Task.Agent string agent,omitempty
+Task.Archived bool archived
+Task.Ask string ask,omitempty
+Task.Attachments []string attachments,omitempty
+Task.Body string body,omitempty
+Task.By string by,omitempty
+Task.ClosedAt time.Time closed_at,omitempty
+Task.CreatedAt time.Time created_at,omitempty
+Task.Criteria string criteria,omitempty
+Task.CriteriaOwner bool criteria_owner,omitempty
+Task.EngineSession string engine_session,omitempty
+Task.Goal string goal,omitempty
+Task.ID string id,omitempty
+Task.LastNudgedAt time.Time last_nudged_at,omitempty
+Task.Links []string links,omitempty
+Task.Nudges int32 nudges
+Task.Proposed sdk.TaskStatus proposed,omitempty
+Task.Result string result,omitempty
+Task.ReviewNote string review_note,omitempty
+Task.Status sdk.TaskStatus status,omitempty
+Task.Title string title,omitempty
+Task.Type sdk.TaskType type,omitempty
+Task.UpdatedAt time.Time updated_at,omitempty
+Task.Verify sdk.Verify verify,omitempty
+Task.VerifyHow string verify_how,omitempty
+Task.WaitingSince time.Time waiting_since,omitempty
+TaskFollowPrefs struct
+TaskFollowPrefs.NudgeAt string nudge_at,omitempty
+TaskFollowPrefs.NudgeEveryDays int32 nudge_every_days
+TaskFollowPrefs.NudgeMax int32 nudge_max
+TaskFollowPrefs.StaleDays int32 stale_days
+TaskStatus string
+TaskType string
+TasksAcceptRequest struct
+TasksAcceptRequest.By *sdk.Actor by,omitempty
+TasksAcceptRequest.ID string id,omitempty
+TasksAcceptResponse struct
+TasksAcceptResponse.Task *sdk.Task task,omitempty
+TasksArchiveRequest struct
+TasksArchiveRequest.By *sdk.Actor by,omitempty
+TasksArchiveRequest.IDS []string ids,omitempty
+TasksArchiveResponse struct
+TasksArchiveResponse.Archived []string archived,omitempty
+TasksCloseRequest struct
+TasksCloseRequest.AddLinks []string add_links,omitempty
+TasksCloseRequest.By *sdk.Actor by,omitempty
+TasksCloseRequest.ID string id,omitempty
+TasksCloseRequest.Result string result,omitempty
+TasksCloseRequest.Status sdk.TaskStatus status,omitempty
+TasksCloseRequest.Verify sdk.Verify verify,omitempty
+TasksCloseRequest.VerifyHow string verify_how,omitempty
+TasksCloseResponse struct
+TasksCloseResponse.Task *sdk.Task task,omitempty
+TasksCreateRequest struct
+TasksCreateRequest.Agent string agent,omitempty
+TasksCreateRequest.Ask string ask,omitempty
+TasksCreateRequest.Attachments []string attachments,omitempty
+TasksCreateRequest.Body string body,omitempty
+TasksCreateRequest.By *sdk.Actor by,omitempty
+TasksCreateRequest.Criteria string criteria,omitempty
+TasksCreateRequest.CriteriaFromOwner bool criteria_from_owner,omitempty
+TasksCreateRequest.Goal string goal,omitempty
+TasksCreateRequest.Result string result,omitempty
+TasksCreateRequest.Status sdk.TaskStatus status,omitempty
+TasksCreateRequest.Title string title,omitempty
+TasksCreateRequest.Type sdk.TaskType type,omitempty
+TasksCreateRequest.Verify sdk.Verify verify,omitempty
+TasksCreateRequest.VerifyHow string verify_how,omitempty
+TasksCreateResponse struct
+TasksCreateResponse.Task *sdk.Task task,omitempty
+TasksGetRequest struct
+TasksGetRequest.ID string id,omitempty
+TasksGetResponse struct
+TasksGetResponse.Task *sdk.Task task,omitempty
+TasksListRequest struct
+TasksListRequest.Agent string agent,omitempty
+TasksListRequest.Goal string goal,omitempty
+TasksListRequest.IdeasOnly bool ideas_only
+TasksListRequest.IncludeArchived bool include_archived
+TasksListRequest.Page *sdk.PageRequest page,omitempty
+TasksListRequest.Statuses []sdk.TaskStatus statuses,omitempty
+TasksListResponse struct
+TasksListResponse.Page *sdk.PageResponse page,omitempty
+TasksListResponse.Tasks []sdk.Task tasks,omitempty
+TasksReconcileRequest struct
+TasksReconcileRequest.Agent string agent,omitempty
+TasksReconcileResponse struct
+TasksReconcileResponse.ShelvedIDS []string shelved_ids,omitempty
+TasksReconcileResponse.Tasks []sdk.Task tasks,omitempty
+TasksRejectRequest struct
+TasksRejectRequest.By *sdk.Actor by,omitempty
+TasksRejectRequest.ID string id,omitempty
+TasksRejectRequest.Note string note,omitempty
+TasksRejectResponse struct
+TasksRejectResponse.Task *sdk.Task task,omitempty
+TasksStaleRequest struct
+TasksStaleResponse struct
+TasksStaleResponse.Tasks []sdk.Task tasks,omitempty
+TasksSubmitRequest struct
+TasksSubmitRequest.AddLinks []string add_links,omitempty
+TasksSubmitRequest.By *sdk.Actor by,omitempty
+TasksSubmitRequest.ID string id,omitempty
+TasksSubmitRequest.Proposed sdk.TaskStatus proposed,omitempty
+TasksSubmitRequest.Result string result,omitempty
+TasksSubmitRequest.Verify sdk.Verify verify,omitempty
+TasksSubmitRequest.VerifyHow string verify_how,omitempty
+TasksSubmitResponse struct
+TasksSubmitResponse.Task *sdk.Task task,omitempty
+TasksUpdateRequest struct
+TasksUpdateRequest.AddAttachments []string add_attachments,omitempty
+TasksUpdateRequest.AddLinks []string add_links,omitempty
+TasksUpdateRequest.Agent *string agent,omitempty
+TasksUpdateRequest.Ask *string ask,omitempty
+TasksUpdateRequest.Body *string body,omitempty
+TasksUpdateRequest.By *sdk.Actor by,omitempty
+TasksUpdateRequest.Criteria *string criteria,omitempty
+TasksUpdateRequest.CriteriaFromOwner bool criteria_from_owner,omitempty
+TasksUpdateRequest.EngineSession *string engine_session,omitempty
+TasksUpdateRequest.Goal *string goal,omitempty
+TasksUpdateRequest.ID string id,omitempty
+TasksUpdateRequest.RemoveAttachments []string remove_attachments,omitempty
+TasksUpdateRequest.Result *string result,omitempty
+TasksUpdateRequest.Status *sdk.TaskStatus status,omitempty
+TasksUpdateRequest.Title *string title,omitempty
+TasksUpdateRequest.Type *sdk.TaskType type,omitempty
+TasksUpdateResponse struct
+TasksUpdateResponse.Task *sdk.Task task,omitempty
+TasksWaitingRequest struct
+TasksWaitingResponse struct
+TasksWaitingResponse.Tasks []sdk.WaitingTask tasks,omitempty
+ThreadStatus string
+ThreadSummary struct
+ThreadSummary.Activity string activity,omitempty
+ThreadSummary.Agent string agent,omitempty
+ThreadSummary.BackgroundTasks int32 background_tasks
+ThreadSummary.Kind sdk.SessionKind kind,omitempty
+ThreadSummary.LastAssistantAt time.Time last_assistant_at,omitempty
+ThreadSummary.LastPreview string last_preview,omitempty
+ThreadSummary.LastTurnEndAt time.Time last_turn_end_at,omitempty
+ThreadSummary.LimitedUntil time.Time limited_until,omitempty
+ThreadSummary.Name string name,omitempty
+ThreadSummary.Queued int32 queued
+ThreadSummary.SeenUuid string seen_uuid,omitempty
+ThreadSummary.Status sdk.ThreadStatus status,omitempty
+ThreadSummary.StatusSince time.Time status_since,omitempty
+ThreadSummary.Task string task,omitempty
+ThreadSummary.Title string title,omitempty
+ThreadSummary.Unread int32 unread
+ThreadSummary.Waiting []sdk.WaitingReason waiting,omitempty
+Tier string
+TimeRange struct
+TimeRange.From time.Time from,omitempty
+TimeRange.To time.Time to,omitempty
+UpdateApplyRequest struct
+UpdateApplyRequest.By *sdk.Actor by,omitempty
+UpdateApplyRequest.Version string version,omitempty
+UpdateCheckRequest struct
+UpdateCheckRequest.By *sdk.Actor by,omitempty
+UpdateDecideRequest struct
+UpdateDecideRequest.By *sdk.Actor by,omitempty
+UpdateDecideRequest.Decision string decision,omitempty
+UpdateDecideRequest.Version string version,omitempty
+UpdateInfo struct
+UpdateInfo.Channel string channel,omitempty
+UpdateInfo.CheckedAt time.Time checked_at,omitempty
+UpdateInfo.CoreFound bool core_found
+UpdateInfo.Current string current,omitempty
+UpdateInfo.Decision string decision,omitempty
+UpdateInfo.DecisionAt time.Time decision_at,omitempty
+UpdateInfo.Detail string detail,omitempty
+UpdateInfo.Notes string notes,omitempty
+UpdateInfo.Rescue bool rescue,omitempty
+UpdateInfo.Skipped []string skipped,omitempty
+UpdateInfo.State *sdk.UpdateState state,omitempty
+UpdateInfo.Tag string tag,omitempty
+UpdateInfo.Target string target,omitempty
+UpdateInfo.TonightAt string tonight_at,omitempty
+UpdateItem struct
+UpdateItem.ConflictsWithFork bool conflicts_with_fork
+UpdateItem.Diff string diff,omitempty
+UpdateItem.Path string path,omitempty
+UpdateItem.Summary string summary,omitempty
+UpdateRollbackRequest struct
+UpdateRollbackRequest.By *sdk.Actor by,omitempty
+UpdateState struct
+UpdateState.FinishedAt time.Time finished_at,omitempty
+UpdateState.From string from,omitempty
+UpdateState.Kind string kind,omitempty
+UpdateState.Log string log,omitempty
+UpdateState.Next string next,omitempty
+UpdateState.OK bool ok
+UpdateState.Outcome string outcome,omitempty
+UpdateState.Phase string phase,omitempty
+UpdateState.Reason string reason,omitempty
+UpdateState.Restored bool restored,omitempty
+UpdateState.StartedAt time.Time started_at,omitempty
+UpdateState.To string to,omitempty
+UpdateStatusRequest struct
+UsageWindow struct
+UsageWindow.Expired bool expired,omitempty
+UsageWindow.Hours int32 hours
+UsageWindow.Kind sdk.UsageWindowKind kind,omitempty
+UsageWindow.ResetsAt time.Time resets_at,omitempty
+UsageWindow.Rolled bool rolled,omitempty
+UsageWindow.UsedRatio float64 used_ratio
+UsageWindowKind string
+VaultAppendRequest struct
+VaultAppendRequest.By *sdk.Actor by,omitempty
+VaultAppendRequest.ID string id,omitempty
+VaultAppendRequest.Kind string kind,omitempty
+VaultAppendRequest.Line string line,omitempty
+VaultAppendResponse struct
+VaultAppendResponse.Revision string revision,omitempty
+VaultArchiveRequest struct
+VaultArchiveRequest.By *sdk.Actor by,omitempty
+VaultArchiveRequest.ID string id,omitempty
+VaultArchiveRequest.Kind string kind,omitempty
+VaultArchiveResponse struct
+VaultChangesRequest struct
+VaultChangesRequest.Before string before,omitempty
+VaultChangesRequest.By string by,omitempty
+VaultChangesRequest.Kind string kind,omitempty
+VaultChangesRequest.Limit int32 limit,omitempty
+VaultChangesRequest.Since string since,omitempty
+VaultChangesRequest.Until string until,omitempty
+VaultChangesResponse struct
+VaultChangesResponse.Items []sdk.ChangeEntry items,omitempty
+VaultChangesResponse.NextBefore string next_before,omitempty
+VaultGetRequest struct
+VaultGetRequest.ID string id,omitempty
+VaultGetRequest.Kind string kind,omitempty
+VaultGetResponse struct
+VaultGetResponse.Record *sdk.Record record,omitempty
+VaultListRequest struct
+VaultListRequest.IncludeArchived bool include_archived
+VaultListRequest.Kind string kind,omitempty
+VaultListRequest.Page *sdk.PageRequest page,omitempty
+VaultListRequest.Where map[string]string where,omitempty
+VaultListResponse struct
+VaultListResponse.Page *sdk.PageResponse page,omitempty
+VaultListResponse.Records []sdk.Record records,omitempty
+VaultNextIdRequest struct
+VaultNextIdRequest.Kind string kind,omitempty
+VaultNextIdResponse struct
+VaultNextIdResponse.ID string id,omitempty
+VaultPatchRequest struct
+VaultPatchRequest.By *sdk.Actor by,omitempty
+VaultPatchRequest.ExpectedRevision string expected_revision,omitempty
+VaultPatchRequest.ID string id,omitempty
+VaultPatchRequest.Kind string kind,omitempty
+VaultPatchRequest.Set map[string]interface {} set,omitempty
+VaultPatchRequest.Unset []string unset,omitempty
+VaultPatchResponse struct
+VaultPatchResponse.Record *sdk.Record record,omitempty
+VaultPutRequest struct
+VaultPutRequest.By *sdk.Actor by,omitempty
+VaultPutRequest.ExpectedRevision string expected_revision,omitempty
+VaultPutRequest.Record *sdk.Record record,omitempty
+VaultPutResponse struct
+VaultPutResponse.Record *sdk.Record record,omitempty
+VaultWatchRequest struct
+VaultWatchRequest.Kinds []string kinds,omitempty
+VaultWatchResponse struct
+VaultWatchResponse.At time.Time at,omitempty
+VaultWatchResponse.By *sdk.Actor by,omitempty
+VaultWatchResponse.Record *sdk.Record record,omitempty
+VaultWatchResponse.Type sdk.ChangeType type,omitempty
+Verify string
+WaitingReason string
+WaitingTask struct
+WaitingTask.Task *sdk.Task task,omitempty
+WaitingTask.WaitingDays int32 waiting_days
+WebAnswerBootPromptRequest struct
+WebAnswerBootPromptRequest.By *sdk.Actor by,omitempty
+WebAnswerBootPromptRequest.Choice string choice,omitempty
+WebAnswerBootPromptRequest.ID string id,omitempty
+WebAnswerBootPromptRequest.Session string session,omitempty
+WebAnswerBootPromptResponse struct
+WebBootPrompt struct
+WebBootPrompt.AgentName string agent_name,omitempty
+WebBootPrompt.Choices []string choices,omitempty
+WebBootPrompt.ID string id,omitempty
+WebBootPrompt.Session string session,omitempty
+WebBootPrompt.Title string title,omitempty
+WebGetAgentsRequest struct
+WebGetAgentsResponse struct
+WebGetAgentsResponse.Accounts []string accounts,omitempty
+WebGetAgentsResponse.Agents []sdk.AgentSetting agents,omitempty
+WebGetBootPromptsRequest struct
+WebGetBootPromptsResponse struct
+WebGetBootPromptsResponse.Prompts []sdk.WebBootPrompt prompts,omitempty
+WebGetHealthRequest struct
+WebGetHealthResponse struct
+WebGetHealthResponse.Items []sdk.HealthItem items,omitempty
+WebGetMenuPrefsRequest struct
+WebGetMenuPrefsResponse struct
+WebGetMenuPrefsResponse.Prefs *sdk.MenuPrefs prefs,omitempty
+WebGetMenuRequest struct
+WebGetMenuResponse struct
+WebGetMenuResponse.Menu *sdk.Menu menu,omitempty
+WebGetOverviewRequest struct
+WebGetOverviewResponse struct
+WebGetOverviewResponse.Approvals []sdk.Notification approvals,omitempty
+WebGetOverviewResponse.TodayReminders []sdk.Reminder today_reminders,omitempty
+WebGetOverviewResponse.Unread int32 unread
+WebGetOverviewResponse.WaitingTasks []sdk.WaitingTask waiting_tasks,omitempty
+WebGetOverviewResponse.WaitingThreads []sdk.ThreadSummary waiting_threads,omitempty
+WebGetOverviewResponse.WaitingTotal int32 waiting_total
+WebGetPagesRequest struct
+WebGetPagesResponse struct
+WebGetPagesResponse.Pages []sdk.PageInfo pages,omitempty
+WebGetPhoneRequest struct
+WebGetPhoneRequest.By *sdk.Actor by,omitempty
+WebGetPhoneRequest.Local bool local
+WebGetPhoneResponse struct
+WebGetPhoneResponse.Phone sdk.WebPhone phone
+WebGetRosterRequest struct
+WebGetRosterResponse struct
+WebGetRosterResponse.Agents []sdk.RosterAgent agents,omitempty
+WebGetSitesRequest struct
+WebGetSitesResponse struct
+WebGetSitesResponse.AllowBoards []string allow_boards,omitempty
+WebGetSitesResponse.OwnerLogin string owner_login,omitempty
+WebGetSitesResponse.Sites []sdk.WebSite sites,omitempty
+WebGetTrustRequest struct
+WebGetTrustResponse struct
+WebGetTrustResponse.Policy *sdk.PermissionPolicy policy,omitempty
+WebPhone struct
+WebPhone.Account string account,omitempty
+WebPhone.DownloadURL string download_url,omitempty
+WebPhone.Funnel bool funnel
+WebPhone.FunnelURL string funnel_url,omitempty
+WebPhone.Local bool local
+WebPhone.Mounted bool mounted
+WebPhone.Problem string problem,omitempty
+WebPhone.PushReady bool push_ready
+WebPhone.Tailscale string tailscale,omitempty
+WebPhone.URL string url,omitempty
+WebPhoneCloseFunnelRequest struct
+WebPhoneCloseFunnelRequest.By *sdk.Actor by,omitempty
+WebPhoneCloseFunnelRequest.Local bool local
+WebPhoneCloseFunnelResponse struct
+WebPhoneCloseFunnelResponse.Phone sdk.WebPhone phone
+WebPhoneSetupRequest struct
+WebPhoneSetupRequest.By *sdk.Actor by,omitempty
+WebPhoneSetupRequest.Local bool local
+WebPhoneSetupResponse struct
+WebPhoneSetupResponse.HelpURL string help_url,omitempty
+WebPhoneSetupResponse.Message string message,omitempty
+WebPhoneSetupResponse.OK bool ok
+WebPhoneSetupResponse.Phone sdk.WebPhone phone
+WebPhoneSetupResponse.Reason string reason,omitempty
+WebSetAllowBoardsRequest struct
+WebSetAllowBoardsRequest.AllowBoards []string allow_boards,omitempty
+WebSetAllowBoardsRequest.By *sdk.Actor by,omitempty
+WebSetAllowBoardsResponse struct
+WebSetAllowBoardsResponse.AllowBoards []string allow_boards,omitempty
+WebSetAllowBoardsResponse.Backup string backup,omitempty
+WebSetMenuPrefsRequest struct
+WebSetMenuPrefsRequest.By *sdk.Actor by,omitempty
+WebSetMenuPrefsRequest.Prefs *sdk.MenuPrefs prefs,omitempty
+WebSetMenuPrefsResponse struct
+WebSetMenuPrefsResponse.Prefs *sdk.MenuPrefs prefs,omitempty
+WebSetOwnerLoginRequest struct
+WebSetOwnerLoginRequest.By *sdk.Actor by,omitempty
+WebSetOwnerLoginRequest.OwnerLogin string owner_login,omitempty
+WebSetOwnerLoginResponse struct
+WebSetOwnerLoginResponse.Backup string backup,omitempty
+WebSetOwnerLoginResponse.OwnerLogin string owner_login,omitempty
+WebSetSitesRequest struct
+WebSetSitesRequest.By *sdk.Actor by,omitempty
+WebSetSitesRequest.Sites []sdk.WebSite sites,omitempty
+WebSetSitesResponse struct
+WebSetSitesResponse.Backup string backup,omitempty
+WebSetSitesResponse.Sites []sdk.WebSite sites,omitempty
+WebSite struct
+WebSite.Color string color,omitempty
+WebSite.URL string url,omitempty
+WebVoiceAnswerRequest struct
+WebVoiceAnswerRequest.Ask string ask,omitempty
+WebVoiceAnswerRequest.By *sdk.Actor by,omitempty
+WebVoiceAnswerRequest.Text string text,omitempty
+WebVoiceAnswerResponse struct
+WebVoiceAnswerResponse.Delivered bool delivered
+WebVoiceAnswerResponse.Reply string reply,omitempty
+WebVoiceSendRequest struct
+WebVoiceSendRequest.By *sdk.Actor by,omitempty
+WebVoiceSendRequest.NoWait bool no_wait,omitempty
+WebVoiceSendRequest.Text string text,omitempty
+WebVoiceSendRequest.To string to,omitempty
+WebVoiceSendResponse struct
+WebVoiceSendResponse.Agent string agent,omitempty
+WebVoiceSendResponse.AgentName string agent_name,omitempty
+WebVoiceSendResponse.Answered bool answered
+WebVoiceSendResponse.Envelope string envelope,omitempty
+WebVoiceSendResponse.Guessed bool guessed
+WebVoiceSendResponse.Question bool question
+WebVoiceSendResponse.Reply string reply,omitempty
+WebVoiceSendResponse.Speak string speak,omitempty
+WebVoiceSendResponse.Sure bool sure
+WebVoiceSendResponse.Text string text,omitempty
+enum.ActionClassCommit commit
+enum.ActionClassDelete delete
+enum.ActionClassPush push
+enum.ActionClassRead read
+enum.ActionClassSendExternal send_external
+enum.ActionClassSettings settings
+enum.ActionClassSpend spend
+enum.ActionClassWrite write
+enum.ActionVerdictAllow allow
+enum.ActionVerdictAsk ask
+enum.ActionVerdictDeny deny
+enum.AnswerNone none
+enum.AnswerUnsupported unsupported
+enum.AnswerViaAPI api
+enum.AnswerViaAuto auto
+enum.AnswerViaButton button
+enum.AnswerViaChat chat
+enum.ApprovalKindPermission permission
+enum.ApprovalKindQuestion question
+enum.BackupSweepExpired expired
+enum.BackupSweepInUse in_use
+enum.BackupSweepMisnamed misnamed
+enum.BackupSweepSkipped skipped
+enum.BackupSweepUnchecked unchecked
+enum.BoardAPILevel 1
+enum.CategoryApprove approve
+enum.CategoryDigest digest
+enum.CategoryDone done
+enum.CategoryDue due
+enum.CategoryOpening opening
+enum.ChangeTypeArchived archived
+enum.ChangeTypeCreated created
+enum.ChangeTypeUpdated updated
+enum.ChannelApp app
+enum.ChannelBoard board
+enum.ChannelLine line
+enum.ChatDisplayDefault default
+enum.ChatDisplayEngineer engineer
+enum.ChatKindAssistant assistant
+enum.ChatKindInterrupt interrupt
+enum.ChatKindNotice notice
+enum.ChatKindToolCall tool_call
+enum.ChatKindToolResult tool_result
+enum.ChatKindUser user
+enum.ClaimStateAsked asked
+enum.ClaimStateChange change
+enum.ClaimStateDone done
+enum.ClaimStateFailed failed
+enum.ClaimStateLater later
+enum.CommandBadArg bad_arg
+enum.CommandDialog dialog
+enum.CommandTyping typing
+enum.CommandUnsupported unsupported
+enum.CycleBiweekly biweekly
+enum.CycleDaily daily
+enum.CycleMonthly monthly
+enum.CycleOnce once
+enum.CycleWeekly weekly
+enum.DataExportByFolder by_folder
+enum.DataExportByPersona by_persona
+enum.DataPersonaIDExact exact
+enum.DataPersonaIDPrefix prefix
+enum.DeliverAlready already
+enum.DeliveryModeBoard board
+enum.DeliveryModeDigest digest
+enum.DeliveryModeInstant instant
+enum.DeliveryModeOff off
+enum.DifficultyEasy easy
+enum.DifficultyHard hard
+enum.DifficultyNormal normal
+enum.DoctorGroupConfig config
+enum.DoctorGroupData data
+enum.DoctorGroupPackages packages
+enum.DoctorGroupPermissions permissions
+enum.DoctorGroupPush push
+enum.DoctorGroupSchedule schedule
+enum.DoctorGroupSessions sessions
+enum.DoctorSeverityError error
+enum.DoctorSeverityOk ok
+enum.DoctorSeverityWarn warn
+enum.DownloadFixedDir fixed
+enum.EngineErrorKindAuth auth
+enum.EngineErrorKindBilling billing
+enum.EngineErrorKindOverloaded overloaded
+enum.EngineErrorKindRejected rejected
+enum.EngineErrorKindUnknown unknown
+enum.EngineEventTypeActivityEnded activity_ended
+enum.EngineEventTypeActivityStarted activity_started
+enum.EngineEventTypeIdleHint idle_hint
+enum.EngineEventTypeRateLimited rate_limited
+enum.EngineEventTypeSessionEnded session_ended
+enum.EngineEventTypeSessionStarted session_started
+enum.EngineEventTypeTurnEnded turn_ended
+enum.EngineEventTypeTurnFailed turn_failed
+enum.EngineEventTypeTurnStarted turn_started
+enum.EngineNoPlatformMessage AI 平台沒有附說明
+enum.EnvBundledPersonas EVERGENIE_BUNDLED_PERSONAS
+enum.EnvMedia EVERGENIE_MEDIA
+enum.EnvOfficialPersonas EVERGENIE_OFFICIAL_PERSONAS
+enum.EnvPrefix EVERGENIE_
+enum.EnvState EVERGENIE_STATE
+enum.EnvelopeKindAnswer answer
+enum.EnvelopeKindChat chat
+enum.EnvelopeKindDelegate delegate
+enum.EnvelopeKindEcho echo
+enum.EnvelopeKindReport report
+enum.EnvelopeKindRoutine routine
+enum.EnvelopeKindSay say
+enum.EnvelopeRouteCore core
+enum.EnvelopeRouteDirect direct
+enum.ErrorCodeConflict conflict
+enum.ErrorCodeForbidden forbidden
+enum.ErrorCodeInternal internal
+enum.ErrorCodeInvalid invalid
+enum.ErrorCodeNotFound not_found
+enum.ErrorCodeUnavailable unavailable
+enum.ExtensionKindPageSlot page_slot
+enum.ExtensionKindPromptAppend prompt_append
+enum.ExtensionKindSetting setting
+enum.FollowCheck check
+enum.FollowConfirm confirm
+enum.FollowDiscuss discuss
+enum.FollowNone none
+enum.FollowRemind remind
+enum.GoalStateActive active
+enum.GoalStateDone done
+enum.GoalStateDraft draft
+enum.GoalStateWithdrawn withdrawn
+enum.HomeBackupKindBeforeRestore before-restore
+enum.HomeBackupKindDaily daily
+enum.HomeBackupKindManual manual
+enum.HomeBackupUploadMaxBytes 2147483648
+enum.HomeEnvDev dev
+enum.HomeEnvProd prod
+enum.HomeModeFull full
+enum.HomeModeSimple simple
+enum.InputSourcePeer peer
+enum.InputSourceSystem system
+enum.InputSourceTyped typed
+enum.JobResultFailed failed
+enum.JobResultFired fired
+enum.JobResultOk ok
+enum.JobResultRunning running
+enum.JobResultSkipped skipped
+enum.LifecycleBlocked blocked
+enum.LifecycleFailed failed
+enum.LifecycleInterrupted interrupted
+enum.LifecycleNotified notified
+enum.LifecycleQueued queued
+enum.LifecycleReceived received
+enum.LifecycleReplied replied
+enum.LifecycleUnanswered unanswered
+enum.LifecycleWorking working
+enum.MessageWaitAnswer answer
+enum.MessageWaitBusy busy
+enum.MessageWaitInterject interject
+enum.MessageWaitLimited limited
+enum.MessageWaitRetrying retrying
+enum.MessageWaitWaking waking
+enum.NotificationStateAnswered answered
+enum.NotificationStateExpired expired
+enum.NotificationStateFailed failed
+enum.NotificationStateRead read
+enum.NotificationStateUnread unread
+enum.NotifyLaneAgent agent
+enum.NotifyLaneSystem system
+enum.NotifySourceGoals goals
+enum.NotifySourcePackage package
+enum.NotifySourcePolicy policy
+enum.NudgeSurfaceInline inline
+enum.NudgeSurfaceNone none
+enum.NudgeSurfacePush push
+enum.NudgeSurfaceToast toast
+enum.PackageKindData data
+enum.PackageKindProgram program
+enum.PackageRemedyInstallGo install_go
+enum.PackageStateBuilding building
+enum.PackageStateFailed failed
+enum.PackageStateRejected rejected
+enum.PackageStateRunning running
+enum.PackageStateStopped stopped
+enum.PendingKindPermission permission
+enum.PendingKindQuestion question
+enum.PermissionLevelFull full
+enum.PermissionLevelReadOnly readonly
+enum.PermissionLevelStandard standard
+enum.PermissionModeAsk ask
+enum.PermissionModeAuto auto
+enum.PersonaImportMaxBytes 2147483648
+enum.PolicyKindGuidance guidance
+enum.PolicyKindRule rule
+enum.PolicyStatusApplied applied
+enum.PolicyStatusExpired expired
+enum.PolicyStatusFailed failed
+enum.PolicyStatusPending pending
+enum.PolicyStatusRejected rejected
+enum.PolicyStatusRevoked revoked
+enum.ProductName evergenie
+enum.ReceiveWithin 3s
+enum.ReminderQueryDoneYesterday done_yesterday
+enum.ReminderQueryNoTime no_time
+enum.ReminderQueryOverdue overdue
+enum.ReminderQueryThisWeek this_week
+enum.ReminderQueryToday today
+enum.ReminderQueryUpcoming upcoming
+enum.ReminderQueryWaiting waiting
+enum.ReminderStatusAsking asking
+enum.ReminderStatusCancelled cancelled
+enum.ReminderStatusDoing doing
+enum.ReminderStatusDone done
+enum.ReminderStatusShelved shelved
+enum.ReminderStatusTodo todo
+enum.RulesDiffOpAdd add
+enum.RulesDiffOpDel del
+enum.RulesDiffOpSame same
+enum.RulesProposalStatusAccepted accepted
+enum.RulesProposalStatusPending pending
+enum.RulesProposalStatusRejected rejected
+enum.RulesVersionSourceOutside outside
+enum.RulesVersionSourceProposal proposal
+enum.RulesVersionSourceRestore restore
+enum.RulesVersionSourceSave save
+enum.SessionCommandClear clear
+enum.SessionCommandCompact compact
+enum.SessionCommandEffort effort
+enum.SessionCommandInterrupt interrupt
+enum.SessionCommandModel model
+enum.SessionEndReasonLoggedOut logged_out
+enum.SessionKindClone clone
+enum.SessionKindResident resident
+enum.SessionKindRoom room
+enum.SessionKindTemp temp
+enum.SessionKindWork work
+enum.SessionStateBusy busy
+enum.SessionStateIdle idle
+enum.SessionStateLimited limited
+enum.SessionStateStarting starting
+enum.SessionStateStopped stopped
+enum.SessionStateWaiting waiting
+enum.TaskStatusCancelled cancelled
+enum.TaskStatusDoing doing
+enum.TaskStatusDone done
+enum.TaskStatusIdea idea
+enum.TaskStatusWaitingExternal waiting_external
+enum.TaskStatusWaitingUser waiting_user
+enum.TaskTypeAsk ask
+enum.TaskTypeTask task
+enum.ThreadStatusDone done
+enum.ThreadStatusIdle idle
+enum.ThreadStatusLimited limited
+enum.ThreadStatusQueued queued
+enum.ThreadStatusStarting starting
+enum.ThreadStatusStopped stopped
+enum.ThreadStatusWaitingUser waiting_user
+enum.ThreadStatusWorking working
+enum.TierInstalled installed
+enum.TierMine mine
+enum.TierOfficial official
+enum.UpdateKindRescue rescue
+enum.UpdateKindRollback rollback
+enum.UpdateKindUpgrade upgrade
+enum.UpdateOutcomeRolledBack rolled_back
+enum.UpdateOutcomeStranded stranded
+enum.UpdateOutcomeUntouched untouched
+enum.UsageWindowKindShort short
+enum.UsageWindowKindWeekly weekly
+enum.VerifyUnverifiable unverifiable
+enum.VerifyVerified verified
+enum.WaitingReasonApproval approval
+enum.WaitingReasonPermission permission
+enum.WaitingReasonQuestion question
+enum.WaitingReasonReminder reminder
+enum.WaitingReasonWorkQueue work_queue

@@ -1,0 +1,72 @@
+schema = 1
+title = "餐點"
+date_field = "date"
+
+[[field]]
+name = "date"
+type = "date"
+required = true
+description = "吃的那一天（YYYY-MM-DD）"
+
+[[field]]
+name = "at"
+type = "string"
+required = true
+description = "吃的時間，YYYY-MM-DD HH:MM"
+
+[[field]]
+name = "meal"
+type = "enum"
+enum = ["早餐", "午餐", "晚餐", "點心", "宵夜"]
+required = true
+description = "餐別"
+
+[[field]]
+name = "kcal"
+type = "number"
+required = true
+description = "整餐熱量合計（大卡）"
+
+[[field]]
+name = "protein"
+type = "number"
+required = true
+description = "整餐蛋白質合計（公克）"
+
+[[field]]
+name = "carb"
+type = "number"
+required = true
+description = "整餐碳水合計（公克）"
+
+[[field]]
+name = "fat"
+type = "number"
+required = true
+description = "整餐脂肪合計（公克）"
+
+[[field]]
+name = "items"
+type = "list"
+description = "品項；每項是物件：name、qty、kcal、protein、carb、fat"
+
+[[field]]
+name = "photos"
+type = "list"
+description = "照片，每項是 /share/<名字> 連結"
+
+[[field]]
+name = "conf"
+type = "enum"
+enum = ["高", "中", "低"]
+description = "估算把握"
+
+[[field]]
+name = "note"
+type = "string"
+description = "備註"
+
+[[field]]
+name = "fav"
+type = "string"
+description = "從哪個常吃餐點記的（F-編號）"

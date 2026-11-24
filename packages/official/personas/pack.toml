@@ -1,0 +1,4 @@
+# 這一版核心用的角色包。url 空＝這一版沒有角色包（發行者用 evergenie personas pack build --set-pointer 寫，不要手改）。
+version = ""
+url = ""
+sha256 = ""

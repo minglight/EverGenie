@@ -1,0 +1,19 @@
+# recorded 2026-11-17 Claude Code 2.1.326（--add-dir 帶進沒用過的資料夾；路徑換成假的）
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ Adding a new directory:
+
+ /tmp/hg-spike/run/extra
+
+ This session hasn't worked here before. Is this a directory you created or one you trust?
+
+ Claude Code'll be able to read, edit, and execute files here. Its skills, commands, and agents load and can run commands, and so can the git settings of its
+ repository. Your answer holds for this session. Starting Claude Code in this directory and trusting it there lasts, and covers its whole repository or
+ everything below it.
+
+ Security guide
+
+ ❯ No, exit
+   Yes, add it
+
+ Enter to confirm · Esc to cancel

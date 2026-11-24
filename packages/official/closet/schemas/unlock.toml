@@ -1,0 +1,36 @@
+schema = 1
+title = "兌換紀錄"
+
+[[field]]
+name = "persona"
+type = "string"
+required = true
+description = "哪位角色。這個種類只有衣櫃的程式寫（by = closet 或搬家腳本 migrate），別人寫的會被封存"
+
+[[field]]
+name = "outfit"
+type = "string"
+required = true
+description = "哪套衣服的 id"
+
+[[field]]
+name = "cost"
+type = "int"
+required = true
+description = "花了幾點；習慣套件讀它算錢包的 spent（沒寫當 1）"
+
+[[field]]
+name = "name"
+type = "string"
+description = "衣服名稱（兌換當時的）"
+
+[[field]]
+name = "at"
+type = "datetime"
+required = true
+description = "兌換的時間"
+
+[[field]]
+name = "request"
+type = "string"
+description = "是哪一筆兌換請求（Q-<n>）；升成官方搬過來的是 carry:<舊編號>"

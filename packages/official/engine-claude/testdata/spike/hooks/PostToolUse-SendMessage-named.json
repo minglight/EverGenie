@@ -1,0 +1,39 @@
+{
+ "session_id": "7631e5a5-e3e4-4b99-b5c0-46ff5e19c881",
+ "transcript_path": "/Users/someone/.claude-acme/projects/-private-tmp-hg-s0c-repo/7631e5a5-e3e4-4b99-b5c0-46ff5e19c881.jsonl",
+ "cwd": "/private/tmp/hg-s0c/repo",
+ "scratchpad_dir": "/private/tmp/claude-501/-private-tmp-hg-s0c-repo/7631e5a5-e3e4-4b99-b5c0-46ff5e19c881/scratchpad",
+ "prompt_id": "e859b5b1-c110-4534-b759-5ae9596f5f86",
+ "permission_mode": "auto",
+ "effort": {
+  "level": "medium"
+ },
+ "hook_event_name": "PostToolUse",
+ "tool_name": "SendMessage",
+ "tool_input": {
+  "to": "s0c-r",
+  "summary": "Send PING-C to s0c-r",
+  "message": "PING-C",
+  "type": "message",
+  "recipient": "s0c-r",
+  "recipient_kind": "name",
+  "content": "PING-C"
+ },
+ "tool_response": {
+  "success": true,
+  "message": "“Send PING-C to s0c-r” → s0c-r (another Claude session on this machine; in that session's inbox, not yet read by its Claude — a [Cross-session delivery notice] follows if that session holds it (usually a different permission mode) or refuses it)",
+  "display": "“Send PING-C to s0c-r” → sent to s0c-r — another Claude session on this machine",
+  "msg_id": "b02f23ae-d796-468c-bc4f-7e2172d94d87"
+ },
+ "tool_use_id": "toolu_01DkNyomofbygthopQfQAShf",
+ "duration_ms": 221,
+ "_recorded": {
+  "recorded": "2026-10-24",
+  "claude_code": "2.1.309",
+  "model": "haiku",
+  "account": "claude-acme",
+  "by": "P3-S0c",
+  "flags": "--name <n> --settings <gen> --permission-mode auto --session-id <uuid>（原生：帳號全部設定）",
+  "note": "--name 時 to 沒有 [id] 尾巴；這個事件可能比收件方的 UserPromptSubmit 晚到"
+ }
+}

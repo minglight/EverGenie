@@ -1,0 +1,4 @@
+# 公開時不帶出去的檔（scripts/export-public.sh 讀）。格式與規則只寫在 ai_docs/runbooks/public-release.md。
+# 一行「<路徑樣式>  # 原因」，原因必填。這份會跟著公開，不要寫出私人的名字。
+
+progress/  # 執行計畫的進度紀錄，是內部的工作過程

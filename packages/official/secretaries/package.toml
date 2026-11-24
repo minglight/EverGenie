@@ -1,0 +1,28 @@
+# 官方套件：基本職位（REQ-238，作者 2026-10-28）。帶四個職位樣板：生活、工作、寫程式、電腦。
+# 新的家一開始就有職位可選：設定精靈或「職位與秘書」頁替職位派一位角色，就建好這位秘書並開始上班
+# （`evergenie packages sync secretaries --agent <職位> --persona <人設> --apply`）。掃描時不自動建任何秘書（D-28）。
+# 職位只決定「主動照顧哪些事、記憶放哪」，不是權限的界線（D-40）。
+# 生圖（art）不在這裡：一般家沒有生圖秘書，它的樣板只在開發家才開著的開發工坊（admin 套件，作者 2026-11-15，DEV-160）。
+schema = 1
+id = "secretaries"
+name = "基本職位"
+version = "0.1.0"
+description = "生活、工作、寫程式、電腦四個職位；每個職位派一位角色擔任"
+kind = "data"
+api = "evergenie.v1"
+
+[[contributes.agent]]
+id = "life"
+template = "agents/life/agent.md"
+
+[[contributes.agent]]
+id = "work"
+template = "agents/work/agent.md"
+
+[[contributes.agent]]
+id = "code"
+template = "agents/code/agent.md"
+
+[[contributes.agent]]
+id = "system"
+template = "agents/system/agent.md"

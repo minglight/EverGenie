@@ -1,0 +1,39 @@
+schema = 1
+title = "器材"
+
+[[field]]
+name = "name"
+type = "string"
+required = true
+description = "器材（或徒手動作）名稱；不重名"
+
+[[field]]
+name = "primary"
+type = "list"
+description = "主練肌群（字串清單）"
+
+[[field]]
+name = "secondary"
+type = "list"
+description = "輔助肌群（字串清單）"
+
+[[field]]
+name = "type"
+type = "string"
+description = "例如「徒手」（徒手動作沒有重量）"
+
+[[field]]
+name = "unit"
+type = "enum"
+enum = ["次", "秒"]
+description = "徒手動作的單位"
+
+[[field]]
+name = "seat"
+type = "string"
+description = "座位調整（例如「座位 3」「椅子高度 2、胸墊 4」）；選到這台時顯示在「教練說」"
+
+[[field]]
+name = "cues"
+type = "list"
+description = "注意事項，一條一句、最重要的放第一條；選到這台時顯示在「教練說」"

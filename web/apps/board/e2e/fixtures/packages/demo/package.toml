@@ -1,0 +1,76 @@
+# e2e 用的示範套件（fixtures.ts 複製進暫存家的 packages/mine/demo/）：一般頁、今天頁的卡片、
+# 好的／執行時壞掉的／編不過的自訂選單元件、編不過的一般頁，以及兩種資料 demo.note（一般頁會列出它，P6-3a）、demo.mark（衣櫃「修改」分頁的外掛動作測試）。
+schema = 1
+id = "demo"
+name = "示範套件"
+version = "1.0.0"
+description = "e2e 用的示範套件"
+kind = "data"
+api = "evergenie.v1"
+
+[[contributes.data]]
+kind = "note"
+schema = "schemas/note.toml"
+ids = "seq"
+prefix = "N-"
+
+# 衣櫃「修改」分頁的外掛動作測試（closet-edit.spec，CLO-33、CLO-35）：e2e 登記一筆 closet.action，按下去寫 demo.mark、狀態也看它。
+[[contributes.data]]
+kind = "mark"
+schema = "schemas/mark.toml"
+ids = "seq"
+prefix = "M-"
+
+[[contributes.page]]
+id = "home"
+title = "示範頁"
+route = "/demo"
+component = "pages/home.tsx"
+
+[[contributes.page]]
+id = "card"
+title = "示範卡片"
+route = "/demo-card"
+component = "pages/card.tsx"
+slot = "core.overview.cards"
+
+[[contributes.page]]
+id = "menu"
+title = "示範選單"
+route = "/demo-menu"
+component = "pages/menu.tsx"
+slot = "shell.menu"
+
+[[contributes.page]]
+id = "crashmenu"
+title = "會壞掉的選單"
+route = "/demo-crashmenu"
+component = "pages/crashmenu.tsx"
+slot = "shell.menu"
+
+[[contributes.page]]
+id = "badmenu"
+title = "編不過的選單"
+route = "/demo-badmenu"
+component = "pages/badmenu.tsx"
+slot = "shell.menu"
+
+[[contributes.page]]
+id = "broken"
+title = "編不過的頁面"
+route = "/demo-broken"
+component = "pages/broken.tsx"
+
+[[contributes.menu]]
+id = "home"
+title = "示範頁"
+icon = "puzzle"
+order = 1
+page = "home"
+
+# 設定頁「套件」分頁的擴充點測試（P6-2b）：一個可以改的單行設定。
+[[extension]]
+id = "greeting"
+kind = "setting"
+description = "問候語"
+default = "哈囉"

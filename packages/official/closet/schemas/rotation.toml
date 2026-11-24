@@ -1,0 +1,17 @@
+schema = 1
+title = "輪播設定"
+
+[[field]]
+name = "outfits"
+type = "list"
+description = "要輪流穿的衣服 id（list of string）。實際輪播的是勾的裡面還擁有的（照目錄順序）；沒有就是第一套擁有的。編號 = 人設代號"
+
+[[field]]
+name = "wear"
+type = "string"
+description = "現在穿這套：指定穿的衣服 id（只有衣櫃的程式寫；要換請寫一筆 closet.request，type = wear）。時間沒到而且還擁有才作用；不影響 outfits 清單"
+
+[[field]]
+name = "wear_until"
+type = "string"
+description = "指定穿到什麼時候（RFC 3339，當天結束＝服務所在機器時區的隔天 00:00；只有衣櫃的程式寫）。時間到就照 outfits 輪流"

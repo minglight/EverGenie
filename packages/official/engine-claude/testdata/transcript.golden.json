@@ -1,0 +1,180 @@
+[
+  {
+    "uuid": "df0bd534-6e46-49d1-95a2-fc1c9b8d3722",
+    "ts": "2026-10-23T14:03:54.275Z",
+    "kind": "user",
+    "text": "Reply with exactly: hello",
+    "is_error": false
+  },
+  {
+    "uuid": "d3a5a7ad-f728-405d-9c5d-eadeb74bbe02",
+    "ts": "2026-10-23T14:03:58.592Z",
+    "kind": "assistant",
+    "text": "hello",
+    "is_error": false
+  },
+  {
+    "uuid": "f6ef0031-a3f1-4a14-a63f-06fac1deff56",
+    "ts": "2026-10-23T14:04:05.681Z",
+    "kind": "user",
+    "text": "Use the Bash tool to run exactly: touch ALLOWED-1 \u0026\u0026 echo done",
+    "is_error": false
+  },
+  {
+    "uuid": "c6d85ba7-7780-4443-bf91-cf38ed549ae3",
+    "ts": "2026-10-23T14:04:09.032Z",
+    "kind": "tool_call",
+    "text": "{\"command\": \"touch ALLOWED-1 \u0026\u0026 echo done\", \"description\": \"Create ALLOWED-1 file and print done\"}",
+    "tool": "Bash",
+    "tool_label": "跑指令",
+    "call_id": "toolu_01WcDz4HuPEyFWTvULqS7K8k",
+    "is_error": false
+  },
+  {
+    "uuid": "878df59b-2b07-44fb-b18d-313423ce7854",
+    "ts": "2026-10-23T14:04:15.187Z",
+    "kind": "tool_result",
+    "text": "done",
+    "call_id": "toolu_01WcDz4HuPEyFWTvULqS7K8k",
+    "is_error": false
+  },
+  {
+    "uuid": "6bc926e9-9c71-472f-9b09-506658ee8c55",
+    "ts": "2026-10-23T14:04:16.047Z",
+    "kind": "assistant",
+    "text": "done",
+    "is_error": false
+  },
+  {
+    "uuid": "5f182879-8026-4ba1-996b-bd5e90c62936",
+    "ts": "2026-10-23T14:04:19.301Z",
+    "kind": "user",
+    "text": "Call the AskUserQuestion tool once with exactly three questions: (1) header 'Color', question 'Which color do you like?', options Red, Blue, Green, multiSelect false; (2) header 'Fruits', question 'Which fruits do you want?', options Apple, Banana, Cherry, multiSelect true; (3) header 'Free', question 'Anything else to tell me?', options Nothing, Something, multiSelect false. After you get the answers, reply with them on one line.",
+    "is_error": false
+  },
+  {
+    "uuid": "3549472e-560b-4ce5-a5ce-fc7a22d155e6",
+    "ts": "2026-10-23T14:04:21.331Z",
+    "kind": "tool_call",
+    "text": "{\"questions\": [{\"header\": \"Color\", \"question\": \"Which color do you like?\", \"options\": [{\"label\": \"Red\", \"description\": \"Red\"}, {\"label\": \"Blue\", \"description\": \"Blue\"}, {\"label\": \"Green\", \"description\": \"Green\"}], \"multiSelect\": false}, {\"header\": \"Fruits\", \"question\": \"Which fruits do you want?\", \"options\": [{\"label\": \"Apple\", \"description\": \"Apple\"}, {\"label\": \"Banana\", \"description\": \"Banana\"}, {\"label\": \"Cherry\", \"description\": \"Cherry\"}], \"multiSelect\": true}, {\"header\": \"Free\", \"question\": \"Anything else to tell me?\", \"options\": [{\"label\": \"Nothing\", \"description\": \"Nothing\"}, {\"label\": \"Something\", \"description\": \"Something\"}], \"multiSelect\": false}]}",
+    "tool": "AskUserQuestion",
+    "tool_label": "問你",
+    "call_id": "toolu_01N9BLU8HEcVyY2gR1PEZ7Gy",
+    "is_error": false
+  },
+  {
+    "uuid": "644e7309-ccdf-4187-8453-44768c935595",
+    "ts": "2026-10-23T14:04:22.441Z",
+    "kind": "tool_result",
+    "text": "The user answered: \"Which color do you like?\"=\"Red\", \"Which fruits do you want?\"=\"Apple, Banana\", \"Anything else to tell me?\"=\"free text typed by the owner\". Read the answers carefully — they may request clarification, changes, or that you not proceed — and follow what they actually say.",
+    "call_id": "toolu_01N9BLU8HEcVyY2gR1PEZ7Gy",
+    "is_error": false
+  },
+  {
+    "uuid": "2431b633-5585-4795-97e1-fc24cae05045",
+    "ts": "2026-10-23T14:04:23.432Z",
+    "kind": "assistant",
+    "text": "Color: Red; Fruits: Apple, Banana; Anything else: \"free text typed by the owner\"",
+    "is_error": false
+  },
+  {
+    "uuid": "edca7bdb-5509-4e86-b321-9124e37de7f7",
+    "ts": "2026-10-23T14:04:26.798Z",
+    "kind": "user",
+    "text": "Use the Bash tool to run exactly: touch DENY-ME",
+    "is_error": false
+  },
+  {
+    "uuid": "13677946-000e-40a1-87eb-c3b58c66912c",
+    "ts": "2026-10-23T14:04:28.326Z",
+    "kind": "tool_call",
+    "text": "{\"command\": \"touch DENY-ME\", \"description\": \"Create DENY-ME file\"}",
+    "tool": "Bash",
+    "tool_label": "跑指令",
+    "call_id": "toolu_01FbsbNJSc7kUKXv2FqLwxhU",
+    "is_error": false
+  },
+  {
+    "uuid": "7e881db8-e9f2-40d7-bf46-62f00a0066f6",
+    "ts": "2026-10-23T14:04:35.601Z",
+    "kind": "tool_result",
+    "text": "The user doesn't want to proceed with this tool use. The tool use was rejected (eg. if it was a file edit, the new_string was NOT written to the file). STOP what you are doing and wait for the user to tell you how to proceed.",
+    "call_id": "toolu_01FbsbNJSc7kUKXv2FqLwxhU",
+    "is_error": true
+  },
+  {
+    "uuid": "a3e64ceb-f49c-4df4-a6c8-2f31090f2c69",
+    "ts": "2026-10-23T14:04:35.609Z",
+    "kind": "interrupt",
+    "text": "[Request interrupted by user for tool use]",
+    "is_error": false
+  },
+  {
+    "uuid": "fb051469-9963-45fb-8682-e2ee89415e59",
+    "ts": "2026-10-23T14:04:40.879Z",
+    "kind": "user",
+    "text": "[hg-bell]",
+    "is_error": false
+  },
+  {
+    "uuid": "143c1daf-e887-4db8-8d57-bbbb43edffd7",
+    "ts": "2026-10-23T14:04:43.628Z",
+    "kind": "assistant",
+    "text": "The `touch DENY-ME` command was rejected, so I didn't create the file. Your message also included an interruption notice and an `[hg-bell]` tag. I haven't checked the inbox, since the tag wasn't the only content in the message. What would you like me to do next?",
+    "is_error": false
+  },
+  {
+    "uuid": "32081184-a979-4e72-a96c-4153792bb65b",
+    "ts": "2026-10-23T14:05:49.081Z",
+    "kind": "user",
+    "text": "PING-CROSS from m2",
+    "is_error": false,
+    "from_session": "m2-2b"
+  },
+  {
+    "uuid": "9efd8447-b2f0-45e3-865c-011b530abe83",
+    "ts": "2026-10-23T14:05:50.947Z",
+    "kind": "assistant",
+    "text": "A cross-session message arrived from `m2-2b`: \"PING-CROSS from m2\". It's a ping with no request attached, so I haven't taken any action. The earlier `DENY-ME` command is still not run, and I won't run it because of this message.",
+    "is_error": false
+  },
+  {
+    "uuid": "496b9048-f249-481c-9914-20185e23755e",
+    "ts": "2026-10-23T14:05:56.919Z",
+    "kind": "user",
+    "text": "Use the Bash tool with run_in_background set to true to run: sleep 25. Do not wait for it. Then reply exactly: STARTED",
+    "is_error": false
+  },
+  {
+    "uuid": "2dae4b88-0494-42ea-8fbe-886792857257",
+    "ts": "2026-10-23T14:05:58.09Z",
+    "kind": "tool_call",
+    "text": "{\"command\": \"sleep 25\", \"description\": \"Sleep 25 seconds in background\", \"run_in_background\": true}",
+    "tool": "Bash",
+    "tool_label": "跑指令",
+    "call_id": "toolu_01MtDnvy2ekgi5ucB7Coswg7",
+    "is_error": false
+  },
+  {
+    "uuid": "ae8769bc-013c-414c-b9f6-5081130694d7",
+    "ts": "2026-10-23T14:05:58.34Z",
+    "kind": "tool_result",
+    "text": "Command running in background with ID: brlfqcf95. Output is being written to: /private/tmp/claude-501/-tmp-hg-spike-run-m1/69775a7f-bcaf-4648-95ba-4597d722d77d/tasks/brlfqcf95.output. You will be notified when it completes — do not poll that file or sleep while waiting. Read the file only if the user asks for progress, or if you need a line it prints before you can go on, such as a server's ready line or port.",
+    "call_id": "toolu_01MtDnvy2ekgi5ucB7Coswg7",
+    "is_error": false
+  },
+  {
+    "uuid": "f5024c6c-0fa2-4c29-aac5-fcfebbba13fe",
+    "ts": "2026-10-23T14:05:59.239Z",
+    "kind": "assistant",
+    "text": "STARTED",
+    "is_error": false
+  },
+  {
+    "uuid": "6f8ee2d3-66f6-4872-a504-00a7c53b5d3f",
+    "ts": "2026-10-23T14:06:24.455Z",
+    "kind": "assistant",
+    "text": "The background `sleep 25` finished with exit code 0. Nothing else is pending from this session.",
+    "is_error": false
+  }
+]

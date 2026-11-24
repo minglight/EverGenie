@@ -1,0 +1,102 @@
+schema = 1
+title = "習慣"
+date_field = "start"
+
+[[field]]
+name = "name"
+type = "string"
+required = true
+description = "習慣名稱"
+
+[[field]]
+name = "agent"
+type = "string"
+required = true
+description = "跟哪位秘書約的（職位 id，例如 life）"
+
+[[field]]
+name = "cadence"
+type = "enum"
+enum = ["daily", "weekly"]
+required = true
+description = "頻率：daily＝每天（沒有連續漏超過 miss_days 天）、weekly＝每週（打卡數達 target）"
+
+[[field]]
+name = "target"
+type = "int"
+description = "每週幾次（1–7）；cadence = weekly 時必填，由程式與頁面檢查"
+
+[[field]]
+name = "miss_days"
+type = "int"
+description = "每天型最多可以連續漏幾天（0–6，沒寫＝1，Never miss twice）"
+
+[[field]]
+name = "week_skips"
+type = "int"
+description = "每天型一週最多跳過幾天（0–6，沒寫＝2）；超過那週算沒達標，2026-11-09 之前的週不算"
+
+[[field]]
+name = "mode"
+type = "enum"
+enum = ["cumulative", "streak"]
+required = true
+description = "cumulative＝達標週數只增不減；streak＝連續漏超過 grace 週這一輪累積的週數歸零（賺到的點不收回）"
+
+[[field]]
+name = "grace"
+type = "int"
+description = "streak 的寬容週數（0–6，沒寫＝1）；只影響這一輪累積的週數，不影響連續週數"
+
+[[field]]
+name = "bonus_weeks"
+type = "int"
+description = "連續達標幾週給一次獎勵點（0 或 2–12，沒寫＝4，0＝沒有連續獎勵）；漏一週連續就歸零，已經給的獎勵不收回。約定時跟秘書定，頁面不改（改了會回頭重算）"
+
+[[field]]
+name = "start"
+type = "date"
+required = true
+description = "從哪天開始算（YYYY-MM-DD）；週中才約定的那週沒達標不算漏"
+
+[[field]]
+name = "status"
+type = "enum"
+enum = ["active", "ended"]
+required = true
+description = "active＝進行中；ended＝已結束（可以改回 active）"
+
+[[field]]
+name = "ended"
+type = "date"
+description = "結束那天（status 改成 ended 時頁面會寫；沒寫就用最後修改的那天）。改回 active 時拿掉"
+
+[[field]]
+name = "identity"
+type = "string"
+description = "想成為什麼樣的人"
+
+[[field]]
+name = "cue"
+type = "string"
+description = "提示或習慣堆疊（做完什麼之後做）"
+
+[[field]]
+name = "two_min"
+type = "string"
+description = "兩分鐘版本"
+
+[[field]]
+name = "sources"
+type = "list"
+description = "自動打卡來源（list of string）：fitness:重訓、fitness:跑步（或划船、游泳、騎車）、fitness:有氧（四種有氧任一）、fitness:*（任何運動）、reminder:R-<n>（那筆待辦完成的那天）；即時推算，不寫打卡"
+
+[[field]]
+name = "subtasks"
+type = "list"
+description = "子項目（list of string）：「名稱」「名稱=body:weight」「名稱=nutrition:meals>=N」；當天做到的項數 ≥ 全部 − allow_miss 才算當天打卡"
+
+[[field]]
+name = "allow_miss"
+type = "int"
+description = "子項目最多可以漏幾項還算當天打卡（沒寫＝0）"

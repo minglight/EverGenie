@@ -1,0 +1,47 @@
+# 官方套件：身體數據（REQ-129、236）。純資料套件：一種資料（每天一筆的體重、體脂…）、一個頁面、今天頁的一張卡。
+# 資料經 vault（D-28）：秘書用 `evergenie data …`，頁面用 @evergenie/sdk-web 的 api.vault；沒有套件自己的 RPC。
+# 2026-10-27 從運動套件拆出來，主人才能單獨關掉「身體」；誰聽到體重都可以寫，平常是「健康」秘書在記（health 套件）。
+schema = 1
+id = "body"
+name = "身體"
+version = "0.1.0"
+description = "體重、體脂等身體數據，一天一筆，看 7 天平均與趨勢"
+kind = "data"
+api = "evergenie.v1"
+
+[capabilities]
+read = ["vault:pkg/body"]
+write = ["vault:pkg/body"]
+
+[[contributes.data]]
+kind = "entry"
+schema = "schemas/entry.toml"
+ids = "given"
+
+[[contributes.page]]
+id = "log"
+title = "身體"
+route = "/body"
+component = "pages/log.tsx"
+# 頁面旁邊就是跟「健康」秘書的聊天（REQ-235、236）。
+chat = true
+chat_agent = "health"
+
+[[contributes.page]]
+id = "today"
+title = "今天的身體"
+route = "/body-today"
+component = "pages/today.tsx"
+slot = "core.overview.cards"
+
+[[contributes.menu]]
+id = "log"
+title = "身體"
+icon = "scale"
+group_hint = "daily"
+front = true
+order = 21
+page = "log"
+# 飲食、運動、身體在看板是同一頁「健康」的三個分頁（REQ-235）。
+section = "health"
+section_title = "健康"

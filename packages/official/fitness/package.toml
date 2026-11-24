@@ -1,0 +1,66 @@
+# 官方套件：運動（REQ-127）。純資料套件：三種資料（訓練、器材、筆記）、三個頁面。
+# 資料經 vault（D-28）：秘書用 `evergenie data …`，頁面用 @evergenie/sdk-web 的 api.vault；沒有套件自己的 RPC。
+# 2026-10-27 起秘書不在這裡：飲食、運動、身體由同一位「健康」秘書負責（health 套件，REQ-236）；身體數據拆成 body 套件。
+schema = 1
+id = "fitness"
+name = "運動"
+version = "0.1.0"
+description = "運動記錄、訓練計畫與教練檢討"
+kind = "data"
+api = "evergenie.v1"
+
+[capabilities]
+read = ["vault:pkg/fitness"]
+write = ["vault:pkg/fitness"]
+
+[[contributes.data]]
+kind = "workout"
+schema = "schemas/workout.toml"
+ids = "seq"
+prefix = "W-"
+
+[[contributes.data]]
+kind = "equipment"
+schema = "schemas/equipment.toml"
+ids = "seq"
+prefix = "E-"
+
+[[contributes.data]]
+kind = "note"
+schema = "schemas/note.toml"
+ids = "seq"
+prefix = "N-"
+
+[[contributes.page]]
+id = "log"
+title = "運動"
+route = "/fitness"
+component = "pages/log.tsx"
+# 頁面旁邊就是跟「健康」秘書的聊天（REQ-235、236）。
+chat = true
+chat_agent = "health"
+
+[[contributes.page]]
+id = "plan"
+title = "訓練計畫"
+route = "/fitness-plan"
+component = "pages/plan.tsx"
+
+[[contributes.page]]
+id = "today"
+title = "今天的運動"
+route = "/fitness-today"
+component = "pages/today.tsx"
+slot = "core.overview.cards"
+
+[[contributes.menu]]
+id = "log"
+title = "運動"
+icon = "dumbbell"
+group_hint = "daily"
+front = true
+order = 20
+page = "log"
+# 飲食、運動、身體在看板是同一頁「健康」的三個分頁（REQ-235）。
+section = "health"
+section_title = "健康"

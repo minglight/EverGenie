@@ -1,0 +1,44 @@
+schema = 1
+title = "身體數據"
+date_field = "date"
+
+[[field]]
+name = "date"
+type = "date"
+required = true
+description = "量的那一天（YYYY-MM-DD），同時是編號；一天一筆"
+
+[[field]]
+name = "weight"
+type = "number"
+description = "體重（公斤）"
+
+[[field]]
+name = "fat"
+type = "number"
+description = "體脂率（%）"
+
+[[field]]
+name = "bmi"
+type = "number"
+description = "BMI"
+
+[[field]]
+name = "bmr"
+type = "number"
+description = "基礎代謝（大卡）"
+
+[[field]]
+name = "visceral"
+type = "number"
+description = "內臟脂肪等級"
+
+[[field]]
+name = "score"
+type = "number"
+description = "身體得分"
+
+[[field]]
+name = "note"
+type = "string"
+description = "備註"

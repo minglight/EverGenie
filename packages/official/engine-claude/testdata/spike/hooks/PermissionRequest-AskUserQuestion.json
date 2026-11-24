@@ -1,0 +1,78 @@
+{
+ "session_id": "69775a7f-bcaf-4648-95ba-4597d722d77d",
+ "transcript_path": "/Users/someone/.claude-acme/projects/-tmp-hg-spike-run-m1/69775a7f-bcaf-4648-95ba-4597d722d77d.jsonl",
+ "cwd": "/tmp/hg-spike/run/m1",
+ "scratchpad_dir": "/private/tmp/claude-501/-tmp-hg-spike-run-m1/69775a7f-bcaf-4648-95ba-4597d722d77d/scratchpad",
+ "prompt_id": "b8a4eceb-9fd6-451f-b8ba-1ac00558e441",
+ "permission_mode": "default",
+ "effort": {
+  "level": "medium"
+ },
+ "hook_event_name": "PermissionRequest",
+ "tool_name": "AskUserQuestion",
+ "tool_input": {
+  "questions": [
+   {
+    "question": "Which color do you like?",
+    "header": "Color",
+    "options": [
+     {
+      "label": "Red",
+      "description": "Red"
+     },
+     {
+      "label": "Blue",
+      "description": "Blue"
+     },
+     {
+      "label": "Green",
+      "description": "Green"
+     }
+    ],
+    "multiSelect": false
+   },
+   {
+    "question": "Which fruits do you want?",
+    "header": "Fruits",
+    "options": [
+     {
+      "label": "Apple",
+      "description": "Apple"
+     },
+     {
+      "label": "Banana",
+      "description": "Banana"
+     },
+     {
+      "label": "Cherry",
+      "description": "Cherry"
+     }
+    ],
+    "multiSelect": true
+   },
+   {
+    "question": "Anything else to tell me?",
+    "header": "Free",
+    "options": [
+     {
+      "label": "Nothing",
+      "description": "Nothing"
+     },
+     {
+      "label": "Something",
+      "description": "Something"
+     }
+    ],
+    "multiSelect": false
+   }
+  ]
+ },
+ "_recorded": {
+  "recorded": "2026-10-23",
+  "claude_code": "2.1.309",
+  "model": "haiku",
+  "account": "claude-acme",
+  "by": "P3-S0",
+  "flags": "--setting-sources project --settings <gen> --mcp-config <gen> --strict-mcp-config --session-id <uuid>"
+ }
+}

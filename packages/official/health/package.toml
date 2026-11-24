@@ -1,0 +1,14 @@
+# 官方套件：健康秘書（REQ-236）。飲食、運動、身體由同一位秘書把關（作者 2026-10-27）：
+# 這個套件只帶來那位秘書的樣板，沒有自己的資料與頁面；資料在 nutrition、fitness、body 三個套件，
+# 主人可以各自關掉其中一項（設定 → 套件，或「健康」頁上的開關），秘書只記開著的。
+schema = 1
+id = "health"
+name = "健康秘書"
+version = "0.1.0"
+description = "一位秘書照顧飲食、運動、身體：記錄、估算、檢討、陪你看趨勢"
+kind = "data"
+api = "evergenie.v1"
+
+[[contributes.agent]]
+id = "health"
+template = "agents/health/agent.md"

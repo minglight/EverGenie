@@ -1,0 +1,24 @@
+schema = 1
+title = "示範記號"
+
+# 衣櫃「修改」分頁的外掛動作（closet-edit.spec）：按下去寫一筆，狀態也照這種資料的 state 顯示。
+
+[[field]]
+name = "persona"
+type = "string"
+description = "角色代號"
+
+[[field]]
+name = "outfit"
+type = "string"
+description = "closet.outfit 的編號"
+
+[[field]]
+name = "photo"
+type = "string"
+description = "closet.photo 的編號"
+
+[[field]]
+name = "state"
+type = "string"
+description = "wanted＝要了；done＝做好了"

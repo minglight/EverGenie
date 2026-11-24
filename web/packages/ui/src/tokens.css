@@ -1,0 +1,351 @@
+/* 設計 token：顏色只在這裡定義（FEN-7、UXC-6）。亮色預設，跟著系統換深色，
+   [data-theme="dark"|"light"] 可強制。
+   2026-10-27 UX 改版：色票回到舊系統看板的「精靈」風格——帶紫的淡底、梅紫主色，
+   標題用襯線字（--font-display）；結構與 token 名稱不變。 */
+:root {
+  color-scheme: light dark;
+  --bg: #f5f3f9;
+  --surface: #ffffff;
+  --surface-2: #eeebf4;
+  --side: #efecf5;
+  --hover: #ebe7f2;
+  --selected: #efe8f9;
+  --fg: #1f1b2d;
+  --muted: #625d78;
+  --border: #e2deeb;
+  --border-strong: #c8c2d6;
+  --accent: #6a4a9e;
+  --accent-soft: #efe8f9;
+  --accent-fg: #ffffff;
+  --attention: #f59e0b;
+  --attention-fg: #9a4a0b;
+  --attention-soft: #fdf1df;
+  --on-attention: #1f1b2d;
+  /* 處理中（藍）：狀態顏色一套規則的「藍」（WEB-70）；橘只給「等你處理」。 */
+  --busy: #2f62c7;
+  --busy-soft: #e5edfb;
+  --on-busy: #ffffff;
+  --ok: #2f7a55;
+  --ok-soft: #e3f2ea;
+  --on-ok: #ffffff;
+  --danger: #b3334a;
+  --danger-soft: #f8e1e5;
+  --on-danger: #ffffff;
+  --focus: #6a4a9e;
+  --toast-bg: #1f1b2d;
+  --toast-fg: #f3f0fa;
+  --toast-action: #c9b6f2;
+  --segment-on: #ffffff;
+  --scrim: rgb(31 27 45 / 0.3);
+  /* 標誌（深紫底四顆圓點）：品牌色，亮暗同值。 */
+  --brand-ink: #2a2340;
+  --brand-1: #ee8fb2;
+  --brand-2: #e6b066;
+  --brand-3: #6cc7b3;
+  --brand-4: #9da2f0;
+  /* 角色影片上的漸層與白字（亮暗同值，影片上永遠是深底白字）。 */
+  --media-bg: #0b0b0e;
+  --media-scrim: rgb(0 0 0 / 0.62);
+  --media-btn: rgb(0 0 0 / 0.32);
+  --on-media: #ffffff;
+  --on-media-soft: rgb(255 255 255 / 0.86);
+  --shadow-card: 0 1px 2px rgb(45 30 80 / 0.05), 0 4px 14px rgb(45 30 80 / 0.04);
+  --shadow-pop: 0 24px 64px rgb(45 30 80 / 0.2), 0 2px 8px rgb(45 30 80 / 0.08);
+  --shadow-sheet: 0 -8px 32px rgb(45 30 80 / 0.18);
+  /* 處理中的光圈：跟「處理中」同一個藍（WEB-70）。 */
+  --pulse: rgb(47 98 199 / 0.5);
+  --pulse-end: rgb(47 98 199 / 0);
+  /* 看板連多台（S3）：每台的預設色（頭像外框、台名標籤），[[web.sites]] 沒設 color 時照電腦代號挑一個。
+     不用橘（橘只給等你處理，WEB-70）。 */
+  --site-1: #2f7a55;
+  --site-2: #2f62c7;
+  --site-3: #a8458f;
+  --site-4: #6a4a9e;
+  --site-5: #1d7f86;
+  --site-6: #5b5f8f;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #14121c;
+    --surface: #1d1a28;
+    --surface-2: #282436;
+    --side: #17141f;
+    --hover: #231f30;
+    --selected: #2e2547;
+    --fg: #ebe8f4;
+    --muted: #a49fb8;
+    --border: #322e42;
+    --border-strong: #4a4560;
+    --accent: #b89def;
+    --accent-soft: #2e2547;
+    --accent-fg: #14121c;
+    --attention-fg: #f3b766;
+    --attention-soft: #33251a;
+    --busy: #8db4f5;
+    --busy-soft: #1d2840;
+    --on-busy: #14121c;
+    --ok: #6cc79a;
+    --ok-soft: #1c2e25;
+    --on-ok: #14121c;
+    --danger: #ee8a9b;
+    --danger-soft: #3a1c23;
+    --on-danger: #14121c;
+    --focus: #b89def;
+    --toast-bg: #ebe8f4;
+    --toast-fg: #1f1b2d;
+    --toast-action: #6a4a9e;
+    --segment-on: #3a3550;
+    --scrim: rgb(0 0 0 / 0.55);
+    --shadow-card: none;
+    --shadow-pop: 0 24px 64px rgb(0 0 0 / 0.6);
+    --shadow-sheet: 0 -8px 32px rgb(0 0 0 / 0.5);
+    --pulse: rgb(141 180 245 / 0.5);
+    --pulse-end: rgb(141 180 245 / 0);
+    --site-1: #6cc79a;
+    --site-2: #8db4f5;
+    --site-3: #e58fcf;
+    --site-4: #b89def;
+    --site-5: #5fc8cf;
+    --site-6: #a9add6;
+  }
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #14121c;
+  --surface: #1d1a28;
+  --surface-2: #282436;
+  --side: #17141f;
+  --hover: #231f30;
+  --selected: #2e2547;
+  --fg: #ebe8f4;
+  --muted: #a49fb8;
+  --border: #322e42;
+  --border-strong: #4a4560;
+  --accent: #b89def;
+  --accent-soft: #2e2547;
+  --accent-fg: #14121c;
+  --attention-fg: #f3b766;
+  --attention-soft: #33251a;
+  --busy: #8db4f5;
+  --busy-soft: #1d2840;
+  --on-busy: #14121c;
+  --ok: #6cc79a;
+  --ok-soft: #1c2e25;
+  --on-ok: #14121c;
+  --danger: #ee8a9b;
+  --danger-soft: #3a1c23;
+  --on-danger: #14121c;
+  --focus: #b89def;
+  --toast-bg: #ebe8f4;
+  --toast-fg: #1f1b2d;
+  --toast-action: #6a4a9e;
+  --segment-on: #3a3550;
+  --scrim: rgb(0 0 0 / 0.55);
+  --shadow-card: none;
+  --shadow-pop: 0 24px 64px rgb(0 0 0 / 0.6);
+  --shadow-sheet: 0 -8px 32px rgb(0 0 0 / 0.5);
+  --pulse: rgb(141 180 245 / 0.5);
+  --pulse-end: rgb(141 180 245 / 0);
+  --site-1: #6cc79a;
+  --site-2: #8db4f5;
+  --site-3: #e58fcf;
+  --site-4: #b89def;
+  --site-5: #5fc8cf;
+  --site-6: #a9add6;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-side: var(--side);
+  --color-hover: var(--hover);
+  --color-selected: var(--selected);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-fg: var(--accent-fg);
+  --color-attention: var(--attention);
+  --color-attention-fg: var(--attention-fg);
+  --color-attention-soft: var(--attention-soft);
+  --color-on-attention: var(--on-attention);
+  --color-busy: var(--busy);
+  --color-busy-soft: var(--busy-soft);
+  --color-on-busy: var(--on-busy);
+  --color-ok: var(--ok);
+  --color-ok-soft: var(--ok-soft);
+  --color-on-ok: var(--on-ok);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-on-danger: var(--on-danger);
+  --color-focus: var(--focus);
+  --color-toast-bg: var(--toast-bg);
+  --color-toast-fg: var(--toast-fg);
+  --color-toast-action: var(--toast-action);
+  --color-segment-on: var(--segment-on);
+  --color-scrim: var(--scrim);
+  --color-media-bg: var(--media-bg);
+  --color-media-scrim: var(--media-scrim);
+  --color-media-btn: var(--media-btn);
+  --color-on-media: var(--on-media);
+  --color-on-media-soft: var(--on-media-soft);
+  --font-sans:
+    Inter, -apple-system, BlinkMacSystemFont, "PingFang TC", "Noto Sans TC", system-ui, sans-serif;
+  --font-display:
+    "Noto Serif TC", "Songti TC", "Source Han Serif TC", "Noto Serif CJK TC", Georgia, serif;
+  --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, monospace;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  min-width: 320px;
+  margin: 0;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 秘書顏色由伺服器給（--agent-color / --agent-color-dark），沒有就用 muted。
+   深色：頭像上的字是白的，深色用的顏色偏亮（預設的 muted 只有 2.55:1），底色混 35% 黑讓白字過 4.5:1
+   （muted → #6b6778，5.47:1；DEV-156 U-26）。有圖的頭像圖會蓋住，看不出差別。 */
+.hg-agent {
+  background: var(--agent-color, var(--muted));
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .hg-agent {
+    background: color-mix(
+      in srgb,
+      var(--agent-color-dark, var(--agent-color, var(--muted))) 65%,
+      #000
+    );
+  }
+}
+
+[data-theme="dark"] .hg-agent {
+  background: color-mix(
+    in srgb,
+    var(--agent-color-dark, var(--agent-color, var(--muted))) 65%,
+    #000
+  );
+}
+
+@keyframes hg-pulse {
+  0% {
+    box-shadow: 0 0 0 0 var(--pulse);
+  }
+  70% {
+    box-shadow: 0 0 0 7px var(--pulse-end);
+  }
+  100% {
+    box-shadow: 0 0 0 0 var(--pulse-end);
+  }
+}
+
+@keyframes hg-rise {
+  from {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+@keyframes hg-pop {
+  from {
+    transform: scale(0.97) translateY(-6px);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+@keyframes hg-dot {
+  0%,
+  80%,
+  100% {
+    opacity: 0.25;
+  }
+  40% {
+    opacity: 1;
+  }
+}
+
+.hg-dot {
+  animation: hg-dot 1.2s infinite;
+}
+
+.hg-dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.hg-dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+.hg-pulse {
+  animation: hg-pulse 1.8s infinite;
+}
+
+.hg-rise {
+  animation: hg-rise 0.22s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.hg-pop {
+  animation: hg-pop 0.16s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.hg-scroll {
+  scrollbar-width: none;
+}
+
+.hg-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hg-pulse,
+  .hg-rise,
+  .hg-pop,
+  .hg-dot {
+    animation: none;
+  }
+}
+
+/* 頁面標題用襯線字（舊看板的味道）；放在 base 層，個別地方用 utility（font-sans）蓋得掉。
+   段落標題（h2）不一律換：小字的標籤留無襯線，要換的自己加 font-display。 */
+@layer base {
+  h1 {
+    font-family: var(--font-display);
+    letter-spacing: 0.01em;
+  }
+}
+
+/* 卡片左邊那條秘書顏色的細條（等你處理的卡）：顏色跟頭像一樣由伺服器給。 */
+.hg-stripe {
+  background: var(--agent-color, var(--accent));
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .hg-stripe {
+    background: var(--agent-color-dark, var(--agent-color, var(--accent)));
+  }
+}
+
+[data-theme="dark"] .hg-stripe {
+  background: var(--agent-color-dark, var(--agent-color, var(--accent)));
+}

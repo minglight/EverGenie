@@ -1,0 +1,7 @@
+{
+ "hookSpecificOutput": {
+  "hookEventName": "PreToolUse",
+  "permissionDecision": "ask",
+  "permissionDecisionReason": "S0C-ASK：push 需要主人確認"
+ }
+}

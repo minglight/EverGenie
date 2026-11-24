@@ -1,0 +1,13 @@
+{
+  "name": "@evergenie/sdk-web",
+  "private": true,
+  "version": "0.0.0",
+  "license": "SEE LICENSE IN LICENSE",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit --incremental --tsBuildInfoFile node_modules/.cache/tsc/sdk-web.tsbuildinfo"
+  }
+}

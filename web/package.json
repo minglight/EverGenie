@@ -1,0 +1,25 @@
+{
+  "name": "evergenie-web",
+  "private": true,
+  "version": "0.0.0",
+  "license": "SEE LICENSE IN LICENSE",
+  "type": "module",
+  "packageManager": "pnpm@9.15.9",
+  "scripts": {
+    "build": "pnpm --filter @evergenie/board build",
+    "check": "biome check --write .",
+    "check:ci": "biome ci .",
+    "typecheck": "pnpm -r --workspace-concurrency=${EVERGENIE_CPU:-4} typecheck",
+    "test": "vitest run",
+    "test:changed": "vitest run --changed ${EVERGENIE_BASE:-main} --passWithNoTests",
+    "e2e": "pnpm --filter @evergenie/board e2e"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.4.8",
+    "@testing-library/dom": "10.4.0",
+    "@testing-library/react": "16.3.0",
+    "jsdom": "26.1.0",
+    "typescript": "5.9.3",
+    "vitest": "4.1.2"
+  }
+}

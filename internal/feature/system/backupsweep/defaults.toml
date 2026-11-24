@@ -1,0 +1,24 @@
+# 每週備份掃描（system/backupsweep）的內建設定，跟著程式走（BSW-2、BSW-3、BSW-4）。
+# 這份不是主人的設定檔：主人要加例外寫在家的 settings/backup-sweep.toml（只讀那邊的 [[skip]]）。
+# 路徑的寫法：~ 是使用者家目錄、{home} 是這個家、{launch_agents} 是放開機服務設定的資料夾；* 照檔名萬用字元（不跨 /）。
+
+# 掃描範圍：照規格固定四處——工作資料夾、這個家，加各 AI 程式的帳號資料夾（平台相關，由 engine/registry 給，MOD-N7）。
+# 不能是整個使用者家目錄（會碰到桌面、文件、照片）。
+roots = ["~/Workspace", "{home}"]
+
+# 內建的例外（不算備份、不列進「已到期」「不合規」，在報告的「略過的例外」列出來）：AI 程式自己輪替的備份由 engine/registry 給；
+# 這個家自己的資料夾（狀態資料夾的 backups、每日家備份、vault、附件）由程式算出位置。
+
+# 「在用」的檢查：檔案內容或指令輸出裡有寫到備份的路徑或它的上層資料夾就算在用（BSW-4）。
+# name 是程式內部的名字；label 是報告、看板、通知上給主人看的白話（不寫工具名稱，MOD-N7）。
+[[check]]
+name = "launchd"
+label = "開機服務"
+files = "{launch_agents}/*.plist"
+
+[[check]]
+name = "ps"
+label = "執行中的程式"
+command = ["/bin/ps", "-axww", "-o", "command="]
+
+# 第三種（終端機工具的視窗）是平台相關的，由 engine/registry 給。

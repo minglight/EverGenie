@@ -1,0 +1,60 @@
+schema = 1
+title = "衣服"
+
+[[field]]
+name = "persona"
+type = "string"
+required = true
+description = "哪位角色（人設代號，小寫英文開頭、只用小寫英文與數字，例 athena）"
+
+[[field]]
+name = "outfit"
+type = "string"
+required = true
+description = "衣服 id（小寫英文、數字與減號，例 seaside）；base 是每位角色的第一套。編號 = 人設 + 減號 + 衣服 id（例 athena-seaside），不合會被略過"
+
+[[field]]
+name = "name"
+type = "string"
+required = true
+description = "衣服的名稱（給人看的）"
+
+[[field]]
+name = "desc"
+type = "string"
+description = "一句話說明"
+
+[[field]]
+name = "cost"
+type = "int"
+required = true
+description = "兌換要幾點；0 = 送的或免費"
+
+[[field]]
+name = "state"
+type = "enum"
+enum = ["active", "draft", "retired"]
+required = true
+description = "active = 上架；draft = 設計中（只有開發家用：不能兌換、展示間不列，在角色頁「修改」分頁每張照片都採用了才能上架）；retired = 下架（已擁有的人照樣有，沒擁有的看不到）"
+
+[[field]]
+name = "source"
+type = "enum"
+enum = ["official", "mine"]
+required = true
+description = "official = 官方角色（圖在 personas/avatars/）；mine = 使用者自己的（圖在 personas/mine/avatars/）"
+
+[[field]]
+name = "order"
+type = "int"
+description = "同一位角色裡的排序（小的在前）；沒寫排最後"
+
+[[field]]
+name = "from"
+type = "string"
+description = "升成官方前的編號（closet-mine 的升成官方請求寫的，例 athena-my-12）：只認 closet-mine 寫的、只有一筆指著舊編號的，舊編號的兌換會搬過來；不跟著匯出與角色包走"
+
+[[field]]
+name = "adopted"
+type = "list"
+description = "設計中（draft）的衣服已經單張採用的那幾張（list of string，SEC-10）：half-<n>（第 n 張半身）、full（全身）、video-<n>-<k>（第 n 張的第 k 支影片）；隱藏版的前面加 <隱藏版編號>:（例 h1:half-2、h1:full，2026-11-13）。DEV-160 S2 起不再寫：採用記在每張照片的 closet.photo adopted；這欄只給舊資料，轉換時讀一次。沒寫＝都還沒單張採用。這個家當下的審核進度，不跟著匯出走"

@@ -1,0 +1,32 @@
+schema = 1
+title = "點數檢視"
+
+[[field]]
+name = "earned"
+type = "int"
+description = "習慣套件的錢包賺到過的點數（只增不減）。這個種類只有衣櫃的程式寫，只用 main 這一筆，頁面只讀"
+
+[[field]]
+name = "spent"
+type = "int"
+description = "認得的兌換花掉的點數合計"
+
+[[field]]
+name = "points"
+type = "int"
+description = "現在可以花的點數：max(earned − spent, 0)"
+
+[[field]]
+name = "wallet"
+type = "bool"
+description = "找得到習慣套件的錢包（habits.wallet/main）才是 true"
+
+[[field]]
+name = "computed_at"
+type = "string"
+description = "程式算完的時間（RFC 3339）"
+
+[[field]]
+name = "variants"
+type = "list"
+description = "隱藏版（list of map；DEV-160 S2 起只有一組，有任何一筆 closet.variant 設定就寫一項）：id（固定 h）、name、button（bool，任一筆要畫開關）、on（bool，任一筆開著）、in_window（bool，現在在任一筆的時段裡）、ids（這一組的每一筆 closet.variant 編號，按開關時一起改）。開著＝on 或 in_window；頁面照這個畫開關，不自己算時段"

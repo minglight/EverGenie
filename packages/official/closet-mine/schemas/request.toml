@@ -1,0 +1,106 @@
+schema = 1
+title = "上傳衣服與角色的請求"
+
+[[field]]
+name = "type"
+type = "enum"
+enum = ["character", "outfit", "photo", "full", "video", "promote", "remove_photo", "restore_photo", "remove_outfit", "restore_outfit", "set_cost"]
+required = true
+description = "character＝新角色；outfit＝替任何一位角色加衣服（官方角色也可以）；photo＝替我的衣服加一張輪播照（寫 photo_id 就是換那一張；換了在開發家回到還沒採用，開發家也能這樣換官方的照片）；full＝放或換我的衣服的全身照；video＝放或換我的衣服某張照片的動畫（MP4）；promote＝把採用了的我的衣服升成官方（只在開發家、只認主人本人送的，不用 upload）；remove_photo／restore_photo＝刪掉／拿回一張我上傳的照片（照 photo_id；半身照連它的動畫一起；檔改名成備份、拿回時改回來）；remove_outfit／restore_outfit＝刪掉／拿回一整套我的衣服（連它的照片；基本款不能刪；拿回也把下架的我的衣服改回上架）；set_cost＝改我的衣服要幾點（cost；0＝免費）。後五種不用 upload"
+
+[[field]]
+name = "upload"
+type = "string"
+description = "character、outfit、photo、full、video 必填：上傳檔的網址 /share/<名> 或檔名 <名>（檔案要先放進家的附件資料夾：第 1 版 runtime/share/、第 2 版 media/share/，看板上傳或聊天附件都在那裡）；只能是單一檔名"
+
+[[field]]
+name = "persona"
+type = "string"
+description = "character：想要的代號（my_<名字>，小寫英數；沒給用 my_<請求編號>）；其他種類：哪位角色（必填）"
+
+[[field]]
+name = "outfit"
+type = "string"
+description = "photo、full、video、remove_outfit、restore_outfit、set_cost 必填：衣服 id（只能是我的衣服；photo、full、video 加 adult 時官方的衣服也可以）；promote 必填：要升的那套的編號 <人設>-<衣服 id>（例 athena-my-12）"
+
+[[field]]
+name = "name"
+type = "string"
+description = "character 必填＝角色名；outfit 必填＝衣服名；最多 40 字"
+
+[[field]]
+name = "desc"
+type = "string"
+description = "character＝一句話介紹；outfit＝衣服說明"
+
+[[field]]
+name = "free"
+type = "bool"
+description = "只給 outfit：true＝直接擁有（不用點數，cost = 0）；預設 false＝要點數兌換（cost，預設 1），兌換前衣櫃顯示剪影"
+
+[[field]]
+name = "cost"
+type = "int"
+description = "outfit：兌換要幾點（0＝免費、直接擁有；最多 99）；有寫就照它，沒寫照 free。set_cost 必填：改成幾點（基本款不能改）"
+
+[[field]]
+name = "draft"
+type = "bool"
+description = "只給 outfit：true＝放進「設計中」（照片也還沒採用），之後主人在開發家角色頁的「修改」分頁採用、上架（頁面不送，給開發家的生圖秘書用；不支援 edit 的家收到了，衣櫃下一輪自動上架）；預設 false＝直接上架（state = active、照片 adopted = true）"
+
+[[field]]
+name = "adult"
+type = "bool"
+description = "只給 photo、full、video：true＝自己的隱藏版的圖（檔一樣放 personas/mine/photos/<照片編號>.<副檔名>，照片紀錄 hidden = true；官方的衣服也可以）；家設定（衣櫃的 adult）沒打開就拒絕。不看衣服名或角色代號；沒寫而這套衣服現在的照片全是隱藏版的也算隱藏版，寫 false 才是一般版"
+
+[[field]]
+name = "new_id"
+type = "string"
+description = "只給 promote：官方的新衣服 id（小寫英數與 -，不能 my- 開頭；舊的是 my- 開頭時必填，例 seaside）"
+
+[[field]]
+name = "dry_run"
+type = "bool"
+description = "只給 promote：true＝只預演（detail 列出會搬哪些檔、怎麼退回），什麼都不動"
+
+[[field]]
+name = "photo"
+type = "int"
+description = "只給 video：動畫配在第幾張照片（照衣櫃排的順序數，預設 1）；寫了 photo_id 就不看這個"
+
+[[field]]
+name = "clip"
+type = "int"
+description = "只給 video：這張照片的第幾支動畫（預設 1；寫現有支數 +1＝新加一支，寫現有的＝換那一支，跳號拒絕；最多 6 支）"
+
+[[field]]
+name = "photo_id"
+type = "string"
+description = "照片紀錄（closet.photo）的編號：photo、full 寫了就是換那一張的圖（開發家換了回到還沒採用；開發家也能換官方衣服的一般版照片）；video 寫半身照的編號＝配那一張、寫動畫的編號＝換那一支；remove_photo、restore_photo 必填"
+
+[[field]]
+name = "photos"
+type = "list"
+description = "remove_outfit 這次一起封存的照片紀錄編號（list of string，只有程式回填；restore_outfit 照它拿回）"
+
+[[field]]
+name = "state"
+type = "enum"
+enum = ["pending", "done", "rejected"]
+required = true
+description = "寫入時一律 pending；程式處理後回填 done 或 rejected"
+
+[[field]]
+name = "reason"
+type = "string"
+description = "被拒絕的白話原因（只有程式回填）"
+
+[[field]]
+name = "detail"
+type = "string"
+description = "promote 的說明（只有程式回填）：搬了哪些檔、改了哪些紀錄、怎麼退回"
+
+[[field]]
+name = "result"
+type = "string"
+description = "成功時影響的 closet.outfit 編號（只有程式回填）"

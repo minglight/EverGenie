@@ -1,0 +1,19 @@
+schema = 1
+title = "示範筆記"
+date_field = "date"
+
+[[field]]
+name = "date"
+type = "date"
+description = "哪一天"
+
+[[field]]
+name = "text"
+type = "string"
+required = true
+description = "內容"
+
+[[field]]
+name = "score"
+type = "number"
+description = "分數"

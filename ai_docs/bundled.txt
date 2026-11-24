@@ -1,0 +1,16 @@
+# 跟著發行檔帶的說明文件（DEV-155；platform 卡 PLT-28、packages 卡 PKG-67）。帶哪幾份只看這一份清單：
+#   scripts/dist.sh 照它把文件抄進發行檔的 ai_docs/（連這份清單一起）；`evergenie docs list|show` 只列、只給這裡的（原始碼版也一樣）；
+#   doccheck 的 DOC-12 守著：清單上的檔都在、帶的文件不提到沒帶的文件、秘書會讀到的文字只用 `evergenie docs show <清單上的一份>` 指文件。
+# 帶的標準：秘書替主人做套件、跟主人解釋套件怎麼運作會讀到的；還有主人會問、每位秘書都要答得出來的事（guides/，DEV-153：費用與帳號）。內部開發用的（發版、部署、runbooks、核心模組的說明卡、開發流程與文件寫法）不帶；
+#   帶的文件提到它們時，改寫成「說明卡 X 的 RULE-n」這種不寫路徑的說法。
+# 格式：一行一份，相對 ai_docs/ 的路徑；空白後接「# 一句話」＝`evergenie docs list` 給秘書看的說明。
+
+conventions/user-features.md  # 主人自己的套件：資料夾地圖、id 與保留字、頁面怎麼寫、分享、壞了會怎樣（建套件先讀這份）
+conventions/packages.md       # 寫一個套件的總規則：四層、擴充點、資料種類、附程式的套件
+conventions/terms.md          # 名詞：跟主人說話、寫套件說明時用哪個字
+schemas/package.md            # package.toml 的欄位、資料種類的欄位規格、秘書樣板與 packages sync
+schemas/README.md             # 每種資料共用的格式：共通欄位、型別、保存規則
+schemas/persona.md            # 角色卡的格式（套件帶自己的角色時照這份寫）
+schemas/job.md                # 排程的格式（套件帶排程樣板 [[contributes.job]] 時照這份寫）
+schemas/note.md               # 全家共用的主題筆記：放哪、檔頭、每行留名、分類、索引、誰能寫
+guides/billing-and-accounts.md  # 費用與帳號：要不要錢、額度用完、要重新登入、帳單有問題時怎麼跟主人說

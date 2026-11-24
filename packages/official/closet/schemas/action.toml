@@ -1,0 +1,80 @@
+schema = 1
+title = "登記的動作"
+
+# 動作插座（CLO-33）：使用者自己的套件（官方套件不行）在衣櫃的頁面上加一顆鈕。一筆＝一個動作，編號 <套件 id>-<動作名>（不撞名）；
+# 登記的套件的秘書寫（evergenie data add closet.action --id … --json …），不要了就封存。衣櫃的程式驗過才放進 closet.capabilities/main 的 actions，
+# 不合格的不列、記一次 log；登記的套件關掉或被拒也不列。按下去頁面寫一筆 request_kind 的紀錄（帶 request_fields 與 request_set），
+# 衣櫃不處理那筆請求，由登記的套件自己做。
+
+[[field]]
+name = "package"
+type = "string"
+required = true
+description = "哪個套件登記的（套件 id，使用者自己的套件；官方套件不能登記）；編號要以「<package>-」開頭"
+
+[[field]]
+name = "label"
+type = "string"
+required = true
+description = "鈕上的字（白話、一行、不超過 20 個字）"
+
+[[field]]
+name = "scope"
+type = "enum"
+enum = ["outfit", "photo"]
+required = true
+description = "對整套衣服（outfit）或單張照片（photo）"
+
+[[field]]
+name = "needs"
+type = "enum"
+enum = ["mine", "edit", "edit-tab"]
+required = true
+description = "這個家要有哪個能力才列這顆鈕（同 closet.capabilities 的 supports；edit-tab＝角色頁有「修改」分頁）"
+
+[[field]]
+name = "request_kind"
+type = "string"
+required = true
+description = "按下去寫哪個種類的請求：<package>.<種類>，要是登記的套件自己宣告的"
+
+[[field]]
+name = "request_fields"
+type = "list"
+required = true
+description = "請求帶哪些欄位（字串清單，不能空）：persona（角色代號）、outfit（closet.outfit 的編號）、photo（照片編號，只有 scope = photo 能用）"
+
+[[field]]
+name = "request_set"
+type = "map"
+description = "請求另外固定帶的欄位（例 {\"type\": \"move\"}）；值只能是字串、數字、true/false，不能是 by 或 request_fields 裡的欄位，而且要是 request_kind 規格裡的欄位"
+
+[[field]]
+name = "order"
+type = "int"
+description = "同一個 scope 裡鈕的順序（小的在前，一樣再照編號）；沒寫是 0"
+
+[[field]]
+name = "status_kind"
+type = "string"
+description = "狀態看哪個種類（<package>.<種類>，登記的套件自己宣告的）；沒寫＝不顯示狀態、不能有篩選。頁面找 request_fields 都對得上這套（或這張）的那筆，取最新的一筆"
+
+[[field]]
+name = "status_field"
+type = "string"
+description = "狀態看 status_kind 的哪個欄位（有 status_kind 就要寫）"
+
+[[field]]
+name = "status_labels"
+type = "map"
+description = "狀態值 → 白話（例 {\"done\": \"已搬\", \"stale\": \"改過要再搬\"}）；沒列的值不顯示（有 status_kind 就要寫）"
+
+[[field]]
+name = "filter_label"
+type = "string"
+description = "篩選鈕的名字（例「已處理」）；要配 status_kind。按下去只留狀態是 filter_values 的"
+
+[[field]]
+name = "filter_values"
+type = "list"
+description = "篩選鈕留下哪些狀態值（都要在 status_labels 裡）；沒寫＝status_labels 的全部值"

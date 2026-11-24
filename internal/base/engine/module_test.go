@@ -1,0 +1,28 @@
+package engine
+
+import (
+	"context"
+	"testing"
+)
+
+// Guards: REQ-118
+func TestModuleShape(t *testing.T) {
+	m := New(Deps{})
+	m.SetTrustSource(testPolicy)
+	if got := m.Name(); got != "engine" {
+		t.Fatalf("Name = %q", got)
+	}
+	if err := m.Start(context.Background()); err != nil {
+		t.Fatal(err)
+	}
+	if err := m.Stop(context.Background()); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestStartRejectsMissingTrust(t *testing.T) {
+	m := New(Deps{})
+	if err := m.Start(context.Background()); err == nil {
+		t.Fatal("未接信任能力仍啟動")
+	}
+}

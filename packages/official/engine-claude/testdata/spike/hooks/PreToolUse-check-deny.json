@@ -1,0 +1,27 @@
+{
+ "session_id": "fd3fa161-020e-4de7-b643-0fd461e67696",
+ "transcript_path": "/Users/someone/.claude-acme/projects/-private-tmp-hg-s0c-repo/fd3fa161-020e-4de7-b643-0fd461e67696.jsonl",
+ "cwd": "/private/tmp/hg-s0c/repo",
+ "scratchpad_dir": "/private/tmp/claude-501/-private-tmp-hg-s0c-repo/fd3fa161-020e-4de7-b643-0fd461e67696/scratchpad",
+ "prompt_id": "f1d2e90a-0bdc-4b22-ab4f-ee9e3575bd9e",
+ "permission_mode": "auto",
+ "effort": {
+  "level": "medium"
+ },
+ "hook_event_name": "PreToolUse",
+ "tool_name": "Write",
+ "tool_input": {
+  "file_path": "/private/tmp/hg-s0c/repo/a-deny.txt",
+  "content": "hi"
+ },
+ "tool_use_id": "toolu_01DAmVZRbMVrYEXfiPs8Y9DH",
+ "_recorded": {
+  "recorded": "2026-10-24",
+  "claude_code": "2.1.309",
+  "model": "haiku",
+  "account": "claude-acme",
+  "by": "P3-S0c",
+  "flags": "--name <n> --settings <gen> --permission-mode auto --session-id <uuid>（原生：帳號全部設定）",
+  "note": "回 deny 後：工具沒執行、沒有 PostToolUse、模型看到理由（auto 模式）"
+ }
+}

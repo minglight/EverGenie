@@ -1,0 +1,12 @@
+# 官方套件：Claude 引擎（D-6、D-7）。行程由 engine 模組依內建清單啟動與握手；pkg 只列出它與狀態（PKG-N3）。
+schema = 1
+id = "engine-claude"
+name = "Claude 引擎"
+version = "0.1.0"
+description = "讓秘書用 Claude Code 工作：啟動 session、送訊息、權限、對話紀錄、用量"
+kind = "program"
+api = "evergenie.v1"
+
+[program]
+entry = "cmd/evergenie-engine-claude"
+restart = "always"

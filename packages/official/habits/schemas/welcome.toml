@@ -1,0 +1,14 @@
+schema = 1
+title = "第一次介紹習慣"
+
+[[field]]
+name = "status"
+type = "enum"
+enum = ["done", "skipped"]
+required = true
+description = "done＝秘書已經跟主人介紹過習慣（秘書寫）；skipped＝這個家不用介紹（升級前就在用、或已經約了習慣，套件的程式寫）"
+
+[[field]]
+name = "agent"
+type = "string"
+description = "介紹的是哪位秘書（職位 id）；skipped 不寫"

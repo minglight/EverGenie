@@ -1,0 +1,88 @@
+schema = 1
+title = "習慣狀態"
+
+[[field]]
+name = "habit"
+type = "string"
+required = true
+description = "哪個習慣（H-<n>）；編號是它的小寫（h-3）。這個種類只有套件的程式寫，別人不要寫"
+
+[[field]]
+name = "streak_weeks"
+type = "int"
+description = "連續達標週數：漏一週（miss）就歸零；skip、open 的週不加也不斷"
+
+[[field]]
+name = "achieved_weeks"
+type = "int"
+description = "累計達標週數"
+
+[[field]]
+name = "earned_points"
+type = "int"
+description = "這個習慣賺到的點數（累積點數＋連續獎勵，只增不減）"
+
+[[field]]
+name = "next_need_weeks"
+type = "int"
+description = "離下一點（累積）還差幾週"
+
+[[field]]
+name = "bonus_weeks"
+type = "int"
+description = "連續達標幾週給一次獎勵（習慣的 bonus_weeks；0＝沒有連續獎勵）"
+
+[[field]]
+name = "bonus_points"
+type = "int"
+description = "連續獎勵賺到的點數（整段歷史累加；已含在 earned_points 裡）"
+
+[[field]]
+name = "next_bonus_weeks"
+type = "int"
+description = "離下一次連續獎勵還差幾週（沒有連續獎勵時是 0）"
+
+[[field]]
+name = "this_week"
+type = "map"
+description = "本週進度：done（已做幾次／幾天）、need（目標；每天型是 7）、days（本週做了的日子，list of 日期）"
+
+[[field]]
+name = "weeks"
+type = "list"
+description = "最近 8 週的週結果（list of map）：week（週一日期）、count（打卡數）、result（hit／miss／open／skip）"
+
+[[field]]
+name = "today_subs"
+type = "list"
+description = "有子項目的習慣，今天各項做了沒（list of map）：name、done、how（manual／auto／空）"
+
+[[field]]
+name = "today_manual"
+type = "int"
+description = "今天還有效的手動打卡（沒指定子項目）筆數；頁面用它決定要不要顯示「撤銷今天」"
+
+[[field]]
+name = "computed_at"
+type = "string"
+description = "程式算完的時間（RFC 3339）"
+
+[[field]]
+name = "done_days"
+type = "list"
+description = "做了的日子（日期字串，最近 400 天），月曆用"
+
+[[field]]
+name = "skipped_days"
+type = "list"
+description = "每天型沒做、還在容許內的日子（最近 400 天）"
+
+[[field]]
+name = "broken_days"
+type = "list"
+description = "每天型沒做、超過容許的日子（連續超過 miss_days 或一週超過 week_skips，最近 400 天）"
+
+[[field]]
+name = "manual_days"
+type = "list"
+description = "有手動打卡的日子（最近 400 天）；月曆只有這些能撤銷"

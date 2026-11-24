@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- 不加 interactive-widget=resizes-content（D-59）：iOS Safari 不認，Android 會把整個版面縮小、底部選單騎到鍵盤上，
+         兩邊不一樣。鍵盤打開時要看得到的東西改看 visualViewport（lib/media.ts 的 --hg-visible-h、useVisibleTop，WEB-128）。 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    <meta name="theme-color" content="#f5f3f9" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#14121c" media="(prefers-color-scheme: dark)" />
+    <!--
+      標題的襯線字（Noto Serif TC）：先當成列印用的樣式載入（不擋畫面、不擋程式），載到了才套用；
+      連不到、卡住都只是退回系統的宋體／serif。不能寫成一般的 rel="stylesheet"：外面的字型站一慢，
+      整頁會一片空白到它回應為止（WEB-175）。
+    -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;700&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+    <!-- 看板程式載好之前的畫面（WEB-175）：不是空白；程式沒載到、或等太久，換成白話說明與「重新整理」。 -->
+    <style>
+      #boot {
+        min-height: 100dvh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        padding: 24px;
+        box-sizing: border-box;
+        text-align: center;
+        font: 15px/1.6 system-ui, -apple-system, "PingFang TC", "Noto Sans TC", sans-serif;
+        background: #f5f3f9;
+        color: #4b4660;
+      }
+      #boot button {
+        min-height: 44px;
+        padding: 0 20px;
+        border-radius: 999px;
+        border: 1px solid currentColor;
+        background: transparent;
+        color: inherit;
+        font: inherit;
+      }
+      @media (prefers-color-scheme: dark) {
+        #boot {
+          background: #14121c;
+          color: #cfcae0;
+        }
+      }
+    </style>
+    <script>
+      // 放在看板程式（下面那支 module）之前：它沒載到（服務正在重開、網路斷）或等太久時，把載入畫面換成說明。
+      (() => {
+        var told = false;
+        function tell(text) {
+          var box = document.getElementById("boot");
+          if (!box || told) return; // 看板已經畫出來了，或已經說過原因
+          told = true;
+          document.getElementById("boot-text").textContent = text;
+          document.getElementById("boot-reload").hidden = false;
+        }
+        window.addEventListener(
+          "error",
+          (e) => {
+            var el = e.target;
+            if (el && el.tagName === "SCRIPT" && /^\/assets\//.test(el.getAttribute("src") || "")) {
+              tell("看板的程式沒有載到，可能是看板服務正在重開或網路不穩。等幾秒再重新整理。");
+            }
+          },
+          true,
+        );
+        setTimeout(() => {
+          tell("載入比平常久，可能是網路慢或看板服務正在重開。可以再等一下，或重新整理。");
+        }, 8000);
+      })();
+    </script>
+    <title>看板</title>
+    <script type="module" crossorigin src="/assets/index-0RDH7cds.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-BUY0SyvC.css">
+  </head>
+  <body>
+    <div id="root">
+      <div id="boot" role="status">
+        <p id="boot-text">看板載入中…</p>
+        <button id="boot-reload" type="button" hidden onclick="location.reload()">重新整理</button>
+      </div>
+    </div>
+  </body>
+</html>

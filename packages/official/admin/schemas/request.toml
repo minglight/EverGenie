@@ -1,0 +1,27 @@
+schema = 1
+title = "重新整理請求"
+
+[[field]]
+name = "type"
+type = "enum"
+enum = ["refresh"]
+required = true
+description = "請求種類，現在只有 refresh（馬上重算，不等 5 分鐘一次的定時）"
+
+[[field]]
+name = "target"
+type = "enum"
+enum = ["all", "release", "devhome"]
+description = "要重算哪一份；沒寫＝all"
+
+[[field]]
+name = "state"
+type = "enum"
+enum = ["pending", "done", "rejected"]
+required = true
+description = "寫入時一律 pending；admin 的程式處理後回填 done（算完、資料已寫好）或 rejected"
+
+[[field]]
+name = "reason"
+type = "string"
+description = "被拒絕的白話原因（只有程式回填）"

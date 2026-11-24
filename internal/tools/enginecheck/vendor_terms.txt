@@ -1,0 +1,17 @@
+claude
+anthropic
+codex
+gemini
+openai
+tmux
+mcp
+hook
+hooks
+PermissionRequest
+PreToolUse
+PostToolUse
+UserPromptSubmit
+AskUserQuestion
+CLAUDE_CONFIG_DIR
+transcript_path
+remote_control

@@ -1,0 +1,41 @@
+schema = 1
+title = "隱藏版"
+
+# 隱藏版（CLO-17）：另一組圖，開著的時候跟正常版一起列（2026-11-13 起不再取代；衣櫃、展示間、詳情、頭像、輪播都看得到兩版）。
+# 編號＝隱藏版 id（小寫英文、數字與減號）。主人、秘書、頁面、使用者自己的套件都可以寫；衣櫃的程式只讀。
+# 圖放在 dir 指的資料夾，命名跟正常版一樣（<人設>[@<衣服>][~N].<ext>、同代號 .mp4、full/<代號>.<ext>）；
+# 只有擁有的與設計中的衣服會換，沒擁有的照舊只有正常版的剪影。
+# DEV-160 S2 起：隱藏版只有一組。dir 裡的圖由衣櫃登記成 closet.photo（hidden = true）之後只看紀錄；這裡的開關（on、button）
+# 與時段（windows）合起來管那一組（任一筆開著就開著），dir 只給轉換器登記舊圖用。
+
+[[field]]
+name = "name"
+type = "string"
+required = true
+description = "給人看的名稱（衣櫃頁開關上的字），例：隱藏版"
+
+[[field]]
+name = "dir"
+type = "string"
+required = true
+description = "圖的資料夾，相對於 <家>/personas/（用 /，不能有 . 開頭的段），例：avatars/hidden"
+
+[[field]]
+name = "windows"
+type = "list"
+description = "每天自動開著的時段（本機時間，list of string，HH:MM-HH:MM，可以跨午夜，例 22:00-02:00）；沒寫就只看開關"
+
+[[field]]
+name = "button"
+type = "bool"
+description = "true＝衣櫃頁畫一個開關，按了就把隱藏版的圖跟正常版一起列、再按拿掉"
+
+[[field]]
+name = "on"
+type = "bool"
+description = "開關：true＝現在開著（時段外也開）。衣櫃頁的開關寫這個；秘書或使用者自己的頁面也可以寫"
+
+[[field]]
+name = "order"
+type = "int"
+description = "好幾個隱藏版同時開著時，同一套衣服先用 order 小的（沒寫排最後，再照編號）"

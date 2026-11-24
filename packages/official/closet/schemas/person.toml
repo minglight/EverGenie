@@ -1,0 +1,68 @@
+schema = 1
+title = "角色檢視"
+
+[[field]]
+name = "persona"
+type = "string"
+required = true
+description = "人設代號。這個種類只有衣櫃的程式寫，頁面只讀，別人不要寫（會被覆蓋）"
+
+[[field]]
+name = "name"
+type = "string"
+description = "顯示名稱（取人設檔檔頭的 name，沒有就是代號）"
+
+[[field]]
+name = "agent"
+type = "string"
+description = "現在坐這個人設的職位 id；沒人坐是空的（多位坐同一人設取編號最小的啟用中那位）"
+
+[[field]]
+name = "worn"
+type = "string"
+description = "現在穿的衣服 id"
+
+[[field]]
+name = "worn_photo"
+type = "int"
+description = "現在穿的是 photos 清單裡的第幾項（1 起算，含隱藏版開著時接在後面的那些）；0 = 沒有圖"
+
+[[field]]
+name = "picked"
+type = "bool"
+description = "現在穿的這套是不是指定穿的（現在穿這套）；false = 照輪流穿的清單"
+
+[[field]]
+name = "worn_until"
+type = "string"
+description = "指定穿到什麼時候（RFC 3339，當天結束）；沒指定是空字串"
+
+[[field]]
+name = "rotation"
+type = "list"
+description = "有效輪播清單（衣服 id）"
+
+[[field]]
+name = "outfits"
+type = "list"
+description = "已排序的衣服（list of map）：record（outfit 編號）、outfit、name、desc、cost、state、owned（bool）、rotating（bool）、source（official｜mine）、full（一般版全身照網址；只有擁有的與設計中的衣服有，沒有是空字串）、full_id／full_hidden_id（那張全身照的 closet.photo 編號，DEV-160 S2）、full_hidden／full_hidden_variant（隱藏版開著時的隱藏版全身照網址與隱藏版代號 h，跟 full 並存）、adopted（設計中的衣服才有：已單張採用的 key 清單，照 closet.photo 的 adopted 算）、promotable（只有開發家、可以升成官方的衣服才有，true：官方角色、source = mine、state = active、不是自己的隱藏版；展示間的篩選與 closet-mine 的按鈕讀它）、preview（只有開發家、沒兌換卻照樣給真圖的衣服才有，true；CLO-27）、status（擁有的、設計中的與 preview 的才有：每張照片在一般版與隱藏版有沒有，CLO-21；隱藏版只有一組，鍵是 h）、photos（list of map：n（那一版的第幾張）、id（那張的 closet.photo 編號）、variant（隱藏版是 h、一般版空字串；隱藏版開著時接在一般版後面，兩版都列）、url（隱藏版的公開檔名是 h-<n>）、real（bool）、video、videos、video_ids（每支影片的 closet.photo 編號））。哪張是哪套的、隱藏版與否、採用了沒都照 closet.photo，不看檔名"
+
+[[field]]
+name = "photo_urls"
+type = "map"
+description = "照片編號 → 公開網址（closet.photo 的編號對到這一輪公開資料夾裡那張半身、那支影片或那張全身照的網址；隱藏版的公開檔名是 h-<n>、網址帶 ?v=h）。只列真的放進公開資料夾的：沒擁有的衣服（只有剪影）、隱藏版關著、檔做不出來的都不列；開發家的下架又沒擁有的衣服不在 outfits 裡、照片網址照樣列在這裡（DEV-160 審查 S3b）。角色頁「修改」分頁照編號找圖（DEV-160，CLO-35）"
+
+[[field]]
+name = "owner_hidden"
+type = "list"
+description = "這位的照片裡「自己的隱藏版」的 closet.photo 編號（hidden 而且放在 personas/mine/〔source = mine〕，或舊家放在官方位置、路徑看起來是自己的隱藏版的；CLO-18），不管開關開沒開都列。角色頁「修改」分頁不給把它們改成一般版（改了就不再跟著「自己的隱藏版」開關，DEV-160，CLO-35）"
+
+[[field]]
+name = "hidden_off"
+type = "list"
+description = "這位的隱藏版照片裡，這一輪因為隱藏版開關關著（不在時段、沒打開；自己的隱藏版另看「自己的隱藏版」開關）不公開的 closet.photo 編號。角色頁「修改」分頁照它整張不列、也不出「顯示隱藏版」（作者 2026-11-15，CLO-35）；開著時是空的"
+
+[[field]]
+name = "computed_at"
+type = "string"
+description = "程式算完的時間（RFC 3339）"

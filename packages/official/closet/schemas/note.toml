@@ -1,0 +1,91 @@
+schema = 1
+title = "衣服意見"
+
+# 一筆＝主人對某一張圖（或整套）的意見，給生圖秘書（art 職位，只有開發家有）照內容辦。編號 CN-1、CN-2…。
+# 現在只有開發家角色頁的「修改」分頁寫（評論：intent = comment，有 photo 或 scope = outfit）；DEV-160 以前展示間「設計中」的「修改」「留言」寫的舊意見
+# （沒有 photo、也不是 scope = outfit）照 closet README 的「舊的意見」辦，頁面不再寫這種。
+# 欄位刻意跟角色工坊的 character-studio.note 同名同意思（persona/outfit/type/level/comment/state/result），那邊要一起看或沿用都不必轉換；
+# 這邊多 record、piece、slot、clip 指到「設計中的哪一張」（設計中的圖不在圖庫，所以沒有 shot）。
+# 重做的新圖換在同一套設計中的同一張（不新增衣服），做完秘書把 state 改 redone、result 寫一句話。
+
+[[field]]
+name = "persona"
+type = "string"
+required = true
+description = "哪位角色（人設代號）"
+
+[[field]]
+name = "outfit"
+type = "string"
+required = true
+description = "衣服 id；base 是第一套"
+
+[[field]]
+name = "record"
+type = "string"
+description = "closet.outfit 的編號（<人設>-<衣服 id>）"
+
+[[field]]
+name = "piece"
+type = "string"
+required = true
+description = "哪一張：half-<n>（第 n 張半身）、full（全身）、video-<n>-<k>（第 n 張的第 k 支影片）；隱藏版的前面加 h:（例 h:half-2、h:full；隱藏版只有一組，DEV-160 S2），跟一般版的同一張分開；舊的 <隱藏版編號>:（例 h1:half-2）照讀，當成 h:。DEV-160 起有 closet.photo 就看 photo 欄位，這欄照留。整套的意見（scope = outfit，角色頁「修改」分頁的整套評論）固定寫 outfit，沒有指哪一張"
+
+[[field]]
+name = "type"
+type = "enum"
+enum = ["half", "full", "video"]
+required = true
+description = "半身、全身或影片。整套的意見（scope = outfit）固定寫 half，只是填必填欄位、沒有意思，看 scope"
+
+[[field]]
+name = "slot"
+type = "int"
+description = "第幾張照片（1 起算；全身照沒有）。半身是它自己的第幾張，影片是配哪一張照片"
+
+[[field]]
+name = "clip"
+type = "int"
+description = "只給影片：這張照片的第幾支（1 起算）"
+
+[[field]]
+name = "level"
+type = "string"
+description = "那張圖的版本：標準（一般版）或隱藏版；展示間一律寫，是分辨版本的主要依據（角色工坊寫的意見 piece 不加前綴，只靠這欄）。隱藏版的圖是 closet.photo 裡 hidden = true 的那幾筆（file 指著檔），重做時換那筆指的檔，不要動一般版"
+
+[[field]]
+name = "comment"
+type = "string"
+required = true
+description = "主人的意見，白話：哪裡不喜歡、想怎麼改"
+
+[[field]]
+name = "intent"
+type = "enum"
+enum = ["redo", "comment"]
+description = "redo（沒寫也當 redo）＝主人按「修改」，要秘書只重做那一張；comment＝主人按「留言」，只是留一句話（指令不一定是重做），秘書照內容辦，不自動重做、也不動這張的「已採用」。有 photo 或 scope = outfit 的 comment 是角色頁「修改」分頁的評論：一樣照內容辦，但真的換了新圖用換圖請求（closet-mine.request 帶 photo_id，系統自動回到還沒採用，不要自己改 adopted）、state 填 redone（見 closet README 的「修改」分頁一節）"
+
+[[field]]
+name = "state"
+type = "enum"
+enum = ["open", "redone", "dismissed"]
+required = true
+description = "open 等秘書處理；redone 已重做（新圖已換在同一張）；dismissed 不用重做了（留言處理完也用這個，result 寫做了什麼）"
+
+[[field]]
+name = "result"
+type = "string"
+description = "重做結果：一句話說明（秘書回填）"
+
+# DEV-160：照片登記成 closet.photo 之後，意見指到照片紀錄（photo），也可以對整套（scope = outfit）。舊的 piece、slot、clip 照留。
+
+[[field]]
+name = "photo"
+type = "string"
+description = "哪一張：closet.photo 的編號（例 athena-seaside--half2）；整套的意見（scope = outfit）不用寫"
+
+[[field]]
+name = "scope"
+type = "enum"
+enum = ["outfit", "photo"]
+description = "意見對誰：photo = 某一張（沒寫也當 photo，舊的意見都是）；outfit = 整套（piece 固定 outfit、type 固定 half，不寫 photo、slot、clip、level）。角色頁「修改」分頁的「評論」整套與單張都寫 intent = comment"

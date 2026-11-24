@@ -1,0 +1,34 @@
+# 刻意從 sdk 刪掉的項目（D-35：sdk 只加不刪的例外）。scripts/compat.sh 比上一個正式版時，這裡列的行不算「少了」。
+# 一行一項：api.golden 的原文，後面用 tab 接「# 原因」。要刪之前先確認官方套件都不用，並加一條帶舊欄位也解得開的測試（sdk/compat_test.go TestLegacy*）。
+Envelope.Goal string goal,omitempty	# DEV-92 秘書傳話不掛 Goal（TestLegacyEnvelopeGoalDecodes）
+Goal.Grants []sdk.ActionClass grants,omitempty	# DEV-95 拿掉 Goal 的授權範圍
+GoalsCreateRequest.Grants []sdk.ActionClass grants,omitempty	# DEV-95
+GoalsProposeRequest.Grants []sdk.ActionClass grants,omitempty	# DEV-95
+GoalsOptionsRequest struct	# DEV-95 Goal 選項 API 只剩授權勾選用，一起拿掉
+GoalsOptionsResponse struct	# DEV-95
+GoalsOptionsResponse.AlwaysAsk []sdk.ActionClass always_ask,omitempty	# DEV-95
+SessionIncident struct	# S5-4 拿掉掉包回報 session.report_incident（核心不再判掉包，D1）
+SessionIncident.Agent string agent,omitempty	# S5-4 拿掉掉包回報 session.report_incident（核心不再判掉包，D1）
+SessionIncident.At time.Time at,omitempty	# S5-4 拿掉掉包回報 session.report_incident（核心不再判掉包，D1）
+SessionIncident.Detail string detail,omitempty	# S5-4 拿掉掉包回報 session.report_incident（核心不再判掉包，D1）
+SessionIncident.Envelope string envelope,omitempty	# S5-4 拿掉掉包回報 session.report_incident（核心不再判掉包，D1）
+SessionIncident.Kind sdk.SessionIncidentKind kind,omitempty	# S5-4 拿掉掉包回報 session.report_incident（核心不再判掉包，D1）
+SessionIncident.Session string session,omitempty	# S5-4 拿掉掉包回報 session.report_incident（核心不再判掉包，D1）
+SessionIncident.Steps []string steps,omitempty	# S5-4 拿掉掉包回報 session.report_incident（核心不再判掉包，D1）
+SessionIncidentKind string	# S5-4 拿掉掉包回報 session.report_incident（核心不再判掉包，D1）
+SessionMessage.Lost bool lost,omitempty	# S5-4 狀態追丟拿掉，這一輪沒做完改看 lifecycle interrupted＋reason（TestLegacySessionS5FieldsDecode）
+SessionReportIncidentRequest struct	# S5-4 拿掉掉包回報 session.report_incident（核心不再判掉包，D1）
+SessionReportIncidentRequest.By *sdk.Actor by,omitempty	# S5-4 拿掉掉包回報 session.report_incident（核心不再判掉包，D1）
+SessionReportIncidentRequest.Incident *sdk.SessionIncident incident,omitempty	# S5-4 拿掉掉包回報 session.report_incident（核心不再判掉包，D1）
+SessionReportIncidentResponse struct	# S5-4 拿掉掉包回報 session.report_incident（核心不再判掉包，D1）
+SessionReportIncidentResponse.Accepted bool accepted	# S5-4 拿掉掉包回報 session.report_incident（核心不再判掉包，D1）
+enum.MessageWaitLate late	# S5-4 不再判「3 秒說不出原因＝掉包」（D3）
+enum.SessionIncidentLostState lost_state	# S5-4 拿掉掉包回報 session.report_incident（核心不再判掉包，D1）
+enum.SessionIncidentNotDelivered not_delivered	# S5-4 拿掉掉包回報 session.report_incident（核心不再判掉包，D1）
+enum.SessionIncidentStuck stuck	# S5-4 拿掉掉包回報 session.report_incident（核心不再判掉包，D1）
+enum.SessionStateStuck stuck	# S5-4 核心不再猜卡住（D2）；舊狀態檔 stuck 載入當 idle
+enum.ThreadStatusStuck stuck	# S5-4 核心不再猜卡住（D2）；舊狀態檔 stuck 載入當 idle
+enum.EnvBundledPersonas HG_BUNDLED_PERSONAS	# DEV-158 環境變數改名 EVERGENIE_…；讀舊名（legacy）：新名字沒設時 sdk.Getenv 照讀
+enum.EnvMedia HG_MEDIA	# DEV-158 環境變數改名 EVERGENIE_…；讀舊名（legacy）：新名字沒設時 sdk.Getenv 照讀
+enum.EnvOfficialPersonas HG_OFFICIAL_PERSONAS	# DEV-158 環境變數改名 EVERGENIE_…；讀舊名（legacy）：新名字沒設時 sdk.Getenv 照讀
+enum.EnvState HG_STATE	# DEV-158 環境變數改名 EVERGENIE_…；讀舊名（legacy）：新名字沒設時 sdk.Getenv 照讀

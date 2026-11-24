@@ -1,0 +1,18 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "types": [],
+    "paths": {
+      "react": ["./node_modules/@types/react/index.d.ts"],
+      "react/jsx-runtime": ["./node_modules/@types/react/jsx-runtime.d.ts"],
+      "@evergenie/ui": ["../../packages/ui/src/index.ts"],
+      "@evergenie/sdk-web": ["../../packages/sdk-web/src/index.ts"],
+      "@evergenie/host": ["./src/pkg/host.d.ts"],
+      "vitest": ["../../node_modules/vitest/dist/index.d.ts"]
+    }
+  },
+  "include": [
+    "../../../packages/official/*/pages/**/*.ts",
+    "../../../packages/official/*/pages/**/*.tsx"
+  ]
+}

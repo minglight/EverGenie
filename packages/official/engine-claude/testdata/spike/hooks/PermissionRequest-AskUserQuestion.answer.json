@@ -1,0 +1,70 @@
+{
+ "hookSpecificOutput": {
+  "hookEventName": "PermissionRequest",
+  "decision": {
+   "behavior": "allow",
+   "updatedInput": {
+    "questions": [
+     {
+      "question": "Which color do you like?",
+      "header": "Color",
+      "options": [
+       {
+        "label": "Red",
+        "description": "Red"
+       },
+       {
+        "label": "Blue",
+        "description": "Blue"
+       },
+       {
+        "label": "Green",
+        "description": "Green"
+       }
+      ],
+      "multiSelect": false
+     },
+     {
+      "question": "Which fruits do you want?",
+      "header": "Fruits",
+      "options": [
+       {
+        "label": "Apple",
+        "description": "Apple"
+       },
+       {
+        "label": "Banana",
+        "description": "Banana"
+       },
+       {
+        "label": "Cherry",
+        "description": "Cherry"
+       }
+      ],
+      "multiSelect": true
+     },
+     {
+      "question": "Anything else to tell me?",
+      "header": "Free",
+      "options": [
+       {
+        "label": "Nothing",
+        "description": "Nothing"
+       },
+       {
+        "label": "Something",
+        "description": "Something"
+       }
+      ],
+      "multiSelect": false
+     }
+    ],
+    "answers": {
+     "Which color do you like?": "Red",
+     "Which fruits do you want?": "Apple, Banana",
+     "Anything else to tell me?": "free text typed by the owner"
+    }
+   }
+  }
+ }
+}

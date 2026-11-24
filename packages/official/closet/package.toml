@@ -1,0 +1,203 @@
+# 官方套件：衣櫃（REQ-125）。兩頁（DEV-112，作者 2026-11-03）：「衣櫃」只放擁有的衣服（現在穿哪套、輪流穿）；
+# 「展示間」看所有上架的衣服（沒擁有的是剪影）、用點數兌換，並有新增角色、加衣服的入口（開到核心的角色頁，衣服分頁是 closet-mine 掛的，DEV-143）。
+# 設計中的衣服在開發家角色頁的「修改」分頁採用、評論（CLO-35），展示間不列（開發家只有一行入口，CLO-37）。
+# 附程式的套件（kind = "program"）：背景行程處理兌換請求（只認主人本人）與「現在穿這套」的請求（只有已擁有的能穿）、輪播換衣、
+# 維護公開資料夾（沒兌換的衣服只放剪影，真圖根本不在公開資料夾裡），並把每位角色的檢視寫回 vault（person、state）。
+# 仍然不做 RPC（D-28）：秘書用 `evergenie data …`、頁面用 @evergenie/sdk-web 的 api.vault 讀寫同一份資料。
+# 不寫 requires：沒裝「習慣」套件時，衣櫃照樣能用免費的衣服、輪播、草稿，只是不能花點數。
+schema = 1
+id = "closet"
+name = "衣櫃"
+version = "0.1.0"
+description = "角色的衣服：衣櫃放擁有的、輪流穿；展示間看全部、用點數兌換；沒兌換的只看得到剪影"
+kind = "program"
+api = "evergenie.v1"
+
+[program]
+entry = "cmd/evergenie-closet"
+restart = "always"
+
+[contributes]
+avatars = "worn"
+
+[capabilities]
+read = ["vault:pkg/closet", "vault:pkg/closet-mine", "vault:pkg/habits", "vault:agent"]
+write = ["vault:pkg/closet"]
+
+# 匯出角色（evergenie personas export）與官方角色包時，她的衣服目錄跟著走；隱藏版只在匯出角色時、資料夾裡有她的圖才一起走、只帶她的圖，不進官方角色包（PKG-57、PKG-59）。
+[[contributes.data]]
+kind = "outfit"
+schema = "schemas/outfit.toml"
+ids = "given"
+export = "by_persona"
+# from（升成官方前的編號）、adopted（設計中單張採用的進度，SEC-10）只對這個家有意義，不跟著走。
+export_omit = ["from", "adopted"]
+# 官方角色包只帶「官方來源、而且已採用或下架」的衣服（PKG-68，作者 2026-11-14：採用只代表主人要穿，主人按了「升成官方」的才可以公開）：
+# 主人自己的（source = mine，圖在 personas/mine/、本來就不進包）與設計中的（state = draft）建包不收、同步時包裡萬一帶了也不寫。
+# 主人點名的角色匯出（evergenie personas export）不看這條，照舊都帶。
+pack_only = { source = ["official"], state = ["active", "retired"] }
+pack_only_note = "還沒升成官方或還在設計中的衣服"
+# 角色改代號時（evergenie home tidy、personas promote，PKG-64）：編號是 <角色>-<衣服>、persona 是角色代號（export 那個欄位）、
+# from 是舊的衣服編號；source 說圖在官方位置還是 personas/mine/（角色從官方位置收成自己的時改成 mine）。
+persona_id = "prefix"
+persona_prefixed = ["from"]
+persona_source = "source"
+
+[[contributes.data]]
+kind = "unlock"
+schema = "schemas/unlock.toml"
+ids = "given"
+# 兌換紀錄的編號＝那套衣服的編號 <角色>-<衣服>（PKG-64）；request 裡的 carry:<舊編號> 不在宣告裡，改代號時只列出來。
+persona_field = "persona"
+persona_id = "prefix"
+
+[[contributes.data]]
+kind = "rotation"
+schema = "schemas/rotation.toml"
+ids = "given"
+# 輪播設定一位角色一筆，編號就是角色代號（PKG-64）。
+persona_id = "exact"
+
+[[contributes.data]]
+kind = "request"
+schema = "schemas/request.toml"
+ids = "seq"
+prefix = "Q-"
+# 兌換請求（也收「現在穿這套」與復原，type = wear／unwear）：persona 是角色代號，unlock 是兌換紀錄的編號 <角色>-<衣服>（PKG-64）。
+persona_field = "persona"
+persona_prefixed = ["unlock"]
+
+[[contributes.data]]
+kind = "person"
+schema = "schemas/person.toml"
+ids = "given"
+# 每位角色的檢視是程式算的，但舊代號那筆不會自己消失（只會把欄位清空），所以也跟著改（PKG-64）；outfits 裡的編號下一輪程式會重算。
+persona_field = "persona"
+persona_id = "exact"
+
+# 衣服意見：開發家角色頁「修改」分頁的評論寫一筆，再叫生圖秘書（art 職位，只有開發家有、有啟用中的才叫）照內容辦（CLO-35）；
+# DEV-160 以前展示間「設計中」寫的舊意見照 README 辦。欄位跟角色工坊的 character-studio.note 同名。頁面與秘書都可以寫。
+[[contributes.data]]
+kind = "note"
+schema = "schemas/note.toml"
+ids = "seq"
+prefix = "CN-"
+# 衣服意見：persona 是角色代號，record 是那套衣服的編號 <角色>-<衣服>、photo 是照片編號 <角色>-<衣服>--…（DEV-160 起的意見才有，PKG-64）。
+persona_field = "persona"
+persona_prefixed = ["record", "photo"]
+
+# 照片（DEV-160，作者 2026-11-15）：一筆＝一個檔（每張半身、全身照、每支影片），屬於哪位角色哪一套、類型、一般／隱藏版、採用都記在這裡；
+# S2 起各處只讀這份紀錄，檔名不再帶意思。編號 <衣服編號>--<類型><第幾張>[-c<第幾支>][-h]（見 schemas/photo.toml）。
+# 匯出角色時她的照片紀錄跟著走（adopted 也帶：它是照片本身的狀態「這張定案了」，不像 outfit.adopted 是這個家審核到哪的進度清單），
+# 隱藏版（hidden = true）的紀錄與圖不跟著走（export_only，匯出與官方角色包都一樣）；
+# 官方角色包只帶官方位置、一般版、已採用的（source = official、hidden = false、adopted = true；上架與下架的衣服每張都是 true），
+# 主人自己的（圖在 personas/mine/）、隱藏版、設計中還沒採用的不進包；衣服沒進包（pack_parent：還沒升成官方、設計中）的照片連圖也不進。
+# 匯出與建包照 file 帶檔（file_field，DEV-160 S2）：source = official 時相對於官方角色資料夾，mine 時相對於 personas/mine/。
+[[contributes.data]]
+kind = "photo"
+schema = "schemas/photo.toml"
+ids = "given"
+export = "by_persona"
+pack_only = { source = ["official"], hidden = ["false"], adopted = ["true"] }
+pack_only_note = "主人自己的、隱藏版或還沒採用的照片"
+export_only = { hidden = ["false"] }
+file_field = "file"
+pack_parent = { kind = "outfit", field = "outfit" }
+# 角色改代號時（PKG-64）：編號是 <角色>-<衣服>--…、persona 是角色代號、outfit 是衣服編號、of 是照片編號（都以 <角色>- 開頭）；
+# source 說檔案在官方位置還是 personas/mine/（角色從官方位置收成自己的時改成 mine，file 照舊、檔搬到 personas/mine/ 的同一個相對路徑）。
+# 檔名沒有意思（DEV-160 S2）：改代號時不改檔名，file 照舊指著原檔。
+persona_id = "prefix"
+persona_prefixed = ["outfit", "of"]
+persona_source = "source"
+
+[[contributes.data]]
+kind = "state"
+schema = "schemas/state.toml"
+ids = "given"
+
+[[contributes.data]]
+kind = "variant"
+schema = "schemas/variant.toml"
+ids = "given"
+export = "by_folder"
+folder_field = "dir"
+# 開關 on 是這個家當下的狀態，不跟著走；匯入時本機已有這個隱藏版就保留本機的開關（PKG-58）。時段 windows 照帶。
+export_omit = ["on"]
+
+# 自己的隱藏版（DEV-141，作者 2026-11-07；2026-11-14 改名）：主人自己放的隱藏版，圖放 <家>/personas/mine/adult/。家層級的開關，預設關；
+# 主人在看板「設定 → 套件」把值寫成 on 才讀、才顯示；其他值（含沒設）一律當關。匯出、角色包都不帶自己的隱藏版。
+# owner_only：只有主人本人能改，秘書寫會被核心拒絕。改了之後衣櫃程式幾秒內就照新的值換圖（它每 3 秒看一次這個值）。
+[[extension]]
+id = "adult"
+kind = "setting"
+default = "off"
+owner_only = true
+description = "自己的隱藏版（personas/mine/adult/ 的圖）：寫 on 才讀、才顯示，其他都當關"
+
+[[extension]]
+id = "edit-tab"
+kind = "setting"
+default = "on"
+owner_only = true
+description = "開發家角色頁的「修改」分頁：寫 off 就不掛（改用別的套件管設計時），其他都當開；只有開發家才有這個分頁"
+
+[[contributes.page]]
+id = "wardrobe"
+title = "衣櫃"
+route = "/closet"
+component = "pages/wardrobe.tsx"
+
+[[contributes.page]]
+id = "showroom"
+title = "展示間"
+route = "/closet-showroom"
+component = "pages/showroom.tsx"
+
+[[contributes.page]]
+id = "outfit"
+title = "衣服詳情"
+route = "/closet-outfit"
+component = "pages/outfit.tsx"
+
+# 角色頁（/personas/<代號>）的分頁「修改」（DEV-160 S6，CLO-35）：只有這個家支援 edit（開發家）才列，頁面不判斷是哪種家。
+# 不寫 slot_front：同一個位置 slot_front 的在前、其他照頁面 id 排（closet-mine 的「衣服」有 slot_front），所以排在最後。
+[[contributes.page]]
+id = "edit"
+title = "修改"
+component = "pages/edit.tsx"
+slot = "core.persona.tab"
+show_when = "cap:closet.edit-tab"
+
+[[contributes.menu]]
+id = "wardrobe"
+title = "衣櫃"
+icon = "shirt"
+group_hint = "daily"
+order = 40
+page = "wardrobe"
+# 衣櫃、展示間是核心「角色」頁（介紹 core.personas）的分頁（DEV-117、D-62）：同一個 section 合成一個入口，
+# 分頁順序是核心在前、再照 order；名稱「角色」由核心的項目給。
+section = "personas"
+
+[[contributes.menu]]
+id = "showroom"
+title = "展示間"
+icon = "image-plus"
+group_hint = "daily"
+order = 41
+page = "showroom"
+section = "personas"
+
+# ---- 能力與動作插座（DEV-160 S4，CLO-32、CLO-33）----
+# 這個家支援什麼（只有程式寫、只用 main）：supports 是能力（mine＝每個家；edit＝只有開發家），actions 是驗過、撐得起的登記動作。
+# 核心的 show_when = "cap:closet.<能力>" 讀它（MNU-11）；頁面也只看它，不自己判斷是哪種家。不跟著匯出（每個家各自算）。
+[[contributes.data]]
+kind = "capabilities"
+schema = "schemas/capabilities.toml"
+ids = "given"
+
+# 別的套件登記的動作（編號 <套件 id>-<動作名>）：衣櫃驗過才放進 capabilities 的 actions。不跟著匯出（登記跟著登記的套件走）。
+[[contributes.data]]
+kind = "action"
+schema = "schemas/action.toml"
+ids = "given"

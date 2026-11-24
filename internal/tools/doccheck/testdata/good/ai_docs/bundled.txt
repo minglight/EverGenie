@@ -1,0 +1,2 @@
+# 測試樣本：跟著發行檔帶的文件
+conventions/testing.md  # 測試的規範

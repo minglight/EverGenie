@@ -1,0 +1,33 @@
+schema = 1
+title = "飲食目標"
+
+[[field]]
+name = "mode"
+type = "enum"
+enum = ["減脂", "增肌", "維持", "自訂"]
+required = true
+description = "目標類型"
+
+[[field]]
+name = "kcal"
+type = "number"
+required = true
+description = "每天熱量目標（大卡）"
+
+[[field]]
+name = "protein"
+type = "number"
+required = true
+description = "每天蛋白質目標（公克）"
+
+[[field]]
+name = "carb"
+type = "number"
+required = true
+description = "每天碳水目標（公克）；0 代表不設目標"
+
+[[field]]
+name = "fat"
+type = "number"
+required = true
+description = "每天脂肪目標（公克）；0 代表不設目標"

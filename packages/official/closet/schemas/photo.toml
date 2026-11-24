@@ -1,0 +1,67 @@
+schema = 1
+title = "照片"
+
+# 一筆＝一個檔（DEV-160，作者 2026-11-15）：每張半身、全身照、每支影片各一筆。照片屬於誰（角色、哪套、類型、一般／隱藏版）、
+# 狀態（採用）都記在這裡；S2 起衣櫃、角色包、匯出、改代號都只讀這份紀錄，檔名與資料夾不再帶意思
+# （存放位置只表示歸誰、能不能改：官方在家外唯讀、主人的在家裡）。
+# 編號＝<衣服編號>--<類型><第幾張>[-c<第幾支>][-h]：半身 athena-sea--half2、全身 athena-sea--full1、
+# 影片 athena-sea--video2-c1（配第 2 張半身的第 1 支）、隱藏版接 -h（athena-sea--half2-h）。同一個檔重算一定得到同一個編號；
+# 編號只是名字，讀的人看欄位，不要拆編號；之後改了類型或一般／隱藏（S6），編號不跟著變。這套編號規則只給轉換器登記舊圖用，
+# S3 起新上傳的照片另用沒有意思的編號（不從類型、第幾張推）。舊資料由衣櫃的照片轉換器（internal/photomigrate）一次產生。
+
+[[field]]
+name = "persona"
+type = "string"
+required = true
+description = "哪位角色（人設代號，例 athena；主人自己的角色是 my_<名字>）"
+
+[[field]]
+name = "outfit"
+type = "string"
+required = true
+description = "哪一套：closet.outfit 的編號（<人設>-<衣服 id>，例 athena-seaside）"
+
+[[field]]
+name = "type"
+type = "enum"
+enum = ["half", "full", "video"]
+required = true
+description = "half = 半身照（輪流穿的那幾張）；full = 全身照；video = 影片（配某一張半身照，見 of）"
+
+[[field]]
+name = "order"
+type = "int"
+description = "同一套同類型裡的排序（小的在前，1 起算；半身第 1 張 = 1，取代舊檔名的 ~N；全身照是 1；影片跟它配的那張照片同一個數字，同一張的影片再照 clip 排）"
+
+[[field]]
+name = "of"
+type = "string"
+description = "只給影片：配哪一張照片（那張半身照的 closet.photo 編號，例 athena-seaside--half1）"
+
+[[field]]
+name = "clip"
+type = "int"
+description = "只給影片：這張照片的第幾支（1 起算，就是公開的編號；取代舊檔名的 +k）"
+
+[[field]]
+name = "hidden"
+type = "bool"
+description = "true = 隱藏版的圖（隱藏版開著才列，只加在擁有的與設計中的衣服上）；false = 一般版。隱藏版只有一組，不記是哪一組"
+
+[[field]]
+name = "source"
+type = "enum"
+enum = ["official", "mine"]
+required = true
+description = "這個檔放在哪：official = 官方角色資料夾（家外唯讀）；mine = 主人的 <家>/personas/mine/。file 相對於它；角色從官方收成自己的時改成 mine"
+
+[[field]]
+name = "file"
+type = "string"
+required = true
+description = "檔案的位置，相對於 source 那個資料夾（用 /），例 avatars/athena@sea~2.png、adult/full/athena@sea.png；新上傳的（S3 起）是 photos/<照片編號>.<副檔名>，名字沒有意思"
+
+[[field]]
+name = "adopted"
+type = "bool"
+description = "這張已經採用了（主人看過、要它）。上架、下架的衣服原則上每張都是 true；開發家換了圖（換圖請求）的那張自動回到 false，主人在「修改」分頁再採用；false = 還在開發中"

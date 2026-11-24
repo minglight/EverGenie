@@ -1,0 +1,55 @@
+schema = 1
+title = "發版狀態"
+
+# 只有 admin 的程式寫，只用 current 這一筆（算這台的版本）。欄位大致跟舊的 dev.release 回應一樣（sdk.DevReleaseResponse）；
+# 跨台時代的 sites（每台一列）2026-11-01 換成 version（法律第 7 條：每台一個家）。舊資料還帶著 sites 不算錯，頁面照樣讀，下一輪整筆換掉。
+
+[[field]]
+name = "version"
+type = "string"
+description = "這台核心跑的版本（scripts/version.sh 的格式）；讀不到就沒有這個欄位"
+
+[[field]]
+name = "main"
+type = "map"
+description = "origin/main 最新的 commit：commit、short、subject、at；抓不到就沒有這個欄位"
+
+[[field]]
+name = "pending"
+type = "list"
+description = "main 有、本機版本還沒有的 commit（新到舊，最多 30 個），每個同 main 的格式"
+
+[[field]]
+name = "pending_more"
+type = "bool"
+description = "還沒部署的 commit 超過 30 個"
+
+[[field]]
+name = "detail"
+type = "string"
+description = "白話：抓不到 main 的原因、本機版本認不出 commit 等；正常時空"
+
+[[field]]
+name = "latest"
+type = "map"
+description = "上一個正式版 tag（vX.Y.Z）：name、version、commit、short、at、notes；還沒有就沒有這個欄位"
+
+[[field]]
+name = "safe"
+type = "map"
+description = "最新的 safe/ tag（每晚測試全過的 commit）：name、commit、short、at、notes"
+
+[[field]]
+name = "nightly"
+type = "map"
+description = "上次每晚測試（[admin] release_state 底下的 nightly.json）：commit、short、at、ok、steps、safe_tag"
+
+[[field]]
+name = "next"
+type = "map"
+description = "下一個正式版的草稿（next.json）：version、base、safe_tag、notes、draft（說明還是原樣的 commit 清單）、commits"
+
+[[field]]
+name = "computed_at"
+type = "datetime"
+description = "程式算完的時間（RFC 3339）"

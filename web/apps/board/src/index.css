@@ -1,0 +1,10 @@
+@import "tailwindcss";
+@import "@evergenie/ui/tokens.css";
+@source "../../../packages/ui/src";
+/* 官方套件的頁面（每個官方套件的 pages 資料夾）用到的 Tailwind class 也要編進來。 */
+@source "../../../../packages/official/**/pages/**/*.tsx";
+
+/* 畫面上看得到的高度（WEB-128、D-59）：外殼用 visualViewport 寫成 px（鍵盤打開時變矮）；還沒寫之前是 100dvh。 */
+:root {
+  --hg-visible-h: 100dvh;
+}

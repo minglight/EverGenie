@@ -1,0 +1,18 @@
+{
+ "session_id": "69775a7f-bcaf-4648-95ba-4597d722d77d",
+ "transcript_path": "/Users/someone/.claude-acme/projects/-tmp-hg-spike-run-m1/69775a7f-bcaf-4648-95ba-4597d722d77d.jsonl",
+ "cwd": "/tmp/hg-spike/run/m1",
+ "scratchpad_dir": "/private/tmp/claude-501/-tmp-hg-spike-run-m1/69775a7f-bcaf-4648-95ba-4597d722d77d/scratchpad",
+ "prompt_id": "56b4a3a8-136d-4d41-8209-ec5e80790009",
+ "permission_mode": "default",
+ "hook_event_name": "UserPromptSubmit",
+ "prompt": "<task-notification>\n<task-id>brlfqcf95</task-id>\n<tool-use-id>toolu_01MtDnvy2ekgi5ucB7Coswg7</tool-use-id>\n<output-file>/private/tmp/claude-501/-tmp-hg-spike-run-m1/69775a7f-bcaf-4648-95ba-4597d722d77d/tasks/brlfqcf95.output</output-file>\n<status>completed</status>\n<summary>Background command \"Sleep 25 seconds in background\" completed (exit code 0)</summary>\n</task-notification>",
+ "_recorded": {
+  "recorded": "2026-10-23",
+  "claude_code": "2.1.309",
+  "model": "haiku",
+  "account": "claude-acme",
+  "by": "P3-S0",
+  "flags": "--setting-sources project --settings <gen> --mcp-config <gen> --strict-mcp-config --session-id <uuid>"
+ }
+}

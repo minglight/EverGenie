@@ -1,0 +1,72 @@
+# 官方套件（選用）：開發工坊（admin，法律第 3 條：發行者的工具不放核心；計畫 2026-10-31-dev-workshop-split）。
+# 附程式的套件（kind = "program"）：背景行程定時整理「發版狀態」與「開發家狀態」寫進自己的資料種類，
+# 頁面要新的就寫一張 request 單（跟衣櫃的 Q- 單同一套），程式處理完回填 done。不做 RPC（D-28）。
+# 頁面（發版、開發家）掛在日常看板裡；按鈕只開一般任務單給 admin 秘書，開發用帳號＝admin 秘書在「設定 → 秘書」選的帳號。
+# 選用：開發 EverGenie 的家才開；預設不啟用。
+# 生圖職位 art 的樣板也在這裡（作者 2026-11-15，DEV-160：一般家沒有生圖秘書，只有開發家有）：一般家不開這個套件，
+# 「職位與秘書」、設定精靈、歡迎頁就都不會出現它；樣板標 optional: true，開發家也要主人在「選用的職位」自己加。
+schema = 1
+id = "admin"
+name = "開發工坊"
+version = "0.1.0"
+description = "開發 EverGenie 用的工具：發版狀態與按鈕、開發家狀態、生圖職位（開發 EverGenie 的家才用得到）"
+kind = "program"
+api = "evergenie.v1"
+optional = true
+# 只給開發 EverGenie 的家：正式家的「設定 → 套件」不列它（作者 2026-11-04）
+dev_only = true
+
+[program]
+entry = "cmd/evergenie-admin"
+restart = "always"
+
+# files:home.toml 讀 [admin] 設定；repo、release_state、開發家資料夾在家外面（照 [admin] 設定的路徑只讀，不寫）。
+[capabilities]
+read = ["vault:pkg/admin", "files:home.toml"]
+write = ["vault:pkg/admin"]
+
+[[contributes.data]]
+kind = "release"
+schema = "schemas/release.toml"
+ids = "given"
+
+[[contributes.data]]
+kind = "devhome"
+schema = "schemas/devhome.toml"
+ids = "given"
+
+[[contributes.data]]
+kind = "request"
+schema = "schemas/request.toml"
+ids = "seq"
+prefix = "R-"
+
+[[contributes.page]]
+id = "release"
+title = "發版"
+component = "pages/release.tsx"
+
+[[contributes.page]]
+id = "devhome"
+title = "開發家"
+component = "pages/devhome.tsx"
+
+[[contributes.agent]]
+id = "art"
+template = "agents/art/agent.md"
+
+[[contributes.menu]]
+id = "release"
+title = "發版"
+icon = "target"
+group_hint = "work"
+order = 80
+page = "release"
+
+[[contributes.menu]]
+id = "devhome"
+title = "開發家"
+icon = "folder"
+group_hint = "work"
+order = 81
+page = "devhome"

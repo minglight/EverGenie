@@ -1,0 +1,65 @@
+# 官方套件：飲食記錄（REQ-128）。純資料套件：三種資料（餐點、目標、常吃餐點）、三個頁面。
+# 2026-10-27 起秘書不在這裡：飲食、運動、身體由同一位「健康」秘書負責（health 套件，REQ-236）。
+# 資料經 vault（D-28）：秘書用 `evergenie data …`，頁面用 @evergenie/sdk-web 的 api.vault；沒有套件自己的 RPC。
+schema = 1
+id = "nutrition"
+name = "飲食"
+version = "0.1.0"
+description = "餐點照片估算、飲食紀錄、趨勢與目標"
+kind = "data"
+api = "evergenie.v1"
+
+[capabilities]
+read = ["vault:pkg/nutrition"]
+write = ["vault:pkg/nutrition"]
+
+[[contributes.data]]
+kind = "meal"
+schema = "schemas/meal.toml"
+ids = "seq"
+prefix = "M-"
+
+[[contributes.data]]
+kind = "goal"
+schema = "schemas/goal.toml"
+ids = "given"
+
+[[contributes.data]]
+kind = "fav"
+schema = "schemas/fav.toml"
+ids = "seq"
+prefix = "F-"
+
+[[contributes.page]]
+id = "log"
+title = "飲食"
+route = "/nutrition"
+component = "pages/log.tsx"
+# 頁面旁邊就是跟「健康」秘書的聊天（REQ-235、236）。
+chat = true
+chat_agent = "health"
+
+[[contributes.page]]
+id = "trend"
+title = "飲食趨勢"
+route = "/nutrition-trend"
+component = "pages/trend.tsx"
+
+[[contributes.page]]
+id = "today"
+title = "今天吃了什麼"
+route = "/nutrition-today"
+component = "pages/today.tsx"
+slot = "core.overview.cards"
+
+[[contributes.menu]]
+id = "log"
+title = "飲食"
+icon = "utensils"
+group_hint = "daily"
+front = true
+order = 10
+page = "log"
+# 飲食、運動、身體在看板是同一頁「健康」的三個分頁（REQ-235）。
+section = "health"
+section_title = "健康"
