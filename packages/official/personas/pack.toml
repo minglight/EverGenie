@@ -1,4 +1,4 @@
-# 這一版核心用的角色包。url 空＝這一版沒有角色包（發行者用 evergenie personas pack build --set-pointer 寫，不要手改）。
-version = ""
-url = ""
-sha256 = ""
+# 這一版核心用的角色包（personas pack build --set-pointer 寫的；url 空＝這一版沒有角色包）
+version = "2026.11.26"
+url = "https://raw.githubusercontent.com/minglight/EverGenie-personas/main/m/2026.11.26.json"
+sha256 = "653eab2d10f2cde4a022c447dbc01d86486def5e7ea35ea65f96496a9d317598"

@@ -8,12 +8,14 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strings"
 	"testing"
 
 	"github.com/minglight/evergenie/internal/base/app/cmdline"
 	"github.com/minglight/evergenie/internal/base/platform"
 	"github.com/minglight/evergenie/internal/base/vault/homefixture"
+	"github.com/minglight/evergenie/internal/feature/agents/persona/personapack"
 	"github.com/minglight/evergenie/sdk"
 )
 
@@ -129,11 +131,15 @@ func TestPersonasPackCommands(t *testing.T) {
 	}
 }
 
-// TestOfficialPersonasPackageHasNoPack：官方套件 personas 的 pack.toml 先放空的 url（＝這一版沒有角色包，等 DEV-158 定下載點）；
+// TestPersonasPackEmptyPointerIsNoPack：pack.toml 的 url 空＝這一版沒有角色包；
 // 同步什麼都不做、不是錯誤，白話說「還沒有公開的角色包」、卡已經跟著程式（PRS-25）；status 也這樣說。
-// Guards: REQ-283, PRS-25
-func TestOfficialPersonasPackageHasNoPack(t *testing.T) {
-	t.Setenv("EVERGENIE_PERSONAS_PACK_POINTER", filepath.Join("..", "..", "..", "..", "packages", "official", "personas", "pack.toml"))
+// Guards: REQ-283, PRS-3, PRS-25
+func TestPersonasPackEmptyPointerIsNoPack(t *testing.T) {
+	ptr := filepath.Join(t.TempDir(), "pack.toml")
+	if err := os.WriteFile(ptr, []byte("version = \"\"\nurl = \"\"\nsha256 = \"\"\n"), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	t.Setenv("EVERGENIE_PERSONAS_PACK_POINTER", ptr)
 	user := homefixture.New(t).Dir
 	code, stdout, stderr := packRun(t, user, "sync")
 	if code != 0 || !strings.Contains(stdout, "還沒有公開的角色包") || !strings.Contains(stdout, "角色卡已經跟著程式裝好") || strings.Contains(stdout, "pack") {
@@ -141,6 +147,28 @@ func TestOfficialPersonasPackageHasNoPack(t *testing.T) {
 	}
 	if code, stdout, stderr = packRun(t, user, "status"); code != 0 || !strings.Contains(stdout, "這一版的版號：還沒有公開的角色包") {
 		t.Fatalf("%d %s %s", code, stdout, stderr)
+	}
+}
+
+// TestOfficialPersonasPointerWellFormed：官方套件 personas 的 pack.toml 指到公開的角色包（2026-11-26 起有包）：
+// url 是 https、結尾是 /m/<版號>.json、版號是日期格式、sha256 是 64 個小寫十六進位字。不連網（下載與驗檔有別的測試）。
+// Guards: PRS-3
+func TestOfficialPersonasPointerWellFormed(t *testing.T) {
+	ptr, err := personapack.ReadPointer(filepath.Join("..", "..", "..", "..", "packages", "official", "personas", "pack.toml"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if ptr == nil {
+		t.Skip("這一版沒有角色包（url 空），由 TestPersonasPackEmptyPointerIsNoPack 管")
+	}
+	if !regexp.MustCompile(`^\d{4}\.\d{2}\.\d{2}(\.\d+)?$`).MatchString(ptr.Version) {
+		t.Fatalf("版號格式不對：%q", ptr.Version)
+	}
+	if !strings.HasPrefix(ptr.URL, "https://") || !strings.HasSuffix(ptr.URL, "/m/"+ptr.Version+".json") {
+		t.Fatalf("url 要是 https 而且結尾是 /m/<版號>.json：%q", ptr.URL)
+	}
+	if !regexp.MustCompile(`^[0-9a-f]{64}$`).MatchString(ptr.SHA256) {
+		t.Fatalf("sha256 格式不對：%q", ptr.SHA256)
 	}
 }
 
