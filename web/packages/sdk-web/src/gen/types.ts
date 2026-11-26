@@ -500,6 +500,8 @@ export interface DataKindDecl {
   export_omit?: string[];
   pack_only?: Record<string, string[]>;
   pack_only_note?: string;
+  pack_except?: Record<string, string[]>;
+  pack_except_note?: string;
   persona_id?: string;
   persona_prefixed?: string[];
   persona_source?: string;

@@ -774,3 +774,37 @@ func TestPackSyncSkipsRecordsNotDeclaredPublic(t *testing.T) {
 		}
 	}
 }
+
+// pack_except（PKG-71）：任何一個列出的欄位的值在清單裡就不進官方角色包；欄位沒填、值不在清單裡不擋；跟 pack_only 一起看（兩個都過才可以）。
+// 有值但型別判斷不了（不是字串或 bool）＝擋（判斷不了就不公開）。
+func TestPackExcepts(t *testing.T) {
+	decl := sdk.DataKindDecl{PackOnly: map[string][]string{"source": {"official"}}, PackExcept: map[string][]string{"private": {"true"}}}
+	cases := []struct {
+		fields        map[string]any
+		except, allow bool
+	}{
+		{map[string]any{"source": "official"}, false, true},
+		{map[string]any{"source": "official", "private": false}, false, true},
+		{map[string]any{"source": "official", "private": nil}, false, true},
+		{map[string]any{"source": "official", "private": true}, true, false},
+		{map[string]any{"source": "official", "private": "true"}, true, false},
+		{map[string]any{"source": "official", "private": 1.0}, true, false},
+		{map[string]any{"source": "mine"}, false, false},
+		{map[string]any{"source": "mine", "private": true}, true, false},
+	}
+	for _, c := range cases {
+		if got := PackExcepts(decl, c.fields); got != c.except {
+			t.Errorf("PackExcepts %v：%v，要 %v", c.fields, got, c.except)
+		}
+		if got := PackAllows(decl, c.fields); got != c.allow {
+			t.Errorf("PackAllows %v：%v，要 %v", c.fields, got, c.allow)
+		}
+	}
+	if PackExcepts(sdk.DataKindDecl{}, map[string]any{"private": true}) {
+		t.Error("沒宣告 pack_except 就都不擋")
+	}
+	// export_only 照舊只看 export_only，不受 pack_except 影響（主人點名的匯出照帶）。
+	if !ExportAllows(decl, map[string]any{"private": true}) {
+		t.Error("pack_except 只管官方角色包，不管跟著角色走")
+	}
+}

@@ -1,6 +1,7 @@
 package personapack
 
 import (
+	"encoding/json"
 	"errors"
 	"os"
 	"path/filepath"
@@ -462,5 +463,131 @@ func TestPackBareRefusalExplainsOfficialOutsideHome(t *testing.T) {
 		if !strings.Contains(msg, "kaguya-sea") {
 			t.Errorf("要說是哪一套：%s", msg)
 		}
+	}
+}
+
+// privateKinds 是 photoKinds 加上官方衣櫃的 pack_except（PKG-71，2026-11-26）：衣服標了 private = true 就不進官方角色包。
+func privateKinds() []KindInfo {
+	kinds := photoKinds()
+	d := &kinds[0].Decl
+	d.PackExcept, d.PackExceptNote = map[string][]string{"private": {"true"}}, "主人標了不公開的衣服"
+	d.Fields = append(d.Fields, sdk.DataFieldDecl{Name: "private", Type: "bool"})
+	return kinds
+}
+
+// privateStore：photoStore 再加 athena 一套已經升成官方、上架、主人標了 private = true 的衣服（pool）與它的照片，
+// 和一套明寫 private = false 的（beach）。
+func privateStore(t *testing.T, home string) *memStore {
+	t.Helper()
+	s := photoStore(t, home)
+	s.kinds = privateKinds()
+	av := filepath.Join(home, "personas", "avatars")
+	write(t, filepath.Join(av, "athena@pool.png"), "PNG-pool")
+	write(t, filepath.Join(av, "full", "athena@pool.png"), "PNG-pool-full")
+	write(t, filepath.Join(av, "athena@beach.png"), "PNG-beach")
+	pool := outfitOf("athena", "pool", "active", "official")
+	pool["private"] = true
+	beach := outfitOf("athena", "beach", "active", "official")
+	beach["private"] = false
+	s.put(t, "closet.outfit", "athena-pool", pool)
+	s.put(t, "closet.outfit", "athena-beach", beach)
+	s.put(t, "closet.photo", "athena-pool--half1", photo("athena", "athena-pool", "avatars/athena@pool.png", "official", false, true))
+	full := photo("athena", "athena-pool", "avatars/full/athena@pool.png", "official", false, true)
+	full["type"] = "full"
+	s.put(t, "closet.photo", "athena-pool--full1", full)
+	s.put(t, "closet.photo", "athena-beach--half1", photo("athena", "athena-beach", "avatars/athena@beach.png", "official", false, true))
+	return s
+}
+
+// 主人標了不公開的衣服（pack_except，PKG-71、PRS-29、CLO-26）：已經升成官方、上架也不進官方角色包，它的照片紀錄與圖也不收；
+// 沒寫 private、寫 false 的照舊進。輸出跟 pack_only 擋下的分開說（「主人標了不公開的衣服」、「不帶 private 是 true 的」）。
+func TestPackBuildHoldsPrivateOutfit(t *testing.T) {
+	home := sourceHome(t)
+	res, err := Build(BuildOptions{Home: home, Out: filepath.Join(t.TempDir(), "pack"), Version: "2026.11.26", Store: privateStore(t, home)})
+	if err != nil {
+		t.Fatal(err)
+	}
+	m := loadManifest(t, res.ManifestPath)
+	keys := recordKeys(m.Records)
+	for _, want := range []string{"closet.outfit/athena-beach", "closet.outfit/athena-seaside", "closet.photo/athena-beach--half1"} {
+		if !strings.Contains(keys, want) {
+			t.Errorf("沒標不公開的照進：少了 %s（%s）", want, keys)
+		}
+	}
+	data := read(t, res.ManifestPath)
+	for _, bad := range []string{"athena-pool", "athena@pool", "PNG-pool"} {
+		if strings.Contains(data, bad) {
+			t.Errorf("manifest 不該有 %s", bad)
+		}
+	}
+	for _, f := range paths(m) {
+		if strings.Contains(f, "@pool") {
+			t.Errorf("不公開的衣服的圖不能在包裡：%s", f)
+		}
+	}
+	for _, f := range []string{"avatars/athena@pool.png", "avatars/full/athena@pool.png"} {
+		if !slices.Contains(res.HeldFiles, f) {
+			t.Errorf("不公開的衣服的圖要列在 held_files：%s 不在 %v", f, res.HeldFiles)
+		}
+	}
+	var except *HeldRecords
+	for i, h := range res.RecordsHeld {
+		if h.Except {
+			except = &res.RecordsHeld[i]
+		}
+	}
+	if except == nil || except.Kind != "closet.outfit" || strings.Join(except.IDs, ",") != "athena-pool" || except.What != "主人標了不公開的衣服" || except.Rule != "private 是 true" {
+		t.Fatalf("pack_except 擋下的要另列一筆：%+v", res.RecordsHeld)
+	}
+	for _, h := range res.RecordsHeld {
+		if !h.Except && slices.Contains(h.IDs, "athena-pool") {
+			t.Errorf("athena-pool 不該算在 pack_only 那筆：%+v", h)
+		}
+	}
+	skipped := strings.Join(res.Skipped, "\n")
+	for _, want := range []string{
+		"closet.outfit：1 筆主人標了不公開的衣服沒帶（套件宣告官方角色包不帶 private 是 true 的）：athena-pool",
+		"closet.outfit：2 筆不在公開條件裡的「衣服」沒帶（套件宣告官方角色包只帶 source 是 official、state 是 active／retired 的）：athena-my-24、athena-next",
+		"avatars/athena@pool.png：是沒帶的紀錄 closet.photo/athena-pool--half1 的圖",
+	} {
+		if !strings.Contains(skipped, want) {
+			t.Errorf("少了「%s」：\n%s", want, skipped)
+		}
+	}
+	if !strings.Contains(res.Summary, "（1 筆主人標了不公開的衣服沒帶：athena-pool）") {
+		t.Errorf("總結要分開說：%s", res.Summary)
+	}
+}
+
+// 同步端也防一手（PKG-71）：包裡萬一帶了這個家標成不公開的值的衣服（舊版程式建的包、別人做的包），略過並用 pack_except 的白話說原因。
+func TestPackSyncSkipsPrivateOutfit(t *testing.T) {
+	pub := sourceHome(t)
+	r1, err := Build(BuildOptions{Home: pub, Out: filepath.Join(t.TempDir(), "pack"), Version: "2026.11.26", Store: photoStore(t, pub)})
+	if err != nil {
+		t.Fatal(err)
+	}
+	m := loadManifest(t, r1.ManifestPath)
+	pool := outfitOf("athena", "pool", "active", "official")
+	pool["private"], pool["cost"] = true, float64(0)
+	m.Records = append(m.Records, Record{Kind: "closet.outfit", ID: "athena-pool", Fields: pool})
+	data, _ := json.MarshalIndent(&m, "", "  ")
+	if err := os.WriteFile(r1.ManifestPath, data, 0o644); err != nil {
+		t.Fatal(err)
+	}
+	r1.ManifestSHA256 = SumBytes(data)
+	user := userHome(t)
+	o := syncOpts(user, pointer(t, r1, "file://"+filepath.Dir(filepath.Dir(r1.ManifestPath))))
+	us := newStore(privateKinds())
+	o.Store = us
+	res := mustSync(t, o)
+	if !slices.Contains(res.RecordsAdded, "closet.outfit/athena-base") {
+		t.Fatalf("其他照常寫：%+v", res.RecordsAdded)
+	}
+	want := "closet.outfit/athena-pool：主人標了不公開的衣服，這個家的 closet 套件說不從官方角色包收"
+	if !slices.Contains(res.RecordsSkipped, want) {
+		t.Fatalf("少了「%s」：%v", want, res.RecordsSkipped)
+	}
+	if _, ok := us.recs["closet.outfit/athena-pool"]; ok {
+		t.Fatal("不該寫 athena-pool")
 	}
 }

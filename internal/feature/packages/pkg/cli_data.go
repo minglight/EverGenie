@@ -155,6 +155,13 @@ func dataKindsCmd(e *cmdline.Env, args []string) error {
 			}
 			fmt.Fprintf(&b, "  官方角色包只帶：%s 的（其他的不帶；主人點名的角色匯出照帶）\n", strings.Join(parts, "、"))
 		}
+		if len(k.PackExcept) > 0 {
+			var parts []string
+			for _, name := range sortedKeys(k.PackExcept) {
+				parts = append(parts, name+" 是 "+strings.Join(k.PackExcept[name], "／"))
+			}
+			fmt.Fprintf(&b, "  官方角色包不帶：%s 的（沒寫這個欄位的照帶；主人點名的角色匯出照帶）\n", strings.Join(parts, "、"))
+		}
 		if len(k.ExportOnly) > 0 {
 			var parts []string
 			for _, name := range sortedKeys(k.ExportOnly) {

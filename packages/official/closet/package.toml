@@ -37,6 +37,10 @@ export_omit = ["from", "adopted"]
 # 主人點名的角色匯出（evergenie personas export）不看這條，照舊都帶。
 pack_only = { source = ["official"], state = ["active", "retired"] }
 pack_only_note = "還沒升成官方或還在設計中的衣服"
+# 另外主人可以把一套衣服標成不公開（private = true，PKG-71，作者 2026-11-26：主人要某套升成官方的衣服留在自己家、不公開）：
+# 這個家照常有、照常穿，建包不收（它的照片跟著 pack_parent 也不收）、同步時包裡萬一帶了也不寫；沒寫 private 或 false 照上面那條決定。
+pack_except = { private = ["true"] }
+pack_except_note = "主人標了不公開的衣服"
 # 角色改代號時（evergenie home tidy、personas promote，PKG-64）：編號是 <角色>-<衣服>、persona 是角色代號（export 那個欄位）、
 # from 是舊的衣服編號；source 說圖在官方位置還是 personas/mine/（角色從官方位置收成自己的時改成 mine）。
 persona_id = "prefix"

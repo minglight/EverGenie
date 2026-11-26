@@ -184,6 +184,11 @@ type DataKindDecl struct {
 	// PackOnlyNote 是被擋下的紀錄的白話名稱（例「還沒升成官方或還在設計中的衣服」），建包的輸出用；沒寫就用通用的說法。
 	PackOnly     map[string][]string `json:"pack_only,omitempty"`
 	PackOnlyNote string              `json:"pack_only_note,omitempty"`
+	// PackExcept 是「官方角色包不帶哪些」（PKG-71，只配 export = by_persona）：欄位名 → 不公開的值；任何一個列出的欄位的值在清單裡就不進官方角色包
+	// （建包不收、同步不寫，例：衣服標了 private = true）；少了那個欄位、值不在清單裡＝不擋。跟 PackOnly 一起看：兩個都過才帶。主人點名的角色匯出不看它。
+	// PackExceptNote 是被它擋下的紀錄的白話名稱（例「主人標了不公開的衣服」）；沒寫就用通用的說法。
+	PackExcept     map[string][]string `json:"pack_except,omitempty"`
+	PackExceptNote string              `json:"pack_except_note,omitempty"`
 	// 角色改代號時紀錄怎麼跟著走（PKG-64，evergenie home tidy、personas promote 用）：
 	// PersonaID＝exact（編號就是角色代號）或 prefix（編號是 <角色代號>-<其他>），只給 ids = given；
 	// PersonaPrefixed＝值是 <角色代號>-<其他> 的字串欄位（例：指到某套衣服編號的欄位）；

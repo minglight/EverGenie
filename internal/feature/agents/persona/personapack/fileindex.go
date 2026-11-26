@@ -24,7 +24,7 @@ type FileRef struct {
 	Persona  string // 角色欄位的值
 	Archived bool
 	Exports  bool // 符合 export_only（跟著角色走）
-	Packs    bool // 也符合 pack_only（可以進官方角色包；上層 pack_parent 另外看 CollectResult.HeldFiles）
+	Packs    bool // 也符合 pack_only、沒被 pack_except 擋（可以進官方角色包；上層 pack_parent 另外看 CollectResult.HeldFiles）
 }
 
 // FileIndex 是全家宣告 file_field 的種類的每一筆紀錄（含封存的）指著的檔。key 是家裡的位置（RecordFile.Rel）轉小寫：macOS 的檔名不分大小寫。

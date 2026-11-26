@@ -52,7 +52,7 @@ type BuildResult struct {
 	Records        int      `json:"records"`                // 帶了幾筆跟著角色走的紀錄
 	RecordKinds    []string `json:"record_kinds,omitempty"` // 哪些種類（完整名稱）
 	RecordsNote    string   `json:"records_note,omitempty"` // 沒帶紀錄的原因（--no-records）
-	// RecordsHeld：套件宣告「官方角色包只帶哪些」（pack_only，PKG-68）擋下、沒帶的公開角色紀錄（例如還沒升成官方的衣服），一種一筆、列編號。
+	// RecordsHeld：套件宣告「官方角色包只帶哪些」（pack_only，PKG-68）或「不帶哪些」（pack_except，PKG-71）擋下、沒帶的公開角色紀錄（例如還沒升成官方的衣服、主人標了不公開的衣服），一種一筆（兩種都有分兩筆）、列編號。
 	RecordsHeld []HeldRecords `json:"records_held,omitempty"`
 	// HeldFiles：因為是 RecordsHeld 那些紀錄的圖（檔名 <角色代號>@<其他>…、wardrobe/<角色代號>/<其他>/）而沒收的檔（包裡的邏輯路徑）。
 	HeldFiles []string     `json:"held_files,omitempty"`
@@ -301,7 +301,7 @@ func Build(o BuildOptions) (*BuildResult, error) {
 			res.Skipped = append(res.Skipped, c.logical+"："+why)
 			continue
 		}
-		// 被套件的 pack_only 擋下的紀錄，它的圖也不收（PRS-29）：紀錄不公開、圖卻在包裡，等於照樣公開。
+		// 被套件的 pack_only、pack_except 擋下的紀錄，它的圖也不收（PRS-29）：紀錄不公開、圖卻在包裡，等於照樣公開。
 		// 紀錄指著的檔照紀錄認（上面），這裡只認沒有 file_field 的種類照命名的圖。
 		if i := slices.IndexFunc(heldMedia, func(h HeldMedia) bool { return !c.record && h.Matches(c.logical) }); i >= 0 {
 			res.Skipped = append(res.Skipped, c.logical+"：是沒帶的紀錄 "+heldMedia[i].Key+" 的圖，不進官方角色包")

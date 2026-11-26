@@ -19,7 +19,7 @@ func TestDataExportDeclValidated(t *testing.T) {
 	}
 	good := h.write(sdk.TierMine, "wear", dataPkg("wear", "1.0.0", decl("export = \"by_persona\"\n")+
 		"\n[[contributes.data]]\nkind = \"alt\"\nschema = \"schemas/look.toml\"\nids = \"given\"\nexport = \"by_folder\"\nfolder_field = \"dir\"\nexport_omit = [\"n\"]\n"+
-		"\n[[contributes.data]]\nkind = \"own\"\nschema = \"schemas/look.toml\"\nids = \"given\"\nexport = \"by_persona\"\npersona_field = \"who\"\npack_only = { persona = [\"a\", \"b\"] }\npack_only_note = \"還沒公開的\"\n"+
+		"\n[[contributes.data]]\nkind = \"own\"\nschema = \"schemas/look.toml\"\nids = \"given\"\nexport = \"by_persona\"\npersona_field = \"who\"\npack_only = { persona = [\"a\", \"b\"] }\npack_only_note = \"還沒公開的\"\npack_except = { dir = [\"secret\"] }\npack_except_note = \"主人標了不公開的\"\n"+
 		"\n[[contributes.data]]\nkind = \"plain\"\nschema = \"schemas/look.toml\"\nids = \"given\"\n"),
 		map[string]string{"schemas/look.toml": lookSchema})
 	m, err := ParseManifest(good, sdk.TierMine)
@@ -51,6 +51,13 @@ func TestDataExportDeclValidated(t *testing.T) {
 	}
 	if d := got["look"]; d.PackOnly != nil || d.PackOnlyNote != "" {
 		t.Errorf("沒寫 pack_only 就是空的：%+v", d)
+	}
+	// pack_except（PKG-71）也帶在宣告裡；沒寫的種類是空的。
+	if d := got["own"]; len(d.PackExcept) != 1 || strings.Join(d.PackExcept["dir"], ",") != "secret" || d.PackExceptNote != "主人標了不公開的" {
+		t.Errorf("pack_except 帶在宣告裡：%+v", d)
+	}
+	if d := got["look"]; d.PackExcept != nil || d.PackExceptNote != "" {
+		t.Errorf("沒寫 pack_except 就是空的：%+v", d)
 	}
 
 	cases := []struct{ name, decl, want string }{
@@ -85,6 +92,20 @@ func TestDataExportDeclValidated(t *testing.T) {
 		{"pack_only value not in enum", decl("export = \"by_persona\"\npack_only = { tone = [\"loud\"] }\n"), "不是這個欄位的選項"},
 		{"pack_only bool bad value", decl("export = \"by_persona\"\npack_only = { flag = [\"yes\"] }\n"), "true"},
 		{"note without pack_only", decl("export = \"by_persona\"\npack_only_note = \"還沒公開的\"\n"), "pack_only_note 要配 pack_only"},
+		// pack_except（PKG-71）：宣告規則同 pack_only。
+		{"pack_except without export", decl("pack_except = { who = [\"a\"] }\n"), "pack_except"},
+		{"pack_except with by_folder", decl("export = \"by_folder\"\nfolder_field = \"dir\"\npack_except = { who = [\"a\"] }\n"), "by_persona"},
+		{"pack_except not in schema", decl("export = \"by_persona\"\npack_except = { nobody = [\"a\"] }\n"), "nobody"},
+		{"pack_except not string", decl("export = \"by_persona\"\npack_except = { n = [\"1\"] }\n"), "string"},
+		{"pack_except omitted field", decl("export = \"by_persona\"\nexport_omit = [\"who\"]\npack_except = { who = [\"a\"] }\n"), "export_omit"},
+		{"pack_except no values", decl("export = \"by_persona\"\npack_except = { who = [] }\n"), "至少要寫一個"},
+		{"pack_except empty table", decl("export = \"by_persona\"\npack_except = {}\n"), "至少要寫一個欄位"},
+		{"pack_except duplicate value", decl("export = \"by_persona\"\npack_except = { flag = [\"true\", \"true\"] }\n"), "重複"},
+		{"pack_except persona field", decl("export = \"by_persona\"\npack_except = { persona = [\"a\"] }\n"), "角色代號的欄位"},
+		{"pack_except value not in enum", decl("export = \"by_persona\"\npack_except = { tone = [\"loud\"] }\n"), "不是這個欄位的選項"},
+		{"pack_except bool bad value", decl("export = \"by_persona\"\npack_except = { flag = [\"yes\"] }\n"), "true"},
+		{"except note without pack_except", decl("export = \"by_persona\"\npack_except_note = \"不公開的\"\n"), "pack_except_note 要配 pack_except"},
+		{"except note multi-line", decl("export = \"by_persona\"\npack_except = { flag = [\"true\"] }\npack_except_note = \"一\\n二\"\n"), "一行"},
 		{"note multi-line", decl("export = \"by_persona\"\npack_only = { who = [\"a\"] }\npack_only_note = \"一\\n二\"\n"), "一行"},
 		// file_field、export_only、pack_parent（DEV-160）：只配 by_persona；欄位要在規格裡、是 string（export_only 同 pack_only 的規則）；
 		// file_field 不能是角色代號的欄位或在 export_omit 裡；pack_parent 要指到同一個套件另一種 by_persona 的資料。
@@ -170,6 +191,13 @@ func TestClosetDeclaresExport(t *testing.T) {
 		}
 		if d.Kind != "photo" && (d.FileField != "" || d.ExportOnly != nil || d.PackParent != nil) {
 			t.Errorf("closet.%s 不該有 file_field、export_only、pack_parent", d.Kind)
+		}
+		// 主人標了 private = true 的衣服不進官方角色包（PKG-71，作者 2026-11-26）：這個家照常有、照常穿。
+		if d.Kind == "outfit" && (len(d.PackExcept) != 1 || strings.Join(d.PackExcept["private"], ",") != "true" || d.PackExceptNote == "") {
+			t.Errorf("closet.outfit 的 pack_except 要是 private = [true]，而且有白話說明：%v %q", d.PackExcept, d.PackExceptNote)
+		}
+		if d.Kind != "outfit" && d.PackExcept != nil {
+			t.Errorf("closet.%s 不該有 pack_except：%v", d.Kind, d.PackExcept)
 		}
 		if d.Kind != "outfit" && d.Kind != "photo" && d.PackOnly != nil {
 			t.Errorf("closet.%s 不該有 pack_only：%v", d.Kind, d.PackOnly)

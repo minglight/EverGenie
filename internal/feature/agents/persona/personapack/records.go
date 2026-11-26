@@ -22,7 +22,7 @@ import (
 )
 
 // 跟著角色走的套件紀錄（D-63、PKG-57～59）：角色匯出（personaexport）與官方角色包（Build、Sync）共用同一套收、驗、比對、寫入。
-// 核心不認得任何套件：要不要帶、怎麼帶只看套件 `contributes.data` 的宣告（export、persona_field、folder_field、export_omit、pack_only）；
+// 核心不認得任何套件：要不要帶、怎麼帶只看套件 `contributes.data` 的宣告（export、persona_field、folder_field、export_omit、pack_only、pack_except）；
 // 寫入一律經 Store（指令行程接 sdk client、serve 接 vault 模組），有檔頭、驗證與事件，這裡不碰 vault 的檔案。
 
 // Record 是一筆跟著角色走的套件紀錄：Kind 是完整種類名稱（`<套件>.<種類>`），Fields 不含核心管的欄位與宣告 export_omit 的欄位。
@@ -205,69 +205,100 @@ func (h HeldMedia) Matches(logical string) bool {
 	return rest == "" || strings.ContainsRune("~.+", rune(rest[0]))
 }
 
-// HeldRecords 是一種資料被 pack_only 擋下、沒進官方角色包的紀錄。
+// HeldRecords 是一種資料被 pack_only（或 pack_except，PKG-71）擋下、沒進官方角色包的紀錄。同一種資料兩種都有時分兩筆。
 type HeldRecords struct {
 	Kind string   `json:"kind"`           // 完整種類名稱
-	What string   `json:"what"`           // 白話：這些是什麼（套件的 pack_only_note；沒寫是通用的說法）
-	Rule string   `json:"rule,omitempty"` // 套件宣告的條件（例：source 是 official、state 是 active／retired）
+	What string   `json:"what"`           // 白話：這些是什麼（套件的 pack_only_note／pack_except_note；沒寫是通用的說法）
+	Rule string   `json:"rule,omitempty"` // 套件宣告的條件（例：source 是 official、state 是 active／retired；pack_except 的是 private 是 true）
 	IDs  []string `json:"ids"`            // 編號，排序過
+	// Except＝是 pack_except 擋下的（Rule 是「不帶哪些」）；否則是 pack_only 或上層沒進包（Rule 是「只帶哪些」）。
+	Except bool `json:"except,omitempty"`
 }
 
 // Line 是給人看的一行：幾筆什麼沒帶、編號。
 func (h HeldRecords) Line() string {
-	return fmt.Sprintf("%s：%d 筆%s沒帶（套件宣告官方角色包只帶 %s 的）：%s", h.Kind, len(h.IDs), h.What, h.Rule, strings.Join(h.IDs, "、"))
+	verb := "只帶"
+	if h.Except {
+		verb = "不帶"
+	}
+	return fmt.Sprintf("%s：%d 筆%s沒帶（套件宣告官方角色包%s %s 的）：%s", h.Kind, len(h.IDs), h.What, verb, h.Rule, strings.Join(h.IDs, "、"))
 }
 
-// PackAllows：這筆紀錄的欄位符不符合宣告的 pack_only（PKG-68）——每個列出的欄位的值都在可以公開的清單裡
-// （字串照原樣比；bool 欄位比 "true"／"false"，DEV-160）。
-// 沒宣告＝都可以；少了欄位、值不是字串或 bool、不在清單裡＝不可以（判斷不了就不公開）。核心只比宣告寫的欄位與值，不認得它們的意思。
+// fieldText 是比 pack_only／pack_except 用的欄位值：字串照原樣、bool 轉成 "true"／"false"（DEV-160）；其他型別回 false。
+func fieldText(v any) (string, bool) {
+	switch x := v.(type) {
+	case string:
+		return x, true
+	case bool:
+		return strconv.FormatBool(x), true
+	}
+	return "", false
+}
+
+// PackAllows：這筆紀錄可不可以進官方角色包——符合宣告的 pack_only（PKG-68：每個列出的欄位的值都在可以公開的清單裡），
+// 而且沒被 pack_except 擋下（PKG-71，見 PackExcepts）。
+// pack_only 沒宣告＝都可以；少了欄位、值不是字串或 bool、不在清單裡＝不可以（判斷不了就不公開）。核心只比宣告寫的欄位與值，不認得它們的意思。
 func PackAllows(decl sdk.DataKindDecl, fields map[string]any) bool {
 	for name, allowed := range decl.PackOnly {
-		var v string
-		switch x := fields[name].(type) {
-		case string:
-			v = x
-		case bool:
-			v = strconv.FormatBool(x)
-		default:
-			return false
-		}
-		if !slices.Contains(allowed, v) {
+		v, ok := fieldText(fields[name])
+		if !ok || !slices.Contains(allowed, v) {
 			return false
 		}
 	}
-	return true
+	return !PackExcepts(decl, fields)
 }
 
-// packRule 把 pack_only 寫成一句（欄位照名字排）：`source 是 official、state 是 active／retired`。
-func packRule(decl sdk.DataKindDecl) string {
-	names := make([]string, 0, len(decl.PackOnly))
-	for name := range decl.PackOnly {
+// PackExcepts：這筆紀錄是不是被宣告的 pack_except（PKG-71）擋下——任何一個列出的欄位的值在不公開的清單裡。
+// 欄位沒填＝不擋（例：衣服沒寫 private 就照 pack_only 決定）；有值但不是字串或 bool（判斷不了）＝擋。沒宣告＝都不擋。
+func PackExcepts(decl sdk.DataKindDecl, fields map[string]any) bool {
+	for name, blocked := range decl.PackExcept {
+		raw, ok := fields[name]
+		if !ok || raw == nil {
+			continue
+		}
+		if v, ok := fieldText(raw); !ok || slices.Contains(blocked, v) {
+			return true
+		}
+	}
+	return false
+}
+
+// packRule 把「欄位名 → 值」（pack_only、pack_except、export_only）寫成一句（欄位照名字排）：`source 是 official、state 是 active／retired`。
+func packRule(m map[string][]string) string {
+	names := make([]string, 0, len(m))
+	for name := range m {
 		names = append(names, name)
 	}
 	sort.Strings(names)
 	parts := make([]string, 0, len(names))
 	for _, name := range names {
-		parts = append(parts, name+" 是 "+strings.Join(decl.PackOnly[name], "／"))
+		parts = append(parts, name+" 是 "+strings.Join(m[name], "／"))
 	}
 	return strings.Join(parts, "、")
 }
 
-// heldWhat 是被擋下的紀錄的白話名稱：套件寫的 pack_only_note，沒寫就說「不在公開條件裡的「<種類的名稱>」」。
-func heldWhat(kind string, decl sdk.DataKindDecl) string {
-	if decl.PackOnlyNote != "" {
-		return decl.PackOnlyNote
-	}
+// heldWhat 是被擋下的紀錄的白話名稱。except＝pack_except 擋下的：套件寫的 pack_except_note，沒寫就說「主人標了不公開的「<種類的名稱>」」；
+// 其他：套件寫的 pack_only_note，沒寫就說「不在公開條件裡的「<種類的名稱>」」。
+func heldWhat(kind string, decl sdk.DataKindDecl, except bool) string {
 	title := decl.Title
 	if title == "" {
 		title = kind
+	}
+	if except {
+		if decl.PackExceptNote != "" {
+			return decl.PackExceptNote
+		}
+		return "主人標了不公開的「" + title + "」"
+	}
+	if decl.PackOnlyNote != "" {
+		return decl.PackOnlyNote
 	}
 	return "不在公開條件裡的「" + title + "」"
 }
 
 // CollectRecords 照套件的宣告收 slugs 這幾位角色的紀錄：by_persona 看角色欄位；by_folder 呼叫 folder（資料夾是 personas/ 底下的相對路徑），
 // 它把資料夾裡這幾位的圖收進去、回傳有沒有收到，有才帶這一筆。folder 是 nil＝建官方角色包：by_folder 的種類整個不收（PKG-59），每種列一行原因；
-// by_persona 的種類再照宣告的 pack_only 濾（PKG-68：不在可以公開的值裡的不帶，記在 Held 與 Skipped）。主人點名的角色匯出（folder 不是 nil）不看 pack_only。
+// by_persona 的種類再照宣告的 pack_only、pack_except 濾（PKG-68、PKG-71：不在可以公開的值裡、或在不公開的值裡的不帶，記在 Held 與 Skipped）。主人點名的角色匯出（folder 不是 nil）不看 pack_only。
 // 宣告 export_omit 的欄位與核心管的欄位都拿掉。store 是 nil 時什麼都不收。
 func CollectRecords(ctx context.Context, store Store, slugs []string, folder func(dir string) bool) (*CollectResult, error) {
 	res := &CollectResult{Records: []Record{}}
@@ -316,7 +347,7 @@ func CollectRecords(ctx context.Context, store Store, slugs []string, folder fun
 		}
 		sort.Slice(list, func(i, j int) bool { return list[i].ID < list[j].ID })
 		n := 0
-		var held, notExported []string
+		var held, heldExcept, notExported []string
 		children := map[string]int{} // 上層編號 → 這種下層有幾筆（沒封存的；不管跟不跟著走）
 		for _, rec := range list {
 			if rec.Archived || !recordIDPattern.MatchString(rec.ID) {
@@ -341,7 +372,11 @@ func CollectRecords(ctx context.Context, store Store, slugs []string, folder fun
 				}
 				parent, _ := rec.Fields[parentField].(string)
 				if folder == nil && (!PackAllows(k.Decl, rec.Fields) || (parentKind != "" && !packed[parentKind+"/"+parent])) {
-					held = append(held, rec.ID)
+					if PackExcepts(k.Decl, rec.Fields) {
+						heldExcept = append(heldExcept, rec.ID) // 主人標了不公開（pack_except）：輸出分開說
+					} else {
+						held = append(held, rec.ID)
+					}
 					if f, ok := recordFile(k.Kind, k.Decl, rec); ok {
 						res.HeldFiles = append(res.HeldFiles, f)
 					} else if s, _ := rec.Fields[k.Decl.PersonaField].(string); k.Decl.FileField == "" && k.Decl.PersonaID == sdk.DataPersonaIDPrefix {
@@ -389,14 +424,19 @@ func CollectRecords(ctx context.Context, store Store, slugs []string, folder fun
 		}
 		if len(notExported) > 0 {
 			res.Skipped = append(res.Skipped, fmt.Sprintf("%s：%d 筆不跟著角色走（套件宣告只帶 %s 的），紀錄與檔都沒帶：%s",
-				k.Kind, len(notExported), packRule(sdk.DataKindDecl{PackOnly: k.Decl.ExportOnly}), strings.Join(notExported, "、")))
+				k.Kind, len(notExported), packRule(k.Decl.ExportOnly), strings.Join(notExported, "、")))
 		}
 		if len(held) > 0 {
-			rule := packRule(k.Decl)
+			rule := packRule(k.Decl.PackOnly)
 			if parentKind != "" {
 				rule = strings.TrimPrefix(rule+"、上層 "+parentKind+"（欄位 "+parentField+"）有進包", "、")
 			}
-			h := HeldRecords{Kind: k.Kind, What: heldWhat(k.Kind, k.Decl), Rule: rule, IDs: held}
+			h := HeldRecords{Kind: k.Kind, What: heldWhat(k.Kind, k.Decl, false), Rule: rule, IDs: held}
+			res.Held = append(res.Held, h)
+			res.Skipped = append(res.Skipped, h.Line())
+		}
+		if len(heldExcept) > 0 {
+			h := HeldRecords{Kind: k.Kind, What: heldWhat(k.Kind, k.Decl, true), Rule: packRule(k.Decl.PackExcept), IDs: heldExcept, Except: true}
 			res.Held = append(res.Held, h)
 			res.Skipped = append(res.Skipped, h.Line())
 		}
@@ -484,7 +524,7 @@ type PlanInput struct {
 	Registry map[string]string
 	Force    bool // 改過的也換（換之前 Backup）
 	// PersonaOnly：只收 by_persona 的紀錄，by_folder 的略過並列原因（官方角色包，PKG-59；舊的包萬一帶了也不寫）；
-	// 這個家的套件宣告了 pack_only（PKG-68）時，不在可以公開的值裡的也略過並列原因（舊的包、別人建的包萬一帶了也不寫）。
+	// 這個家的套件宣告了 pack_only（PKG-68）或 pack_except（PKG-71）時，不在可以公開的值裡、或在不公開的值裡的也略過並列原因（舊的包、別人建的包萬一帶了也不寫）。
 	PersonaOnly bool
 	// 紀錄指著的檔（宣告 file_field 的種類，DEV-160 審查 M1）：Carried＝檔案（匯出檔、角色包）帶了家裡這個位置（personas/…）的檔；
 	// Occupied＝這個家這個位置已經有東西；Foreign 回這個位置照檔名是這個家哪一位別的角色的（空＝不是）。有給 Carried 時，
@@ -568,7 +608,7 @@ func PlanRecords(ctx context.Context, store Store, in PlanInput) (*RecordPlan, e
 				continue
 			}
 			if in.PersonaOnly && !PackAllows(decl, rec.Fields) {
-				p.Skipped = append(p.Skipped, rec.Key()+"："+heldWhat(rec.Kind, decl)+"，這個家的 "+packageOf(rec.Kind)+" 套件說不從官方角色包收")
+				p.Skipped = append(p.Skipped, rec.Key()+"："+heldWhat(rec.Kind, decl, PackExcepts(decl, rec.Fields))+"，這個家的 "+packageOf(rec.Kind)+" 套件說不從官方角色包收")
 				continue
 			}
 		case sdk.DataExportByFolder:

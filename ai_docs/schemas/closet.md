@@ -32,6 +32,7 @@ Status: 實作 2026-10-26（P6-4b）。共通規則見 `README.md`；套件資�
 | `state` | enum | 是 | `active` 上架；`draft` 設計中的草稿（不能兌換、真圖照樣公開給使用者看；在開發家角色頁的「修改」分頁每張照片採用〔記在 `closet.photo.adopted`，CLO-34〕，每張都採用了才能按「上架」改 `active`，CLO-35；一般家的衣櫃與展示間不列，CLO-37）；`retired` 下架（已擁有的人照樣有，沒擁有的看不到） |
 | `source` | enum | 是 | `official`（圖在 `personas/avatars/`）、`mine`（圖在 `personas/mine/avatars/`） |
 | `order` | int | 否 | 同一位照 `order` 再照編號排；沒寫排最後 |
+| `private` | bool | 否 | `true`＝不放進官方角色包（這個家照常有、照常穿，主人點名的匯出照帶；`pack_except`，CLO-26、PKG-71，2026-11-26）；沒寫或 `false` 照 `state`／`source` 決定。設：`evergenie data set closet.outfit <編號> --json '{"private":true}'` |
 | `adopted` | list of string | 否 | 舊的單張採用清單（SEC-10，CLO-22 已廢）：`half-<n>`（第 n 張半身）、`full`（全身）、`video-<n>-<k>`（第 n 張的第 k 支影片）。DEV-160 S2 起採用記在 `closet.photo.adopted`（CLO-34），這欄不再寫，只在照片紀錄轉換時讀一次；以前展示間「設計中」按「採用」加進來、按「修改」拿掉。這個家當下的審核進度，匯出不帶（`export_omit`） |
 | `from` | string | 否 | 升成官方前的舊編號（`closet-mine` 的升成官方寫，DEV-141）：只認 `by = closet-mine` 的那筆、同一位角色、舊的那筆已不在目錄裡、只有這一筆指著它；舊編號的兌換會搬到這一筆（新的 `unlock` 的 `request = carry:<舊編號>`，舊的封存，CLO-19）。匯出不帶（`export_omit`） |
 
@@ -156,7 +157,7 @@ Status: 實作 2026-10-26（P6-4b）。共通規則見 `README.md`；套件資�
 - 只封存，不刪除。`outfit` 被封存（`closet-mine` 的刪一套，或 DEV-160 S5b 以前展示間的「不要了」）後編號不能重用；`unlock` 永久保存、不收回。
 - `person`、`state`、`capabilities` 是可重算的快取（`capabilities` 被封存就寫不進去，核心與頁面當這個家什麼都不支援，程式記一次 log）；角色在目錄裡沒有衣服了，`person` 不封存而是清空（`outfits` 為空），因為封存過的紀錄之後寫不進去。
 - 沒有自動封存（套件資料沒有 `ArchiveAt`），已處理的請求由程式封存。
-- 官方角色包（`evergenie personas pack build`）：`outfit` 宣告 `pack_only = { source = ["official"], state = ["active", "retired"] }`——只帶官方來源、已採用或下架的衣服；主人自己的（`source = mine`）與設計中的（`state = draft`）不帶，同步時包裡萬一帶了也不寫（CLO-26）。下面的匯出角色不看這條。
+- 官方角色包（`evergenie personas pack build`）：`outfit` 宣告 `pack_only = { source = ["official"], state = ["active", "retired"] }`——只帶官方來源、已採用或下架的衣服；主人自己的（`source = mine`）與設計中的（`state = draft`）不帶，同步時包裡萬一帶了也不寫（CLO-26）。另外宣告 `pack_except = { private = ["true"] }`：主人標了 `private = true` 的衣服（已經升成官方也一樣）連同它的照片不進包（PKG-71，2026-11-26）。下面的匯出角色不看這兩條。
 - 匯出角色（`evergenie personas export`，PRS-8、D-63）：`package.toml` 宣告 `outfit` 是 `export = "by_persona"`（她的衣服目錄跟著她走）、`variant` 是 `by_folder`＋`folder_field = "dir"`（資料夾裡有她的圖才跟著走，只帶她的圖）＋`export_omit = ["on"]`（開關是這個家當下的狀態不跟著走；匯入時本機已有這個隱藏版就保留本機的開關；時段 `windows` 照帶，PKG-58）。`unlock`、`person`、`state`、`rotation`、`request`、`capabilities`、`action` 不匯出：兌換紀錄只有本套件的程式能寫，對方的家照 `cost` 自己兌換。
 
 ## 從舊系統遷移

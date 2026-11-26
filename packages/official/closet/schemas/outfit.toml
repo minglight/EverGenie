@@ -45,6 +45,11 @@ required = true
 description = "official = 官方角色（圖在 personas/avatars/）；mine = 使用者自己的（圖在 personas/mine/avatars/）"
 
 [[field]]
+name = "private"
+type = "bool"
+description = "true = 不放進官方角色包（這個家照常有、照常穿，主人點名的角色匯出照帶）；沒寫或 false = 照 state／source 決定（2026-11-26）"
+
+[[field]]
 name = "order"
 type = "int"
 description = "同一位角色裡的排序（小的在前）；沒寫排最後"

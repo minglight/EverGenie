@@ -48,6 +48,10 @@ type ContribData struct {
 	// 只能配 export = "by_persona"，欄位要是規格裡的 string、enum 或 bool（值寫 "true"／"false"，DEV-160）、不在 export_omit 裡。PackOnlyNote 是被擋下的紀錄的白話名稱（建包的輸出用）。
 	PackOnly     map[string][]string `toml:"pack_only"`
 	PackOnlyNote string              `toml:"pack_only_note"`
+	// PackExcept 是「官方角色包不帶哪些」（PKG-71）：欄位名 → 不公開的值，任何一個列出的欄位的值在清單裡就不進官方角色包（建包不收、同步不寫）；
+	// 欄位沒填、值不在清單裡＝不擋。宣告規則同 pack_only。PackExceptNote 是被它擋下的紀錄的白話名稱（建包的輸出用）。
+	PackExcept     map[string][]string `toml:"pack_except"`
+	PackExceptNote string              `toml:"pack_except_note"`
 	// 角色改代號時紀錄怎麼跟著走（PKG-64）：persona_field 也可以單獨寫（值是角色代號）；persona_id 是 exact／prefix（只給 given）；
 	// persona_prefixed 是值為 <角色代號>-<其他> 的欄位；persona_source 是值為 official／mine 的欄位（這筆的圖放哪）。
 	PersonaID       string   `toml:"persona_id"`
@@ -105,6 +109,9 @@ type DataKind struct {
 	// 官方角色包只帶哪些（PKG-68）：欄位名 → 可以公開的值；PackOnlyNote 是被擋下的紀錄的白話名稱。
 	PackOnly     map[string][]string
 	PackOnlyNote string
+	// 官方角色包不帶哪些（PKG-71）：欄位名 → 不公開的值；PackExceptNote 是被它擋下的紀錄的白話名稱。
+	PackExcept     map[string][]string
+	PackExceptNote string
 	// 角色改代號時怎麼跟著走（PKG-64）：PersonaField 是值為角色代號的欄位（export = by_persona 時就是 ExportField）。
 	PersonaField    string
 	PersonaID       string
@@ -196,8 +203,8 @@ func (k *DataKind) exportDecl(d ContribData) error {
 		if d.FileField != "" || d.ExportOnly != nil || d.PackParent != nil {
 			return bad("file_field、export_only、pack_parent 只能跟 export = \"by_persona\" 一起寫")
 		}
-		if d.PackOnly != nil || d.PackOnlyNote != "" {
-			return bad("pack_only、pack_only_note 只能跟 export = \"by_persona\" 一起寫（只有跟著角色走的紀錄會進官方角色包）")
+		if d.PackOnly != nil || d.PackOnlyNote != "" || d.PackExcept != nil || d.PackExceptNote != "" {
+			return bad("pack_only、pack_only_note、pack_except、pack_except_note 只能跟 export = \"by_persona\" 一起寫（只有跟著角色走的紀錄會進官方角色包）")
 		}
 		return nil
 	case ExportByPersona:
@@ -239,6 +246,9 @@ func (k *DataKind) exportDecl(d ContribData) error {
 	}
 	k.Export, k.ExportOmit = d.Export, append([]string(nil), d.ExportOmit...)
 	if err := k.packOnlyDecl(d, seen, bad); err != nil {
+		return err
+	}
+	if err := k.packExceptDecl(d, seen, bad); err != nil {
 		return err
 	}
 	if d.ExportOnly == nil {
@@ -315,7 +325,31 @@ func (k *DataKind) packOnlyDecl(d ContribData, omitted map[string]bool, bad func
 	return nil
 }
 
-// onlyValues 驗 pack_only／export_only 的「欄位名 → 值」（label 是錯誤訊息用的名字）：欄位名稱要對、不是角色代號的欄位、不在 export_omit 裡；
+// packExceptDecl 驗證並記下 pack_except、pack_except_note（PKG-71）：規則同 pack_only（packOnlyDecl），只是意思反過來——
+// 列出的欄位的值在清單裡就不進官方角色包。欄位型別、enum 選項、bool 的寫法一樣在 load 查。
+func (k *DataKind) packExceptDecl(d ContribData, omitted map[string]bool, bad func(string, ...any) error) error {
+	note := strings.TrimSpace(d.PackExceptNote)
+	if len(d.PackExcept) == 0 {
+		if note != "" || d.PackExcept != nil {
+			return bad("pack_except 至少要寫一個欄位（pack_except_note 要配 pack_except）")
+		}
+		return nil
+	}
+	if d.Export != ExportByPersona {
+		return bad("pack_except 只能跟 export = \"by_persona\" 一起寫（跟著資料夾走的紀錄本來就不進官方角色包）")
+	}
+	if strings.ContainsAny(note, "\r\n") || len([]rune(note)) > 60 {
+		return bad("pack_except_note 要是一行、60 個字以內的白話說明")
+	}
+	except, err := onlyValues("pack_except", d.PackExcept, k.ExportField, omitted, bad)
+	if err != nil {
+		return err
+	}
+	k.PackExcept, k.PackExceptNote = except, note
+	return nil
+}
+
+// onlyValues 驗 pack_only／pack_except／export_only 的「欄位名 → 值」（label 是錯誤訊息用的名字）：欄位名稱要對、不是角色代號的欄位、不在 export_omit 裡；
 // 每個欄位至少一個值、值不能空白或重複。回一份複製。
 func onlyValues(label string, m map[string][]string, personaField string, omitted map[string]bool, bad func(string, ...any) error) (map[string][]string, error) {
 	if len(m) == 0 {
@@ -332,7 +366,7 @@ func onlyValues(label string, m map[string][]string, personaField string, omitte
 		case omitted[name]:
 			return nil, bad("%s 的欄位「%s」不能同時在 export_omit 裡（拿掉之後對方的家看不到這個值）", label, name)
 		case len(values) == 0:
-			return nil, bad("%s 的欄位「%s」至少要寫一個可以公開的值", label, name)
+			return nil, bad("%s 的欄位「%s」至少要寫一個值", label, name)
 		}
 		seen := map[string]bool{}
 		for _, v := range values {
@@ -490,7 +524,7 @@ func (k *DataKind) load(path, rel string) error {
 	for _, only := range []struct {
 		label string
 		m     map[string][]string
-	}{{"pack_only", k.PackOnly}, {"export_only", k.ExportOnly}} {
+	}{{"pack_only", k.PackOnly}, {"pack_except", k.PackExcept}, {"export_only", k.ExportOnly}} {
 		for _, name := range sortedKeys(only.m) {
 			var fd *dataFieldFile
 			for i := range f.Field {
@@ -602,6 +636,12 @@ func (k DataKind) decl() sdk.DataKindDecl {
 		d.PackOnly, d.PackOnlyNote = map[string][]string{}, k.PackOnlyNote
 		for name, values := range k.PackOnly {
 			d.PackOnly[name] = append([]string(nil), values...)
+		}
+	}
+	if len(k.PackExcept) > 0 {
+		d.PackExcept, d.PackExceptNote = map[string][]string{}, k.PackExceptNote
+		for name, values := range k.PackExcept {
+			d.PackExcept[name] = append([]string(nil), values...)
 		}
 	}
 	d.PersonaField = k.PersonaField
