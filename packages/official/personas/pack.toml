@@ -1,4 +1,4 @@
 # 這一版核心用的角色包（personas pack build --set-pointer 寫的；url 空＝這一版沒有角色包）
-version = "2026.11.26"
-url = "https://raw.githubusercontent.com/minglight/EverGenie-personas/main/m/2026.11.26.json"
-sha256 = "653eab2d10f2cde4a022c447dbc01d86486def5e7ea35ea65f96496a9d317598"
+version = "2026.11.26.1"
+url = "https://raw.githubusercontent.com/minglight/EverGenie-personas/main/m/2026.11.26.1.json"
+sha256 = "f18ee468e9208c53d5f3f3d23370f97e0d10a39241d62d02b4998a66142b9e4e"
