@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"slices"
 	"sort"
 	"strings"
 	"time"
@@ -449,6 +450,21 @@ func Sync(ctx context.Context, o SyncOptions) (*SyncResult, error) {
 				plan.DropFileRecords(rel, "你改過、沒換")
 			}
 		}
+	}
+	if len(plan.Dropped) > 0 {
+		// 照這個家的公開條件沒收的紀錄（PKG-68、PKG-71；含上層沒收的照片）指著的檔也不放（舊的包、別人做的包萬一帶了）。
+		dropped := map[string]bool{}
+		for _, rel := range plan.Dropped {
+			dropped[strings.ToLower(rel)] = true
+		}
+		jobs = slices.DeleteFunc(jobs, func(j job) bool {
+			rel, ok := Target(j.Path)
+			if ok && dropped[strings.ToLower(rel)] {
+				plan.Skipped = append(plan.Skipped, j.Path+"：是這個家不從官方角色包收的紀錄的圖，不放")
+				return true
+			}
+			return false
+		})
 	}
 	res.RecordsAdded, res.RecordsReplaced, res.RecordsUnchanged = plan.Added, plan.Replaced, plan.Unchanged
 	res.RecordsKept, res.RecordsSkipped = plan.Kept, plan.Skipped

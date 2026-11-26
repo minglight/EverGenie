@@ -9,6 +9,7 @@ import (
 	"io"
 	"os"
 	"path/filepath"
+	"slices"
 	"sort"
 	"strings"
 	"testing"
@@ -73,7 +74,7 @@ func (m *memStore) put(t *testing.T, kind, id string, fields map[string]any) {
 }
 
 // closetKinds 照官方衣櫃的宣告（outfit 跟著角色、variant 跟著資料夾、unlock 不跟）；outfit 也照樣宣告 pack_only（PKG-68），
-// 那只管官方角色包：這個檔的測試都帶著它跑，主人點名的匯出與匯入不受影響（TestExportIgnoresPackOnly）。
+// 與 pack_except（PKG-71），那只管官方角色包：這個檔的測試都帶著它跑，主人點名的匯出與匯入不受影響（TestExportIgnoresPackOnly）。
 func closetKinds() []KindInfo {
 	str := func(n string, req bool) sdk.DataFieldDecl {
 		return sdk.DataFieldDecl{Name: n, Type: "string", Required: req}
@@ -83,8 +84,9 @@ func closetKinds() []KindInfo {
 			str("persona", true), str("outfit", true), str("name", true),
 			{Name: "cost", Type: "int", Required: true},
 			{Name: "state", Type: "enum", Enum: []string{"active", "draft", "retired"}, Required: true},
-			{Name: "source", Type: "enum", Enum: []string{"official", "mine"}, Required: true},
-		}, PackOnly: map[string][]string{"source": {"official"}, "state": {"active", "retired"}}, PackOnlyNote: "還沒升成官方或還在設計中的衣服"}},
+			{Name: "source", Type: "enum", Enum: []string{"official", "mine"}, Required: true}, {Name: "private", Type: "bool"},
+		}, PackOnly: map[string][]string{"source": {"official"}, "state": {"active", "retired"}}, PackOnlyNote: "還沒升成官方或還在設計中的衣服",
+			PackExcept: map[string][]string{"private": {"true"}}, PackExceptNote: "主人標了不公開的衣服"}},
 		{Kind: "closet.variant", Decl: sdk.DataKindDecl{Kind: "variant", IDs: "given", Export: sdk.DataExportByFolder, FolderField: "dir", Fields: []sdk.DataFieldDecl{
 			str("name", true), str("dir", true), {Name: "button", Type: "bool"}, {Name: "on", Type: "bool"}, {Name: "windows", Type: "list"},
 		}, ExportOmit: []string{"on"}}},
@@ -675,5 +677,30 @@ func TestExportIgnoresPackOnly(t *testing.T) {
 	}
 	if r := sb.recs["closet.outfit/luna-my-9"]; r.Fields["state"] != "draft" || r.Fields["source"] != "mine" {
 		t.Errorf("欄位照原樣：%+v", r.Fields)
+	}
+}
+
+// 主人點名的角色匯出也不看 pack_except（PKG-71 只管官方角色包）：標了 private = true 的衣服照帶、private 欄位照帶，對方的家匯入照寫。
+func TestExportCarriesPrivateOutfit(t *testing.T) {
+	a, sa := homeA(t)
+	sa.put(t, "closet.outfit", "luna-pool", map[string]any{"persona": "luna", "outfit": "pool", "name": "不公開的", "cost": 0, "state": "active", "source": "official", "private": true})
+	var buf bytes.Buffer
+	exp, err := Export(context.Background(), ExportOptions{Home: a, Personas: []string{"luna"}, Store: sa}, &buf)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if strings.Contains(strings.Join(exp.Skipped, "\n"), "luna-pool") {
+		t.Errorf("匯出不該因為 pack_except 少帶：%v", exp.Skipped)
+	}
+	sb := &memStore{kinds: closetKinds(), recs: map[string]sdk.Record{}}
+	res, err := importBytes(t.TempDir(), sb, buf.Bytes(), false, false)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !slices.Contains(res.RecordsAdded, "closet.outfit/luna-pool") {
+		t.Fatalf("標了不公開的衣服照舊跟著匯出、匯入：%v（略過 %v）", res.RecordsAdded, res.RecordsSkipped)
+	}
+	if r := sb.recs["closet.outfit/luna-pool"]; r.Fields["private"] != true {
+		t.Errorf("private 照帶：%+v", r.Fields)
 	}
 }

@@ -342,6 +342,8 @@ DataKindDecl.FileField string file_field,omitempty
 DataKindDecl.FolderField string folder_field,omitempty
 DataKindDecl.IDs string ids,omitempty
 DataKindDecl.Kind string kind,omitempty
+DataKindDecl.PackExcept map[string][]string pack_except,omitempty
+DataKindDecl.PackExceptNote string pack_except_note,omitempty
 DataKindDecl.PackOnly map[string][]string pack_only,omitempty
 DataKindDecl.PackOnlyNote string pack_only_note,omitempty
 DataKindDecl.PackParent *sdk.DataParentDecl pack_parent,omitempty

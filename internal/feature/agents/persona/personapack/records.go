@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"maps"
 	"os"
 	"path"
 	"path/filepath"
@@ -342,6 +343,9 @@ func CollectRecords(ctx context.Context, store Store, slugs []string, folder fun
 			continue
 		}
 		list, err := store.List(ctx, k.Kind)
+		if folder == nil && len(k.Decl.PackExcept) > 0 {
+			list, err = listWithArchived(ctx, store, k.Kind) // 封存的、主人標了不公開的，它的圖也要擋（下面）
+		}
 		if err != nil {
 			return nil, err
 		}
@@ -350,7 +354,20 @@ func CollectRecords(ctx context.Context, store Store, slugs []string, folder fun
 		var held, heldExcept, notExported []string
 		children := map[string]int{} // 上層編號 → 這種下層有幾筆（沒封存的；不管跟不跟著走）
 		for _, rec := range list {
-			if rec.Archived || !recordIDPattern.MatchString(rec.ID) {
+			if !recordIDPattern.MatchString(rec.ID) {
+				continue
+			}
+			if rec.Archived {
+				// 封存的紀錄不帶；但主人標了不公開的（pack_except）它的圖照樣不收（不然 wardrobe/<代號>/<衣服>/ 的檔會照資料夾被收進包）。
+				if s, _ := rec.Fields[k.Decl.PersonaField].(string); folder == nil && k.Decl.Export == sdk.DataExportByPersona && isSlug[s] && PackExcepts(k.Decl, rec.Fields) {
+					if f, ok := recordFile(k.Kind, k.Decl, rec); ok {
+						res.HeldFiles = append(res.HeldFiles, f)
+					} else if k.Decl.FileField == "" && k.Decl.PersonaID == sdk.DataPersonaIDPrefix {
+						if rest, ok := strings.CutPrefix(rec.ID, s+"-"); ok && rest != "" {
+							res.HeldMedia = append(res.HeldMedia, HeldMedia{Slug: s, Rest: rest, Key: k.Kind + "/" + rec.ID})
+						}
+					}
+				}
 				continue
 			}
 			if parentKind != "" {
@@ -402,7 +419,12 @@ func CollectRecords(ctx context.Context, store Store, slugs []string, folder fun
 			default:
 				continue
 			}
-			res.Records = append(res.Records, Record{Kind: k.Kind, ID: rec.ID, Fields: exportFields(rec.Fields, k.Decl.ExportOmit), Body: rec.Body})
+			omit := k.Decl.ExportOmit
+			if folder == nil && len(k.Decl.PackExcept) > 0 {
+				// 進官方角色包的一定是不擋的值：pack_except 的欄位不帶（收件的家沒這欄＝不擋；還沒升級、規格不認得這欄的家也不會整包不收，PKG-71）。
+				omit = append(slices.Clone(omit), slices.Sorted(maps.Keys(k.Decl.PackExcept))...)
+			}
+			res.Records = append(res.Records, Record{Kind: k.Kind, ID: rec.ID, Fields: exportFields(rec.Fields, omit), Body: rec.Body})
 			packed[k.Kind+"/"+rec.ID] = true
 			packedIDs[k.Kind] = append(packedIDs[k.Kind], rec.ID)
 			n++
@@ -550,8 +572,11 @@ type RecordPlan struct {
 	// Taken 是這個家的紀錄（宣告 file_field 的每一種、封存的也算）指著的檔：家裡的位置（小寫）→ 指著它的 <種類>/<編號>（排序過）。
 	// 匯入時檔名看不出是誰的檔不能是這個家別筆紀錄的檔（不然一筆自己的紀錄就能蓋掉別的角色的照片）。
 	Taken map[string][]string
-	jobs  []recordJob
-	same  map[string]string // 已經一樣的：登記它的雜湊
+	// Dropped 是官方角色包裡因為這個家的公開條件（pack_only、pack_except）或上層沒收（pack_parent）而略過的紀錄指著的檔：
+	// 家裡的位置（RecordFile.Rel）。同步不寫這些檔（舊版程式建的包、別人做的包萬一帶了，紀錄不收、圖也不放，PKG-71）。
+	Dropped []string
+	jobs    []recordJob
+	same    map[string]string // 已經一樣的：登記它的雜湊
 }
 
 type recordJob struct {
@@ -586,6 +611,20 @@ func PlanRecords(ctx context.Context, store Store, in PlanInput) (*RecordPlan, e
 	for _, s := range in.Slugs {
 		isSlug[s] = true
 	}
+	// 官方角色包：先找出照這個家的公開條件不收的紀錄，下層（pack_parent）指著它們的也不收，免得留下沒有衣服的照片。
+	held := map[string]bool{}
+	if in.PersonaOnly {
+		for _, rec := range in.Records {
+			if decl, ok := kinds[rec.Kind]; ok && decl.Export == sdk.DataExportByPersona && !PackAllows(decl, exportFields(rec.Fields, decl.ExportOmit)) {
+				held[rec.Key()] = true
+			}
+		}
+	}
+	drop := func(rec Record, decl sdk.DataKindDecl) {
+		if f, ok := recordFile(rec.Kind, decl, sdk.Record{Kind: rec.Kind, ID: rec.ID, Fields: rec.Fields}); ok {
+			p.Dropped = append(p.Dropped, f.Rel())
+		}
+	}
 	var jobs []recordJob
 	for _, rec := range in.Records {
 		decl, ok := kinds[rec.Kind]
@@ -609,7 +648,16 @@ func PlanRecords(ctx context.Context, store Store, in PlanInput) (*RecordPlan, e
 			}
 			if in.PersonaOnly && !PackAllows(decl, rec.Fields) {
 				p.Skipped = append(p.Skipped, rec.Key()+"："+heldWhat(rec.Kind, decl, PackExcepts(decl, rec.Fields))+"，這個家的 "+packageOf(rec.Kind)+" 套件說不從官方角色包收")
+				drop(rec, decl)
 				continue
+			}
+			if pp := decl.PackParent; in.PersonaOnly && pp != nil {
+				parent, _ := rec.Fields[pp.Field].(string)
+				if key := packageOf(rec.Kind) + "." + pp.Kind + "/" + parent; held[key] {
+					p.Skipped = append(p.Skipped, rec.Key()+"：上層 "+key+" 這個家不從官方角色包收，這筆與它的圖也不收")
+					drop(rec, decl)
+					continue
+				}
 			}
 		case sdk.DataExportByFolder:
 			if in.PersonaOnly {
